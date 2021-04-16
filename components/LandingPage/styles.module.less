@@ -1,0 +1,233 @@
+@left-space: 12rem;
+.logo {
+  margin-top: 3rem;
+  width: 200px;
+  height: auto;
+}
+.heroContainer {
+  position: relative;
+  padding-left: @left-space;
+  min-height: 768px;
+}
+.heroCirlce {
+  float: right;
+}
+.bigBtn {
+  font-size: 1.5rem !important;
+  padding: 0.6rem 3rem !important;
+  height: auto !important;
+}
+.phoneBase {
+  position: absolute;
+  right: 8rem;
+  top: 7rem;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 5px 4px 0 rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid @primary-color;
+  border-radius: 55.9px;
+}
+.profileCardDiv {
+  position: relative;
+  margin-top: 16rem;
+  margin-right: 10rem;
+  float: right;
+}
+.profileCard {
+  height: auto;
+  width: 100%;
+}
+.profileBase {
+  border-radius: 15%;
+  background-color: darken(rgba(255, 255, 255, 0.1), 10%);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 2;
+  width: 150%;
+}
+.circle1 {
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  background-color: @primary-color;
+  position: absolute;
+  top: 1.4rem;
+  left: 1.7rem;
+  z-index: 0;
+}
+.circle2 {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  background-color: @primary-color;
+  position: absolute;
+  bottom: 1.5rem;
+  right: -2rem;
+  z-index: 0;
+}
+.teamCard {
+  position: absolute;
+  right: 3rem;
+  top: 30rem;
+  filter: drop-shadow(0px 0px 1px white);
+}
+.leftSection {
+  display: inline-block;
+}
+.textSection {
+  margin-top: 8rem;
+}
+.footballText {
+  font-size: 2rem;
+  font-weight: 500;
+}
+.heroText {
+  font-size: 6rem;
+  line-height: 1.2;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+//! FEATURES STYLES
+.commonContainer {
+  padding: 4rem @left-space;
+}
+.sectionHeading {
+  font-size: 40px;
+  margin-bottom: 4rem;
+}
+.featureItemContainer {
+  text-align: center;
+}
+.featureIcon {
+  height: 50px;
+  width: 50px;
+}
+.fIconWrapper {
+  height: 100px;
+  width: 100px;
+  border-radius: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.vectorsImg1 {
+  width: 50%;
+  height: auto;
+  position: absolute;
+  top: 20%;
+  left: 48%;
+  margin-top: 0px;
+  transform: rotate(-15deg) translate(-50%, -50%);
+  background-color: transparent;
+  filter: drop-shadow(-7px 21px 15px black);
+  z-index: 3;
+}
+.vectorsImg2 {
+  width: 61%;
+  height: auto;
+  position: absolute;
+  top: 20%;
+  left: 52%;
+  margin-top: 14rem;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+  filter: drop-shadow(-7px 21px 15px black);
+  z-index: 2;
+}
+.backCircle {
+  background-color: @primary-color;
+  height: 30rem;
+  width: 30rem;
+  border-radius: 50%;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  margin-top: 13rem;
+  transform: translate(-50%, -50%);
+}
+.workBody {
+  position: relative;
+}
+// .numberRow {
+//   justify-content: space-between;
+// }
+// .numberItem {
+
+// }
+.left {
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-end !important;
+  margin-bottom: 12rem;
+  text-align: right;
+}
+.right {
+  display: flex !important;
+  flex-direction: column;
+  align-items: start !important;
+  margin-bottom: 12rem;
+  text-align: left;
+}
+.cirlceNumber {
+  border-radius: 50%;
+  height: 4rem;
+  width: 4rem;
+  font-size: 1.8rem;
+}
+.stepText {
+  font-size: 18px;
+  margin-top: 0.8rem;
+}
+.leftText {
+  padding-left: 35%;
+}
+.textRight {
+  padding-right: 35%;
+}
+
+//Banner Section
+.bannerContainer {
+  width: 100%;
+  margin-top: 5rem;
+  background-image: url("/assets/images/bannerImg.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 6rem @left-space;
+}
+.bannerImg {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+}
+.bannerTitle {
+  text-transform: uppercase;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+//Footer section
+.logo2 {
+  width: 150px;
+  height: auto;
+  margin-bottom: 2rem;
+}
+.links {
+  display: inline-flex;
+  flex: 6;
+  font-size: 16px;
+  color: @text-color;
+  & > a {
+    margin-right: 3rem;
+  }
+  &:hover {
+    color: @primary-color;
+  }
+}
+.copyRightText {
+  display: inline-flex;
+  justify-content: flex-end;
+  flex: 4;
+}

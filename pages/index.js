@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from "react";
-import LpHeader from "@components";
-const { Header, Footer, Sider, Content } = Layout;
+import React from "react";
+import { Hero, Features, Work, Banner, Footer } from "@components";
+import "antd/dist/antd.less";
+import "../styles/commonStyles.module.less";
 
-function LandingPage(props) {
+function LandingPage() {
   return (
-    <>
-      <Header>
-        <LpHeader />
-      </Header>
-      <Content>Content</Content>
-      <Footer>Footer</Footer>
-    </>
+    <div
+      style={{
+        margin: "0px auto",
+        maxWidth: window?.innerWidth || "100%",
+      }}
+    >
+      <Hero />
+      <Features />
+      <Work />
+      <Banner />
+      <Footer />
+    </div>
   );
 }
 

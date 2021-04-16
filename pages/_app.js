@@ -1,5 +1,4 @@
-import Images from "@config/images";
-import React, { useEffect } from "react";
+import React from "react";
 import { useStore } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { wrapper } from "../redux/store/configureStore";
