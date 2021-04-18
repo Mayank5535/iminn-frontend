@@ -1,22 +1,34 @@
 import React from "react";
-import { Hero, Features, Work, Banner, Footer } from "@components";
+import Head from "next/head";
+import {
+  Hero,
+  Features,
+  Work,
+  Banner,
+  Footer,
+  ThemeContext,
+} from "@components";
 import "antd/dist/antd.less";
 import "../styles/commonStyles.module.less";
 
 function LandingPage() {
   return (
-    <div
-      style={{
-        margin: "0px auto",
-        maxWidth: window?.innerWidth || "100%",
-      }}
-    >
-      <Hero />
-      <Features />
-      <Work />
-      <Banner />
-      <Footer />
-    </div>
+    <>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <title>Iminn - Get early access</title>
+      </Head>
+      <div>
+        <Hero />
+        <Features />
+        <Work />
+        <Banner />
+        <Footer />
+      </div>
+    </>
   );
 }
 

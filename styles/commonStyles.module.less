@@ -1,18 +1,3 @@
-@primary: #2ebaab;
-@primaryLight: rgba(4, 175, 134, 0.24);
-@secondary: #5ec9c0;
-@layout-header-height: 40px;
-@textPrimary: #222222;
-@textSecondary: #b8b9bb;
-
-@pink: #ef466f;
-@orange: #ffa337;
-@blue: #3772ff;
-@white: #fff;
-
-@lightTheme: #fefefe;
-@darkTheme: #222222;
-
 body {
   font-family: "Montserrat", sans-serif !important;
   margin: 0px;
@@ -71,6 +56,15 @@ body {
 .semiBold {
   font-weight: 600 !important;
 }
+.logoText {
+  font-family: "Nunito Sans", sans-serif !important;
+  font-weight: 800 !important;
+  .logoText-light {
+    font-family: "Nunito Sans", sans-serif !important;
+    font-weight: 800 !important;
+    color: @lightTheme;
+  }
+}
 .colFlex {
   display: flex !important;
   flex-direction: column;
@@ -79,12 +73,18 @@ body {
   display: flex !important;
   flex-direction: row;
 }
+.justifyCenter {
+  justify-content: center;
+}
+.alignCenter {
+  align-items: center;
+}
 .allCenter {
   justify-content: center;
   align-items: center;
 }
-.featureText {
-  margin-top: 1.5rem;
-  font-size: 18px;
-  text-align: center;
+
+//OVERRIDEEN ANT STYLES
+.ant-btn {
+  box-shadow: 0px 17px 45px rgba(255, 130, 82, 0.15) !important;
 }

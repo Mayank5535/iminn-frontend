@@ -1,13 +1,19 @@
 import React from "react";
 import Images from "@config/images";
-import { Button } from "antd";
+import { Button, Row } from "antd";
 import "../styles.module.less";
+import useMediaQuery from "utils/useMediaQuery";
 
 function Hero() {
+  const { isXs } = useMediaQuery();
+
   return (
-    <section className="heroContainer">
+    <section className={isXs ? "wrapperCol" : "heroContainer"}>
       <div className="leftSection">
-        <img src={Images.brandLogo} alt="logo" className="logo" />
+        <Row className="logoContainer">
+          <img src={Images.brandLogo} alt="logo" className="logo" />
+          <span className="logoText fLogoText">IMINN</span>
+        </Row>
         <div className="textSection">
           <div className="footballText">Football</div>
           <div className="heroText">WHO's IN?</div>

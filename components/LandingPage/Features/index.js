@@ -1,11 +1,13 @@
 import React from "react";
 import Images from "@config/images";
 import { Col, Row } from "antd";
+import useMediaQuery from "utils/useMediaQuery";
 
 function Features() {
   const FeatureItem = ({ text, icon, classN }) => {
+    const { isXs, isSm, isMd, isLg, isXl } = useMediaQuery();
     return (
-      <Col md={6} className="colFlex allCenter">
+      <Col xs={12} md={6} className="colFlex alignCenter">
         <Row className={`${classN} fIconWrapper`}>
           <img src={icon} className="featureIcon" />
         </Row>
@@ -23,7 +25,7 @@ function Features() {
         <span className="primaryColor">IMINN&nbsp;</span>
         <span> FEATURES</span>
       </Row>
-      <Row justify="center" align="middle">
+      <Row justify="center">
         <FeatureItem
           text="Create games and invite others via a joining link"
           classN="primaryBg"

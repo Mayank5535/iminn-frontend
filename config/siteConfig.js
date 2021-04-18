@@ -5,5 +5,4 @@ export default {
   siteIcon: "",
   domainUrl: prod ? "https://iminn-football.com/" : "http://localhost:3000",
   apiUrl: "https://iminn-football.com/api/",
-  imgUrl: "https://iminn-football.com/",
 };

@@ -1,21 +1,102 @@
 @left-space: 12rem;
-.logo {
+
+@gradientStart: rgba(0, 0, 0, 0.3);
+@gradientEnd: rgba(255, 255, 255, 0.1);
+@startOffset: 60%;
+@endOffset: 100%;
+
+.logoContainer {
   margin-top: 3rem;
   width: 200px;
   height: auto;
+  flex-wrap: nowrap !important;
+  @media @xs {
+    width: 20%;
+    margin-top: 2rem;
+  }
+}
+.logo {
+  @media @xs {
+    height: 1.8rem;
+    width: auto;
+  }
 }
 .heroContainer {
   position: relative;
   padding-left: @left-space;
   min-height: 768px;
+  @media @xs {
+    padding-left: @left-space - 10rem;
+    min-height: 475px;
+  }
+}
+.wrapperCol {
+  position: relative;
+  padding-left: @left-space;
+  min-height: 768px;
+  @media @xs {
+    padding-left: @left-space - 10rem;
+    min-height: 475px;
+  }
+  content: "";
+  z-index: 10;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  background: -moz-linear-gradient(
+    top,
+    @gradientStart @startOffset,
+    @gradientEnd @endOffset
+  ); /* FF3.6+ */
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(@startOffset, @gradientEnd),
+    color-stop(@endOffset, @gradientStart)
+  ); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(
+    top,
+    @gradientStart @startOffset,
+    @gradientEnd @endOffset
+  ); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(
+    top,
+    @gradientStart @startOffset,
+    @gradientEnd @endOffset
+  ); /* Opera 11.10+ */
+  background: -ms-linear-gradient(
+    top,
+    @gradientStart @startOffset,
+    @gradientEnd @endOffset
+  ); /* IE10+ */
+  background: linear-gradient(
+    to bottom,
+    @gradientStart @startOffset,
+    @gradientEnd @endOffset
+  ); /* W3C */
 }
 .heroCirlce {
-  float: right;
+  position: absolute;
+  top: 0;
+  right: 0;
+  @media @xs {
+    width: 65%;
+    height: auto;
+    z-index: -1;
+  }
 }
 .bigBtn {
-  font-size: 1.5rem !important;
-  padding: 0.6rem 3rem !important;
-  height: auto !important;
+  @media @lg {
+    font-size: 1.5rem !important;
+    padding: 0.6rem 3rem !important;
+    height: auto !important;
+    margin-top: 1rem;
+  }
+  @media @xs {
+    margin-top: 1.5rem;
+  }
 }
 .phoneBase {
   position: absolute;
@@ -28,12 +109,33 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid @primary-color;
   border-radius: 55.9px;
+  overflow: auto;
+  width: fit-content;
+  @media @xs {
+    width: 40%;
+    border-radius: 24px;
+    padding: 0.5rem;
+    top: 59%;
+    right: 0%;
+    transform: translate(-50%, -50%);
+  }
+}
+.phone {
+  @media @xs {
+    width: 100%;
+    height: 100%;
+  }
 }
 .profileCardDiv {
-  position: relative;
-  margin-top: 16rem;
-  margin-right: 10rem;
-  float: right;
+  position: absolute;
+  top: 13rem;
+  right: 45rem;
+  @media @xs {
+    width: 18%;
+    top: 15rem;
+    right: 0rem;
+    left: 2rem;
+  }
 }
 .profileCard {
   height: auto;
@@ -72,58 +174,111 @@
   right: 3rem;
   top: 30rem;
   filter: drop-shadow(0px 0px 1px white);
+  @media @xs {
+    top: 64%;
+    left: 50%;
+    width: 45%;
+    height: auto;
+  }
 }
 .leftSection {
   display: inline-block;
+  position: absolute;
+  top: 0;
 }
 .textSection {
   margin-top: 8rem;
+  @media @xs {
+    z-index: 5;
+    position: absolute;
+    margin-top: 3rem;
+    transform: translate(0%, 0%);
+    text-align: center;
+    width: calc(100vw - 4rem);
+  }
 }
 .footballText {
   font-size: 2rem;
   font-weight: 500;
+  @media @xs {
+    font-size: 1.4rem;
+    color: @lightTheme;
+  }
 }
 .heroText {
   font-size: 6rem;
   line-height: 1.2;
   font-weight: 700;
   text-transform: uppercase;
+  @media @xs {
+    font-size: 2.8rem;
+    color: @lightTheme;
+  }
 }
 
 //! FEATURES STYLES
 .commonContainer {
   padding: 4rem @left-space;
+  @media @xs {
+    padding: 1rem @left-space - 10rem;
+  }
 }
 .sectionHeading {
-  font-size: 40px;
+  font-size: 2.5rem;
   margin-bottom: 4rem;
+  @media @xs {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
 }
 .featureItemContainer {
   text-align: center;
 }
+.featureText {
+  margin-top: 1.5rem;
+  font-size: 18px;
+  text-align: center;
+  @media @xs {
+    font-size: 16px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+}
+
 .featureIcon {
-  height: 50px;
-  width: 50px;
+  height: 100%;
+  width: 100%;
 }
 .fIconWrapper {
   height: 100px;
   width: 100px;
+  padding: 25px;
   border-radius: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media @xs {
+    height: 80px;
+    width: 80px;
+    padding: 18px;
+  }
 }
 .vectorsImg1 {
   width: 50%;
   height: auto;
   position: absolute;
-  top: 20%;
+  top: 8%;
   left: 48%;
   margin-top: 0px;
   transform: rotate(-15deg) translate(-50%, -50%);
   background-color: transparent;
   filter: drop-shadow(-7px 21px 15px black);
   z-index: 3;
+  @media @xs {
+    width: 100%;
+    top: 4rem;
+    filter: none;
+  }
 }
 .vectorsImg2 {
   width: 61%;
@@ -136,6 +291,13 @@
   background-color: transparent;
   filter: drop-shadow(-7px 21px 15px black);
   z-index: 2;
+  @media @xs {
+    width: 105%;
+    top: 11rem;
+    left: 56%;
+    margin-top: 0px;
+    filter: none;
+  }
 }
 .backCircle {
   background-color: @primary-color;
@@ -147,22 +309,39 @@
   left: 50%;
   margin-top: 13rem;
   transform: translate(-50%, -50%);
+  @media @xs {
+    position: relative;
+    height: 0;
+    width: 70%;
+    overflow: hidden;
+    top: 10rem;
+    margin-top: 0rem;
+    padding-bottom: 70%;
+    opacity: 0.3;
+  }
 }
 .workBody {
   position: relative;
 }
-// .numberRow {
-//   justify-content: space-between;
-// }
-// .numberItem {
-
-// }
+.workListContainer {
+  @media @xs {
+    position: absolute;
+    z-index: 3;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+}
 .left {
   display: flex !important;
   flex-direction: column;
   align-items: flex-end !important;
   margin-bottom: 12rem;
   text-align: right;
+  @media @xs {
+    flex-direction: row;
+    text-align: left;
+    align-items: center !important;
+    margin-bottom: 2rem;
+  }
 }
 .right {
   display: flex !important;
@@ -170,22 +349,44 @@
   align-items: start !important;
   margin-bottom: 12rem;
   text-align: left;
+  @media @xs {
+    flex-direction: row;
+    margin-bottom: 2rem;
+    align-items: center !important;
+  }
 }
 .cirlceNumber {
   border-radius: 50%;
   height: 4rem;
   width: 4rem;
   font-size: 1.8rem;
+  @media @xs {
+    height: 3rem;
+    width: 3rem;
+    font-size: 1.2rem;
+  }
 }
 .stepText {
   font-size: 18px;
   margin-top: 0.8rem;
+  @media @xs {
+    margin-top: 0rem;
+    font-size: 16px;
+    flex: 4;
+    color: @darkBlack;
+  }
 }
 .leftText {
   padding-left: 35%;
+  @media @xs {
+    padding: 0px 1rem;
+  }
 }
 .textRight {
   padding-right: 35%;
+  @media @xs {
+    padding: 0px 1rem;
+  }
 }
 
 //Banner Section
@@ -196,6 +397,16 @@
   background-repeat: no-repeat;
   background-size: cover;
   padding: 6rem @left-space;
+  @media @xs {
+    background-size: cover;
+    background-position: center;
+    margin-top: 10rem;
+    padding: 2rem @left-space - 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 6;
+  }
 }
 .bannerImg {
   object-fit: cover;
@@ -206,28 +417,58 @@
   text-transform: uppercase;
   font-size: 3rem;
   margin-bottom: 1rem;
+  @media @xs {
+    font-size: 1.2rem;
+  }
 }
 
 //Footer section
-.logo2 {
-  width: 150px;
-  height: auto;
+.logoRow {
   margin-bottom: 2rem;
+  @media @xs {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+  }
 }
 .links {
   display: inline-flex;
-  flex: 6;
   font-size: 16px;
   color: @text-color;
   & > a {
     margin-right: 3rem;
+    @media @xs {
+      display: block !important;
+      text-align: center;
+      margin-bottom: 1rem;
+      margin-right: 0;
+    }
   }
+
   &:hover {
     color: @primary-color;
   }
 }
+.linksRow {
+  display: flex;
+  flex-direction: row;
+  @media @xs {
+    display: block;
+  }
+}
 .copyRightText {
-  display: inline-flex;
-  justify-content: flex-end;
-  flex: 4;
+  text-align: right;
+  @media @xs {
+    text-align: center;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+}
+.fLogoText {
+  font-size: 2.4rem;
+  margin-left: 1rem;
+  @media @xs {
+    font-size: 1.3rem;
+    margin-left: 0.5rem;
+  }
 }

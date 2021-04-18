@@ -7,16 +7,17 @@ function Footer() {
   return (
     <section className="commonContainer">
       <Row className="logoRow">
-        <img src={Images.brandLogo} alt="logo" className="logo2" />
+        <img src={Images.brandLogo} alt="logo" className="logo" />
+        <span className="logoText fLogoText">IMINN</span>
       </Row>
-      <Row className="rowFlex">
-        <Col className="links">
+      <Row className="linksRow">
+        <Col className="links" xs={24} md={14}>
           <a href="/">About</a>
           <a href="/">Features</a>
           <a href="/">Help</a>
           <a href="/">Privacy Policy</a>
         </Col>
-        <Col className="copyRightText">
+        <Col className="copyRightText" xs={24} md={10}>
           &copy;&nbsp;2021 All Rigth Reserved by IMINN
         </Col>
       </Row>

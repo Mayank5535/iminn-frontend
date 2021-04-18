@@ -14,8 +14,8 @@ function Banner() {
         <img src={Images.vectorPhone1} className="vectorsImg1" />
         <img src={Images.vectorPhone2} className="vectorsImg2" />
         <span className="backCircle" />
-        <Row>
-          <Col span={6} className="left">
+        <Row className="workListContainer">
+          <Col xs={{ span: 24 }} lg={{ span: 6 }} className="left">
             <div className="cirlceNumber  primaryLightBg colFlex allCenter primaryColor bold">
               1
             </div>
@@ -23,7 +23,11 @@ function Banner() {
               Create games and invite others via a joining link
             </div>
           </Col>
-          <Col offset={12} span={6} className="right">
+          <Col
+            xs={{ span: 24, offset: 0 }}
+            lg={{ span: 6, offset: 12 }}
+            className="right"
+          >
             <div className="cirlceNumber  primaryLightBg colFlex allCenter primaryColor bold">
               2
             </div>
@@ -31,7 +35,7 @@ function Banner() {
               Lorem iosum dolot sirt amet lorem iapsum.
             </div>
           </Col>
-          <Col span={6} className="left">
+          <Col xs={{ span: 24 }} lg={{ span: 6 }} className="left">
             <div className="cirlceNumber  primaryLightBg colFlex allCenter primaryColor bold">
               3
             </div>
@@ -39,7 +43,11 @@ function Banner() {
               Lorem iosum dolot sirt amet lorem iapsum.
             </div>
           </Col>
-          <Col offset={12} span={6} className="right">
+          <Col
+            xs={{ span: 24, offset: 0 }}
+            lg={{ span: 6, offset: 12 }}
+            className="right"
+          >
             <div className="cirlceNumber  primaryLightBg colFlex allCenter primaryColor bold">
               4
             </div>

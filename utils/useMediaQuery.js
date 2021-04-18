@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Grid } from "antd";
-import { isEmpty } from "lodash-es";
 const { useBreakpoint } = Grid;
 
-export default function useCurrentScreen() {
+export default function useMediaQuery() {
   const screens = useBreakpoint();
   const [currentPoint, setCurrentPoint] = useState("");
 
@@ -19,7 +18,12 @@ export default function useCurrentScreen() {
     }
   }, [screens]);
 
-  if (!isEmpty(currentPoint)) {
-    return currentPoint;
-  }
+  return {
+    isXs: currentPoint === "xs" || false,
+    isSm: currentPoint === "sm" || false,
+    isMd: currentPoint === "md" || false,
+    isLg: currentPoint === "lg" || false,
+    isXl: currentPoint === "xl" || false,
+    isXxl: currentPoint === "xxl" || false,
+  };
 }
