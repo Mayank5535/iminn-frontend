@@ -16,9 +16,14 @@ function Hero() {
         </Row>
         <div className="textSection">
           <div className="footballText">Football</div>
-          <div className="heroText">WHO's IN?</div>
-          <div className="heroText primaryColor">I'M IN</div>
-          {/* <div className="primaryBtn">Get Early Access</div> */}
+          <div className={`heroText ${isXs && "text-shaodw-theme"}`}>
+            WHO's IN?
+          </div>
+          <div
+            className={`heroText primaryColor ${isXs && "text-shadow-primary"}`}
+          >
+            I'M IN
+          </div>
           <Button type="primary" size="large" shape="round" className="bigBtn">
             Get early access
           </Button>
