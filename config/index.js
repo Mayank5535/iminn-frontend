@@ -1,1 +1,4 @@
-export { isMobilePad, windowWidth, windowHeight, isMobile } from "./dimensions";
+import Images from "./images";
+import db from "./firebaseConfig";
+
+export { Images, db };

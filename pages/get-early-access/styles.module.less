@@ -1,0 +1,94 @@
+.fullContainerView {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  display: flex;
+}
+.mobileContainer {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.leftDiv {
+  width: 50%;
+  height: 100%;
+  background-color: @primary;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.rightDiv {
+  width: 50%;
+  height: 100%;
+  background-color: @white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.cornerImg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30vh;
+}
+.titleText {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: @white;
+  margin-bottom: 1rem;
+  @media @sm {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+  @media @xs {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+}
+.subTitleText {
+  font-size: 18px;
+  font-weight: 500;
+  color: @white;
+  @media @sm {
+    font-size: 1rem;
+    text-align: center;
+  }
+  @media @xs {
+    font-size: 1rem;
+    text-align: center;
+  }
+}
+.logoContainer2 {
+  height: fit-content;
+  display: flex;
+  margin: 2rem auto;
+}
+.roundcontainer {
+  background-color: @primary;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom-left-radius: 100%;
+  border-bottom-right-radius: 100%;
+  width: 120vw;
+  position: fixed;
+  left: -10%;
+  height: 40vh;
+  top: 0%;
+}
+.formContainer {
+  height: 90vh;
+  display: flex;
+  padding: 2rem;
+  justify-content: center;
+  align-items: flex-end;
+}
+.bigText {
+  font-size: 2rem !important;
+  padding-left: 0.6rem;
+}

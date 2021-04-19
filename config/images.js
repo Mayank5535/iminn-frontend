@@ -1,6 +1,7 @@
 const Images = {
   //Landing Page
   brandLogo: "/assets/images/brandLogo.svg",
+  brandLogoLight: "/assets/images/brandLogoLight.svg",
   baseLessPhone: "/assets/images/baseLessPhone.png",
   heroEllipse: "/assets/images/heroEllipse.svg",
   profile_card: "/assets/images/profile_card.svg",
@@ -12,6 +13,7 @@ const Images = {
   vectorPhone1: "/assets/images/vectorPhone1.svg",
   vectorPhone2: "/assets/images/vectorPhone2.svg",
   bannerImg: "/assets/images/bannerImg.svg",
+  football: "/assets/images/football.svg",
 };
 
 export default Images;

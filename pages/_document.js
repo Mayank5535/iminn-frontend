@@ -25,6 +25,8 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             crossOrigin="true"
           />
+          <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+          <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
         </Head>
         <body>
           <Main />

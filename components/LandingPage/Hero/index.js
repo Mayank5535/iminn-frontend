@@ -1,10 +1,12 @@
 import React from "react";
 import Images from "@config/images";
 import { Button, Row } from "antd";
-import "../styles.module.less";
+import { useRouter } from "next/router";
 import useMediaQuery from "utils/useMediaQuery";
+import "../styles.module.less";
 
 function Hero() {
+  const router = useRouter();
   const { isXs } = useMediaQuery();
 
   return (
@@ -24,7 +26,13 @@ function Hero() {
           >
             I'M IN
           </div>
-          <Button type="primary" size="large" shape="round" className="bigBtn">
+          <Button
+            type="primary"
+            size="large"
+            shape="round"
+            className="bigBtn"
+            onClick={() => router.push("/get-early-access")}
+          >
             Get early access
           </Button>
         </div>
@@ -44,9 +52,7 @@ function Hero() {
           />
         </div>
       </div>
-      {/* <div className="teamCardbase"> */}
       <img src={Images.team_card} alt="background2" className="teamCard" />
-      {/* </div> */}
     </section>
   );
 }
