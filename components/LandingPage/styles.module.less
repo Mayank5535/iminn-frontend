@@ -10,13 +10,13 @@
   width: 200px;
   height: auto;
   flex-wrap: nowrap !important;
-  @media @xs {
+  @media @md {
     width: 20%;
     margin-top: 2rem;
   }
 }
 .logo {
-  @media @xs {
+  @media @md {
     height: 1.8rem;
     width: auto;
   }
@@ -25,7 +25,7 @@
   position: relative;
   padding-left: @left-space;
   min-height: 768px;
-  @media @xs {
+  @media @md {
     padding-left: @left-space - 10rem;
     min-height: 475px;
   }
@@ -34,8 +34,11 @@
   position: relative;
   padding-left: @left-space;
   min-height: 768px;
-  @media @xs {
+  @media @md {
     padding-left: @left-space - 10rem;
+    min-height: 560px;
+  }
+  @media @sm {
     min-height: 475px;
   }
   content: "";
@@ -81,20 +84,24 @@
   position: absolute;
   top: 0;
   right: 0;
-  @media @xs {
+  @media @xxl {
+    max-width: 450px;
+  }
+  @media @md {
     width: 65%;
+    max-width: 350px;
     height: auto;
     z-index: -1;
   }
 }
 .bigBtn {
-  @media @lg {
+  @media only screen and (min-width: 992px) {
     font-size: 1.5rem !important;
     padding: 0.6rem 3rem !important;
     height: auto !important;
     margin-top: 1rem;
   }
-  @media @xs {
+  @media @md {
     margin-top: 1.5rem;
   }
 }
@@ -111,8 +118,13 @@
   border-radius: 55.9px;
   overflow: auto;
   width: fit-content;
-  @media @xs {
+  @media @xxl {
+    border-radius: 41.9px;
+    width: 20%;
+  }
+  @media @md {
     width: 40%;
+    max-width: 200px;
     border-radius: 24px;
     padding: 0.5rem;
     top: 59%;
@@ -121,7 +133,11 @@
   }
 }
 .phone {
-  @media @xs {
+  @media @xxl {
+    width: 100%;
+    height: 100%;
+  }
+  @media @md {
     width: 100%;
     height: 100%;
   }
@@ -130,7 +146,12 @@
   position: absolute;
   top: 13rem;
   right: 45rem;
-  @media @xs {
+  @media @xxl {
+    width: 15%;
+    top: 15rem;
+    right: 30rem;
+  }
+  @media @md {
     width: 18%;
     top: 15rem;
     right: 0rem;
@@ -148,6 +169,9 @@
   -webkit-backdrop-filter: blur(20px);
   z-index: 2;
   width: 150%;
+  @media @xxl {
+    width: 110%;
+  }
 }
 .circle1 {
   height: 4rem;
@@ -168,15 +192,36 @@
   bottom: 1.5rem;
   right: -2rem;
   z-index: 0;
+  @media @xxl {
+    right: 0rem;
+  }
+  @media @md {
+    right: -2rem;
+  }
 }
 .teamCard {
   position: absolute;
   right: 3rem;
   top: 30rem;
   filter: drop-shadow(0px 0px 1px white);
-  @media @xs {
+  @media @xxl {
+    max-width: 250px;
+    top: 55%;
+    right: 4%;
+    width: 45%;
+    height: auto;
+  }
+  @media @md {
+    max-width: 190px;
     top: 64%;
-    left: 50%;
+    right: 6%;
+    width: 45%;
+    height: auto;
+  }
+  @media @sm {
+    max-width: 190px;
+    top: 64%;
+    right: 6%;
     width: 45%;
     height: auto;
   }
@@ -188,7 +233,7 @@
 }
 .textSection {
   margin-top: 8rem;
-  @media @xs {
+  @media @md {
     z-index: 5;
     position: absolute;
     margin-top: 3rem;
@@ -200,7 +245,10 @@
 .footballText {
   font-size: 2rem;
   font-weight: 500;
-  @media @xs {
+  @media @xxl {
+    font-size: 1.8rem;
+  }
+  @media @md {
     font-size: 1.4rem;
     color: @lightTheme;
   }
@@ -210,7 +258,10 @@
   line-height: 1.2;
   font-weight: 700;
   text-transform: uppercase;
-  @media @xs {
+  @media @xxl {
+    font-size: 4rem;
+  }
+  @media @md {
     font-size: 2.8rem;
     color: @lightTheme;
   }
@@ -219,14 +270,14 @@
 //! FEATURES STYLES
 .commonContainer {
   padding: 4rem @left-space;
-  @media @xs {
+  @media @md {
     padding: 1rem @left-space - 10rem;
   }
 }
 .sectionHeading {
   font-size: 2.5rem;
   margin-bottom: 4rem;
-  @media @xs {
+  @media @md {
     font-size: 1.5rem;
     margin-bottom: 2rem;
   }
@@ -239,7 +290,7 @@
   margin-top: 1.5rem;
   font-size: 18px;
   text-align: center;
-  @media @xs {
+  @media @md {
     font-size: 16px;
     margin-top: 1rem;
     margin-bottom: 2rem;
@@ -258,7 +309,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  @media @xs {
+  @media @md {
     height: 70px;
     width: 70px;
     padding: 18px;
@@ -275,10 +326,18 @@
   background-color: transparent;
   filter: drop-shadow(-7px 21px 15px black);
   z-index: 3;
-  @media @xs {
-    width: 100%;
+  @media @xxl {
+    width: 50%;
+    top: 15%;
+    left: 48%;
+  }
+  @media @md {
+    width: 70%;
     top: 4rem;
     filter: none;
+  }
+  @media @sm {
+    width: 100%;
   }
 }
 .vectorsImg2 {
@@ -292,12 +351,20 @@
   background-color: transparent;
   filter: drop-shadow(-7px 21px 15px black);
   z-index: 2;
-  @media @xs {
-    width: 105%;
+  @media @xxl {
+    width: 61%;
+    top: 17%;
+    left: 52%;
+  }
+  @media @md {
+    width: 85%;
     top: 11rem;
     left: 56%;
     margin-top: 0px;
     filter: none;
+  }
+  @media @sm {
+    width: 105%;
   }
 }
 .backCircle {
@@ -310,15 +377,28 @@
   left: 50%;
   margin-top: 13rem;
   transform: translate(-50%, -50%);
-  @media @xs {
+  @media @xxl {
+    top: 10%;
+    height: 25rem;
+    width: 25rem;
+  }
+  @media @md {
     position: relative;
     height: 0;
-    width: 70%;
     overflow: hidden;
     top: 10rem;
     margin-top: 0rem;
-    padding-bottom: 70%;
     opacity: 0.3;
+    width: 40%;
+    padding-bottom: 40%;
+  }
+  @media @sm {
+    width: 55%;
+    padding-bottom: 55%;
+  }
+  @media @xs {
+    width: 70%;
+    padding-bottom: 70%;
   }
 }
 .workBody {
@@ -329,7 +409,7 @@
 //   background-color: aquamarine !important;
 // }
 .workListContainer {
-  @media @xs {
+  @media @md {
     z-index: 3;
     position: absolute;
     background-color: rgba(255, 255, 255, 0.7);
@@ -341,7 +421,7 @@
   align-items: flex-end !important;
   margin-bottom: 12rem;
   text-align: right;
-  @media @xs {
+  @media @md {
     flex-direction: row;
     text-align: left;
     align-items: center !important;
@@ -354,7 +434,7 @@
   align-items: start !important;
   margin-bottom: 12rem;
   text-align: left;
-  @media @xs {
+  @media @md {
     flex-direction: row;
     margin-bottom: 2rem;
     align-items: center !important;
@@ -365,7 +445,7 @@
   height: 4rem;
   width: 4rem;
   font-size: 1.8rem;
-  @media @xs {
+  @media @md {
     height: 3rem;
     width: 3rem;
     font-size: 1.2rem;
@@ -375,7 +455,7 @@
   font-size: 18px;
   margin-top: 0.8rem;
   font-weight: 500;
-  @media @xs {
+  @media @md {
     margin-top: 0rem;
     font-size: 16px;
     flex: 4;
@@ -384,13 +464,13 @@
 }
 .leftText {
   padding-left: 35%;
-  @media @xs {
+  @media @md {
     padding: 0px 1rem;
   }
 }
 .textRight {
   padding-right: 35%;
-  @media @xs {
+  @media @md {
     padding: 0px 1rem;
   }
 }
@@ -403,7 +483,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   padding: 6rem @left-space;
-  @media @xs {
+  @media @md {
     background-size: cover;
     background-position: center;
     padding: 2rem @left-space - 10rem;
@@ -423,7 +503,7 @@
   text-transform: uppercase;
   font-size: 3rem;
   margin-bottom: 1rem;
-  @media @xs {
+  @media @md {
     font-size: 1.2rem;
   }
 }
@@ -431,7 +511,7 @@
 //Footer section
 .logoRow {
   margin-bottom: 2rem;
-  @media @xs {
+  @media @md {
     margin-top: 2rem;
     display: flex;
     justify-content: center;
@@ -444,7 +524,7 @@
   font-weight: 500;
   & > a {
     margin-right: 3rem;
-    @media @xs {
+    @media @md {
       display: block !important;
       text-align: center;
       margin-bottom: 1rem;
@@ -459,13 +539,13 @@
 .linksRow {
   display: flex;
   flex-direction: row;
-  @media @xs {
+  @media @md {
     display: block;
   }
 }
 .copyRightText {
   text-align: right;
-  @media @xs {
+  @media @md {
     text-align: center;
     margin-top: 2.5rem;
     margin-bottom: 1rem;
@@ -474,7 +554,7 @@
 .fLogoText {
   font-size: 2.4rem;
   margin-left: 1rem;
-  @media @xs {
+  @media @md {
     font-size: 1.3rem;
     margin-left: 0.5rem;
   }

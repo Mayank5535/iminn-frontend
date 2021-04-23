@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useRef } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import Images from "@config/images";
 import { Col, Row } from "antd";
 import useMediaQuery from "utils/useMediaQuery";
@@ -7,6 +7,12 @@ import useMediaQuery from "utils/useMediaQuery";
 function Banner() {
   const { isXs, isSm } = useMediaQuery;
   const listRef = useRef();
+  const [minHeight, setMinHeight] = useState("100%");
+
+  useLayoutEffect(() => {
+    const minH = listRef?.current?.clientHeight || "100%";
+    setMinHeight(minH);
+  }, []);
 
   return (
     <section className="commonContainer">
@@ -18,7 +24,7 @@ function Banner() {
         justify="space-between"
         align="top"
         className="workBody"
-        style={{ minHeight: listRef?.current?.clientHeight || "100%" }}
+        style={{ minHeight: minHeight }}
       >
         <img src={Images.vectorPhone1} className="vectorsImg1" />
         <img src={Images.vectorPhone2} className="vectorsImg2" />

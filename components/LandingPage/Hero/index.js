@@ -7,10 +7,10 @@ import "../styles.module.less";
 
 function Hero() {
   const router = useRouter();
-  const { isXs } = useMediaQuery();
+  const { isXs, isSm } = useMediaQuery();
 
   return (
-    <section className={isXs ? "wrapperCol" : "heroContainer"}>
+    <section className={isXs || isSm ? "wrapperCol" : "heroContainer"}>
       <div className="leftSection">
         <Row className="logoContainer">
           <img src={Images.brandLogo} alt="logo" className="logo" />
