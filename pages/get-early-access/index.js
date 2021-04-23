@@ -3,7 +3,7 @@ import Head from "next/head";
 import useMediaQuery from "utils/useMediaQuery";
 import Images from "@config/images";
 import db from "@config/firebaseConfig";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, notification } from "antd";
 import "./styles.module.less";
 
 function GetEarlyAccess() {
@@ -11,6 +11,16 @@ function GetEarlyAccess() {
   const [form] = Form.useForm();
 
   const [termscheck, setTermscheck] = useState(false);
+  const [btnLoading, setBtnLoading] = useState(false);
+
+  const checkBoxValidation = (rule, value) => {
+    return new Promise((resolve, reject) => {
+      if (termscheck) {
+        resolve(true);
+      }
+      reject("Please accept the terms and conditions");
+    });
+  };
 
   // const seeData = () => {
   //   db.collection("users")
@@ -23,16 +33,31 @@ function GetEarlyAccess() {
   // };
 
   const onFinish = async ({ email }) => {
-    db.collection("users")
-      .add({
-        email: email,
-      })
-      .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id);
-      })
-      .catch((error) => {
-        console.error("Error adding document: ", error);
+    if (btnLoading) return;
+    const data = {
+      email: email,
+    };
+    setBtnLoading(true);
+    try {
+      let result = await db.collection("users").add(data);
+      if (result.id) {
+        console.log("successsssssss");
+        notification.success({
+          message: "Success",
+          description: "Your email is submitted successfully!",
+        });
+      }
+      setBtnLoading(false);
+      form.resetFields();
+      setTermscheck(false);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      notification.error({
+        message: "Oops!",
+        description: "something went wrong while submitting your email",
       });
+      setBtnLoading(false);
+    }
   };
 
   const renderMobileView = () => {
@@ -63,7 +88,7 @@ function GetEarlyAccess() {
             >
               <Input placeholder="Email" />
             </Form.Item>
-            <Form.Item>
+            <Form.Item name="terms">
               <Checkbox
                 onChange={(e) => setTermscheck(e.target.checked)}
                 checked={termscheck}
@@ -119,12 +144,16 @@ function GetEarlyAccess() {
               <Form.Item
                 name="email"
                 rules={[
+                  { required: true, message: "Email is required!" },
                   { type: "email", message: "Please enter a valid email!" },
                 ]}
               >
                 <Input placeholder="Email" />
               </Form.Item>
-              <Form.Item>
+              <Form.Item
+                name="terms"
+                rules={[{ validator: checkBoxValidation }]}
+              >
                 <Checkbox
                   onChange={(e) => setTermscheck(e.target.checked)}
                   checked={termscheck}
@@ -140,6 +169,7 @@ function GetEarlyAccess() {
               </Form.Item>
               <Form.Item>
                 <Button
+                  loading={btnLoading}
                   type="primary"
                   size="large"
                   htmlType="submit"

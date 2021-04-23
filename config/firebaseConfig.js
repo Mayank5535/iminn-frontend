@@ -10,14 +10,12 @@ var config = {
   measurementId: "G-M1NJNESK7Z",
 };
 
-let firebaseApp = {};
-
 if (!firebase.apps.length) {
-  firebaseApp = firebase.initializeApp(config);
+  firebase.initializeApp(config);
 } else {
-  firebaseApp = firebase.app(); // if already initialized, use that one
+  firebase.app(); // if already initialized, use that one
 }
 
-const db = firebaseApp.firestore();
+const db = firebase.firestore();
 
 export default db;
