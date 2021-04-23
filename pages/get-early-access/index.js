@@ -7,7 +7,7 @@ import { Button, Checkbox, Form, Input } from "antd";
 import "./styles.module.less";
 
 function GetEarlyAccess() {
-  const { isXs } = useMediaQuery();
+  const { isXs, isMd } = useMediaQuery();
   const [form] = Form.useForm();
 
   const [termscheck, setTermscheck] = useState(false);
@@ -114,7 +114,7 @@ function GetEarlyAccess() {
             <Form
               form={form}
               onFinish={onFinish}
-              wrapperCol={{ span: 10, offset: 7 }}
+              wrapperCol={{ span: isMd ? 16 : 10, offset: isMd ? 4 : 7 }}
             >
               <Form.Item
                 name="email"
