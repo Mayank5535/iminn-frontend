@@ -148,7 +148,7 @@ function GetEarlyAccess() {
                   { type: "email", message: "Please enter a valid email!" },
                 ]}
               >
-                <Input placeholder="Email" />
+                <Input placeholder="Email" size="large" />
               </Form.Item>
               <Form.Item
                 name="terms"

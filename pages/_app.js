@@ -2,6 +2,8 @@ import React from "react";
 import { useStore } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { wrapper } from "../redux/store/configureStore";
+import "antd/dist/antd.less";
+import "../styles/commonStyles.module.less";
 
 const App = ({ Component, pageProps }) => {
   const store = useStore((state) => state);

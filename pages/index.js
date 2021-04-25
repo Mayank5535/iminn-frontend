@@ -8,8 +8,6 @@ import {
   Footer,
   ThemeContext,
 } from "@components";
-import "antd/dist/antd.less";
-import "../styles/commonStyles.module.less";
 
 function LandingPage() {
   return (

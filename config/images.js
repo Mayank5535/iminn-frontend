@@ -14,6 +14,8 @@ const Images = {
   vectorPhone2: "/assets/images/vectorPhone2.svg",
   bannerImg: "/assets/images/bannerImg.svg",
   football: "/assets/images/football.svg",
+  google: "/assets/images/google.svg",
+  facebook: "/assets/images/facebook.svg",
 };
 
 export default Images;
