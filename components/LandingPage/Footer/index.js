@@ -16,6 +16,7 @@ function Footer() {
           <a href="/">Features</a>
           <a href="/">Help</a>
           <a href="/">Privacy Policy</a>
+          <a href="/signin">Signin</a>
         </Col>
         <Col className="copyRightText" xs={24} md={10}>
           &copy;&nbsp;2021 All Rigth Reserved by IMINN
