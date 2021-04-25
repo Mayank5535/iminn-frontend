@@ -11,11 +11,14 @@ function Signin() {
   const { isXs, isMd } = useMediaQuery();
   const [form] = Form.useForm();
 
-  const [formSwitch, setFormSwitch] = useState(false); // true for login Form, False for signup Form
+  const [formSwitch, setFormSwitch] = useState(true); // true for login Form, False for signup Form
   const [termscheck, setTermscheck] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
 
   const checkBoxValidation = (rule, value) => {
+    if (formSwitch) {
+      return true;
+    }
     return new Promise((resolve, reject) => {
       if (termscheck) {
         resolve(true);
