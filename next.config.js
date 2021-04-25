@@ -32,10 +32,27 @@ module.exports = withPlugins([
           ...(typeof origExternals[0] === "function" ? [] : origExternals),
         ];
 
-        config.module.rules.unshift({
-          test: antStyles,
-          use: "null-loader",
-        });
+        config.module.rules.unshift(
+          {
+            test: antStyles,
+            use: "null-loader",
+          },
+          {
+            test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+            use: [
+              {
+                loader: "babel-loader",
+              },
+              {
+                loader: "@svgr/webpack",
+                options: {
+                  babel: false,
+                  icon: true,
+                },
+              },
+            ],
+          }
+        );
       }
       return config;
     },

@@ -9,6 +9,7 @@
     "clean": "npx rimraf .next"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.6.2",
     "@zeit/next-less": "^1.0.1",
     "antd": "^4.12.3",
     "antd-img-crop": "^3.14.1",
