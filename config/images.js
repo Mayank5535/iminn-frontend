@@ -16,6 +16,7 @@ const Images = {
   football: "/assets/images/football.svg",
   google: "/assets/images/google.svg",
   facebook: "/assets/images/facebook.svg",
+  darkTheme: "/assets/images/darkTheme.svg",
 };
 
 export default Images;

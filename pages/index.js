@@ -1,13 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import {
-  Hero,
-  Features,
-  Work,
-  Banner,
-  Footer,
-  ThemeContext,
-} from "@components";
+import { Hero, Features, Work, Banner, Footer } from "@components";
 
 function LandingPage() {
   return (

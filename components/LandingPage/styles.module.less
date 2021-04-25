@@ -21,7 +21,17 @@
     width: auto;
   }
 }
+.themeBtn {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  height: 2rem;
+  width: 2rem;
+  z-index: 15;
+  cursor: pointer;
+}
 .heroContainer {
+  background-color: @theme;
   position: relative;
   padding-left: @left-space;
   min-height: 768px;
@@ -272,6 +282,7 @@
 
 //! FEATURES STYLES
 .commonContainer {
+  background-color: @theme;
   padding: 4rem @left-space;
   @media @md {
     padding: 1rem @left-space - 10rem;
@@ -406,6 +417,8 @@
 }
 .workBody {
   position: relative;
+  background-color: @theme;
+  margin-bottom: 2rem;
 }
 // .vectorsWrapper {
 //   position: relative;
@@ -462,7 +475,6 @@
     margin-top: 0rem;
     font-size: 16px;
     flex: 4;
-    color: @darkBlack;
   }
 }
 .leftText {
@@ -481,7 +493,6 @@
 //Banner Section
 .bannerContainer {
   width: 100%;
-  margin-top: 5rem;
   background-image: url("/assets/images/bannerImg.svg");
   background-repeat: no-repeat;
   background-size: cover;

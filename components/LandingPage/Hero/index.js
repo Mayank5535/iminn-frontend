@@ -3,6 +3,7 @@ import Images from "@config/images";
 import { Button, Row } from "antd";
 import { useRouter } from "next/router";
 import useMediaQuery from "utils/useMediaQuery";
+import { switchTheme } from "utils/commonFunctions";
 import "../styles.module.less";
 
 function Hero() {
@@ -11,6 +12,11 @@ function Hero() {
 
   return (
     <section className={isXs || isSm ? "wrapperCol" : "heroContainer"}>
+      <img
+        src={Images.darkTheme}
+        className="themeBtn"
+        onClick={() => switchTheme()}
+      />
       <div className="leftSection">
         <Row className="logoContainer">
           <img src={Images.brandLogo} alt="logo" className="logo" />
