@@ -100,14 +100,13 @@ function Signin() {
                   : "Accept terms and conditions"}
               </Checkbox>
             </Form.Item>
-            <Form.Item>
+            <Form.Item style={{ textAlign: "center" }}>
               <Button
                 loading={btnLoading}
                 type="primary"
                 size="large"
                 htmlType="submit"
                 shape="round"
-                block
               >
                 {formSwitch ? "LOGIN" : "SIGNUP"}
               </Button>
