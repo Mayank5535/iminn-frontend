@@ -133,7 +133,7 @@ function GetEarlyAccess() {
         <div className="rightDiv">
           <div className="logoContainer2">
             <img src={Images.brandLogo} alt="logo" className="logo" />
-            <span className="logoText fLogoText">IMINN</span>
+            <span className="logoText fLogoText2">IMINN</span>
           </div>
           <div>
             <Form

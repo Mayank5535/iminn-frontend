@@ -164,7 +164,7 @@ function Signin() {
           <div className="colFlex allCenter" style={{ flex: 6 }}>
             <div className="logoContainer2">
               <img src={Images.brandLogo} alt="logo" className="logo" />
-              <span className="logoText fLogoText">IMINN</span>
+              <span className="logoText fLogoText2">IMINN</span>
             </div>
             <div className="welcomeTextSmall">
               {formSwitch ? "Welcome back to IMINN!" : "Welcome to IMINN!"}
