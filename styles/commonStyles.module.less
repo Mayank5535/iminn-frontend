@@ -15,7 +15,7 @@ body {
   font-family: "Monteserrat", sans-serif !important;
 }
 .primaryColor {
-  color: @primary;
+  color: @primary !important;
 }
 .primaryBg {
   background-color: @primary;
@@ -102,6 +102,9 @@ body {
 }
 
 //OVERRIDEEN ANT STYLES
+.ant-input {
+  color: @darkBlack !important;
+}
 .ant-btn {
   box-shadow: 0px 10x 20px rgba(54, 53, 52, 0.219) !important;
   font-weight: 500 !important;
@@ -109,5 +112,6 @@ body {
 }
 
 .ant-divider-horizontal {
-  border-color: @textPrimary !important;
+  border-color: var(--themeText) !important;
+  color: var(--themeText) !important;
 }

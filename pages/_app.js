@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useStore } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { wrapper } from "../redux/store/configureStore";
 import "antd/dist/antd.less";
 import "../styles/commonStyles.module.less";
+import { initializeTheme } from "../utils/commonFunctions";
 
 const App = ({ Component, pageProps }) => {
   const store = useStore((state) => state);
+
+  useEffect(() => {
+    initializeTheme();
+  }, []);
+
   return (
     <PersistGate persistor={store.__persistor} loading={<div>...Loading</div>}>
       <Component {...pageProps} />

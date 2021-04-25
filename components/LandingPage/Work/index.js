@@ -3,10 +3,12 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import Images from "@config/images";
 import { Col, Row } from "antd";
 import useMediaQuery from "utils/useMediaQuery";
+import { useSelector } from "react-redux";
 
 function Banner() {
-  const { isXs, isSm } = useMediaQuery;
   const listRef = useRef();
+  const { theme } = useSelector((state) => state.theme);
+  const isDark = theme === "dark";
   const [minHeight, setMinHeight] = useState("100%");
 
   useLayoutEffect(() => {
@@ -29,7 +31,10 @@ function Banner() {
         <img src={Images.vectorPhone1} className="vectorsImg1" />
         <img src={Images.vectorPhone2} className="vectorsImg2" />
         <span className="backCircle" />
-        <Row className="workListContainer" ref={listRef}>
+        <Row
+          className={isDark ? "workListContainer-dark" : "workListContainer"}
+          ref={listRef}
+        >
           <Col xs={{ span: 24 }} lg={{ span: 6 }} className="left">
             <div className="cirlceNumber  primaryLightBg colFlex allCenter primaryColor bold">
               1

@@ -5,13 +5,23 @@ import { useRouter } from "next/router";
 import useMediaQuery from "utils/useMediaQuery";
 import { switchTheme } from "utils/commonFunctions";
 import "../styles.module.less";
+import { useSelector } from "react-redux";
 
 function Hero() {
   const router = useRouter();
   const { isXs, isSm } = useMediaQuery();
-
+  const { theme } = useSelector((state) => state.theme);
+  const isDark = theme === "dark";
   return (
-    <section className={isXs || isSm ? "wrapperCol" : "heroContainer"}>
+    <section
+      className={
+        isXs || isSm
+          ? isDark
+            ? "wrapperCol-dark"
+            : "wrapperCol"
+          : "heroContainer"
+      }
+    >
       <img
         src={Images.darkTheme}
         className="themeBtn"
