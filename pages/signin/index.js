@@ -1,8 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import useMediaQuery from "utils/useMediaQuery";
 import Images from "@config/images";
+import firebase from "firebase";
 import db from "@config/firebaseConfig";
 import { Button, Checkbox, Divider, Form, Input, notification } from "antd";
 import "./styles.module.less";
@@ -15,43 +16,74 @@ function Signin() {
   const [termscheck, setTermscheck] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
 
+  useEffect(() => {
+    form.resetFields();
+    setTermscheck(false);
+  }, [formSwitch]);
+
   const checkBoxValidation = (rule, value) => {
-    if (formSwitch) {
-      return true;
-    }
     return new Promise((resolve, reject) => {
-      if (termscheck) {
+      if (termscheck || formSwitch) {
         resolve(true);
       }
       reject("Please accept the terms and conditions");
     });
   };
 
-  const onFinish = async ({ email }) => {
-    if (btnLoading) return;
-    const data = {
-      email: email,
-    };
-    setBtnLoading(true);
-    try {
-      let result = await db.collection("users").add(data);
-      if (result.id) {
-        notification.success({
-          message: "Success",
-          description: "Your email is submitted successfully!",
-        });
-      }
-      setBtnLoading(false);
-      form.resetFields();
-      setTermscheck(false);
-    } catch (error) {
-      console.error("Error adding document: ", error);
-      notification.error({
-        message: "Oops!",
-        description: "something went wrong while submitting your email",
-      });
-      setBtnLoading(false);
+  const onFinish = (values) => {
+    console.log("Handling Login", values);
+
+    if (formSwitch) {
+      handleSignin(values);
+    } else {
+      handleSignup(values);
     }
+  };
+
+  const handleSignin = async ({ email, password }) => {
+    if (btnLoading) return;
+    setBtnLoading(true);
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        console.log("Logged In", userCredential);
+        // Signed in
+        var user = userCredential.user;
+        setBtnLoading(false);
+      })
+      .catch((error) => {
+        console.error("Signin Failed", error);
+        notification.error({
+          message: "Oops!",
+          description: error.message,
+        });
+        setBtnLoading(false);
+      });
+  };
+
+  const handleSignup = ({ email, password }) => {
+    console.log("EMAIl ==>", email);
+    console.log("PASS ==>", password);
+    if (btnLoading) return;
+    setBtnLoading(true);
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        console.log("userCredential", userCredential);
+        // Signed in
+        var user = userCredential.user;
+        setBtnLoading(false);
+      })
+      .catch((error) => {
+        console.error("Signup Failed", error);
+        notification.error({
+          message: "Oops!",
+          description: error.message,
+        });
+        setBtnLoading(false);
+      });
   };
 
   const renderMobileView = () => {
@@ -85,7 +117,7 @@ function Signin() {
               <Input size="large" placeholder="Enter your email" />
             </Form.Item>
             <Form.Item
-              name="passowrd"
+              name="password"
               rules={[{ required: true, message: "Password is required!" }]}
             >
               <Input.Password size="large" placeholder="Enter your password" />
@@ -194,7 +226,7 @@ function Signin() {
                   <Input size="large" placeholder="Enter your email" />
                 </Form.Item>
                 <Form.Item
-                  name="passowrd"
+                  name="password"
                   rules={[{ required: true, message: "Password is required!" }]}
                 >
                   <Input.Password

@@ -1,3 +1,4 @@
+import firebase from "firebase";
 import ThemeActions from "@redux/reducers/theme/actions";
 
 const darkColor = "#222222";
@@ -34,4 +35,28 @@ export const switchTheme = () => {
     root.style.setProperty("--theme", lightColor);
     root.style.setProperty("--themeText", darkColor);
   }
+};
+
+export const getAuthState = async () => {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      console.log("User just logged innn", user);
+      var uid = user.uid;
+      // ...
+    } else {
+      console.log("User just logged outttt", user);
+    }
+  });
+};
+
+export const signOut = async () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      return true;
+    })
+    .catch((error) => {
+      return error;
+    });
 };
