@@ -8,7 +8,7 @@ import { Button, Checkbox, Divider, Form, Input, notification } from "antd";
 import "./styles.module.less";
 
 function Signin() {
-  const { isXs, isMd } = useMediaQuery();
+  const { isXs, isMd, isSm } = useMediaQuery();
   const [form] = Form.useForm();
 
   const [formSwitch, setFormSwitch] = useState(true); // true for login Form, False for signup Form
@@ -163,7 +163,7 @@ function Signin() {
         <div className="rightDiv">
           <div className="colFlex allCenter" style={{ flex: 6 }}>
             <div className="logoContainer2">
-              <img src={Images.brandLogo} alt="logo" className="logo" />
+              <img src={Images.brandLogo} alt="logo" />
               <span className="logoText fLogoText2">IMINN</span>
             </div>
             <div className="welcomeTextSmall">
@@ -179,7 +179,10 @@ function Signin() {
                 form={form}
                 className="form"
                 onFinish={onFinish}
-                wrapperCol={{ span: isMd ? 16 : 10, offset: isMd ? 4 : 7 }}
+                wrapperCol={{
+                  span: isMd || isSm ? 16 : 10,
+                  offset: isMd || isSm ? 4 : 7,
+                }}
               >
                 <Form.Item
                   name="email"

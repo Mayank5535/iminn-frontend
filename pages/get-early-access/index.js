@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import useMediaQuery from "utils/useMediaQuery";
 import Images from "@config/images";
 import db from "@config/firebaseConfig";
@@ -9,9 +10,11 @@ import "./styles.module.less";
 function GetEarlyAccess() {
   const { isXs, isMd } = useMediaQuery();
   const [form] = Form.useForm();
+  const router = useRouter();
 
   const [termscheck, setTermscheck] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
 
   const checkBoxValidation = (rule, value) => {
     return new Promise((resolve, reject) => {
@@ -32,6 +35,26 @@ function GetEarlyAccess() {
   //     });
   // };
 
+  const renderEmailSentView = () => {
+    return (
+      <>
+        <img src={Images.emailSent} height="auto" width={150} />
+        <p className="emailSentTitle primaryColor">Email correctly sent</p>
+        <p className="emailSentText">
+          We will update you soon on the release of the app. See you soon.
+        </p>
+        <Button
+          type="primary"
+          size="large"
+          shape="round"
+          onClick={() => router.replace("/")}
+        >
+          COME BACK
+        </Button>
+      </>
+    );
+  };
+
   const onFinish = async ({ email }) => {
     if (btnLoading) return;
     const data = {
@@ -41,11 +64,11 @@ function GetEarlyAccess() {
     try {
       let result = await db.collection("users").add(data);
       if (result.id) {
-        console.log("successsssssss");
-        notification.success({
-          message: "Success",
-          description: "Your email is submitted successfully!",
-        });
+        setEmailSent(true);
+        // notification.success({
+        //   message: "Success",
+        //   description: "Your email is submitted successfully!",
+        // });
       }
       setBtnLoading(false);
       form.resetFields();
@@ -61,6 +84,17 @@ function GetEarlyAccess() {
   };
 
   const renderMobileView = () => {
+    if (emailSent) {
+      return (
+        <div className="emailSentContainer">
+          <div className="logoContainer2">
+            <img src={Images.brandLogo} alt="logo" />
+            <span className="logoText fLogoText2">IMINN</span>
+          </div>
+          {renderEmailSentView()}
+        </div>
+      );
+    }
     return (
       <div className="mobileContainer">
         <div className="roundcontainer">
@@ -132,55 +166,59 @@ function GetEarlyAccess() {
         </div>
         <div className="rightDiv">
           <div className="logoContainer2">
-            <img src={Images.brandLogo} alt="logo" className="logo" />
+            <img src={Images.brandLogo} alt="logo" />
             <span className="logoText fLogoText2">IMINN</span>
           </div>
-          <div>
-            <Form
-              form={form}
-              onFinish={onFinish}
-              wrapperCol={{ span: isMd ? 16 : 10, offset: isMd ? 4 : 7 }}
-            >
-              <Form.Item
-                name="email"
-                rules={[
-                  { required: true, message: "Email is required!" },
-                  { type: "email", message: "Please enter a valid email!" },
-                ]}
+          {emailSent ? (
+            renderEmailSentView()
+          ) : (
+            <div>
+              <Form
+                form={form}
+                onFinish={onFinish}
+                wrapperCol={{ span: isMd ? 16 : 10, offset: isMd ? 4 : 7 }}
               >
-                <Input placeholder="Email" size="large" />
-              </Form.Item>
-              <Form.Item
-                name="terms"
-                rules={[{ validator: checkBoxValidation }]}
-              >
-                <Checkbox
-                  onChange={(e) => setTermscheck(e.target.checked)}
-                  checked={termscheck}
+                <Form.Item
+                  name="email"
+                  rules={[
+                    { required: true, message: "Email is required!" },
+                    { type: "email", message: "Please enter a valid email!" },
+                  ]}
                 >
-                  Accept terms and conditions
-                </Checkbox>
-              </Form.Item>
-              <Form.Item>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Facilisi orci penatibus lorem dolor imperdiet. Viverra sem neque
-                enim vulputate sagittis, aliquam, eget. Volutpat lacinia morbi
-                urna varius dignissim consectetur nullam.
-              </Form.Item>
-              <Form.Item>
-                <Button
-                  loading={btnLoading}
-                  type="primary"
-                  size="large"
-                  htmlType="submit"
-                  shape="round"
-                  block
+                  <Input placeholder="Email" size="large" />
+                </Form.Item>
+                <Form.Item
+                  name="terms"
+                  rules={[{ validator: checkBoxValidation }]}
                 >
-                  SEND MAIL
-                </Button>
-              </Form.Item>
-            </Form>
-          </div>
+                  <Checkbox
+                    onChange={(e) => setTermscheck(e.target.checked)}
+                    checked={termscheck}
+                  >
+                    Accept terms and conditions
+                  </Checkbox>
+                </Form.Item>
+                <Form.Item>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Facilisi orci penatibus lorem dolor imperdiet. Viverra sem
+                  neque enim vulputate sagittis, aliquam, eget. Volutpat lacinia
+                  morbi urna varius dignissim consectetur nullam.
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    loading={btnLoading}
+                    type="primary"
+                    size="large"
+                    htmlType="submit"
+                    shape="round"
+                    block
+                  >
+                    SEND MAIL
+                  </Button>
+                </Form.Item>
+              </Form>
+            </div>
+          )}
         </div>
       </div>
     );

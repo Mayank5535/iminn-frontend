@@ -21,6 +21,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  @media @xxl {
+    padding: 0px 15rem 0px 5rem;
+  }
+  @media @xl {
+    padding: 0px 5rem 0px 3rem;
+  }
 }
 .rightDiv {
   width: 50%;
@@ -96,4 +102,24 @@
 .fLogoText2 {
   font-size: 2.4rem;
   margin-left: 1rem;
+}
+.emailSentTitle {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 3rem auto 1rem auto;
+}
+.emailSentText {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 3rem;
+  max-width: 80%;
+  text-align: center;
+}
+.emailSentContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: @theme;
 }

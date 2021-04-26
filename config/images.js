@@ -17,6 +17,7 @@ const Images = {
   google: "/assets/images/google.svg",
   facebook: "/assets/images/facebook.svg",
   darkTheme: "/assets/images/darkTheme.svg",
+  emailSent: "/assets/images/emailSent.svg",
 };
 
 export default Images;
