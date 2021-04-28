@@ -18,6 +18,7 @@ const fetchHelper = (
   headers = defaultHeader,
   formData = false
 ) => {
+  let head = {};
   if (formData) {
     head = { ...headers };
   }
@@ -27,7 +28,7 @@ const fetchHelper = (
 
   let options = {
     method,
-    headers: head,
+    headers: head || defaultHeader,
   };
   if (method === "POST" || method === "PUT") {
     options = { ...options, body: formData ? data : JSON.stringify(data) };
@@ -35,7 +36,7 @@ const fetchHelper = (
 
   // console.log("API Helper", );
 
-  return fetch(`${siteConfig.apiUrl}${url}`, options)
+  return fetch(`${url}`, options)
     .then((res) => {
       const newData = res.json().then((detail) => {
         if (detail && detail.message === "Unauthorised") {

@@ -18,6 +18,14 @@ const Images = {
   facebook: "/assets/images/facebook.svg",
   darkTheme: "/assets/images/darkTheme.svg",
   emailSent: "/assets/images/emailSent.svg",
+  roleDefender: "/assets/images/role-defender.svg",
+  roleKeeper: "/assets/images/role-keeper.svg",
+  roleStriker: "/assets/images/role-striker.svg",
+  roleMidFielder: "/assets/images/role-midfielder.svg",
+  roleDefenderActive: "/assets/images/role-defender-active.svg",
+  roleKeeperActive: "/assets/images/role-keeper-active.svg",
+  roleStrikerActive: "/assets/images/role-striker-active.svg",
+  roleMidFielderActive: "/assets/images/role-midfielder-active.svg",
 };
 
 export default Images;

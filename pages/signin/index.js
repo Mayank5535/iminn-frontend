@@ -1,14 +1,21 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import useMediaQuery from "utils/useMediaQuery";
 import Images from "@config/images";
 import firebase from "firebase";
 import db from "@config/firebaseConfig";
 import { Button, Checkbox, Divider, Form, Input, notification } from "antd";
 import "./styles.module.less";
+import { isEmpty } from "lodash";
+import { useDispatch } from "react-redux";
+import AuthActions from "@redux/reducers/auth/actions";
+const { setUserData } = AuthActions;
 
 function Signin() {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const { isXs, isMd, isSm } = useMediaQuery();
   const [form] = Form.useForm();
 
@@ -20,7 +27,6 @@ function Signin() {
     form.resetFields();
     setTermscheck(false);
   }, [formSwitch]);
-
   const checkBoxValidation = (rule, value) => {
     return new Promise((resolve, reject) => {
       if (termscheck || formSwitch) {
@@ -31,8 +37,6 @@ function Signin() {
   };
 
   const onFinish = (values) => {
-    console.log("Handling Login", values);
-
     if (formSwitch) {
       handleSignin(values);
     } else {
@@ -47,9 +51,14 @@ function Signin() {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        console.log("Logged In", userCredential);
+        // console.log("Logged In", userCredential);
+        if (isEmpty(userCredential.user.displayName)) {
+          dispatch(setUserData(userCredential, {}));
+          router.push("/create-profile");
+        } else {
+          router.push("/home");
+        }
         // Signed in
-        var user = userCredential.user;
         setBtnLoading(false);
       })
       .catch((error) => {
@@ -63,8 +72,6 @@ function Signin() {
   };
 
   const handleSignup = ({ email, password }) => {
-    console.log("EMAIl ==>", email);
-    console.log("PASS ==>", password);
     if (btnLoading) return;
     setBtnLoading(true);
     firebase
@@ -72,9 +79,8 @@ function Signin() {
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         console.log("userCredential", userCredential);
-        // Signed in
-        var user = userCredential.user;
-        setBtnLoading(false);
+        createNewUser(userCredential);
+        handleSignin({ email, password }); //Directly Login After creating an account
       })
       .catch((error) => {
         console.error("Signup Failed", error);
@@ -84,6 +90,14 @@ function Signin() {
         });
         setBtnLoading(false);
       });
+  };
+
+  const createNewUser = async (uData) => {
+    const data = {
+      userId: uData.user.uid,
+      email: uData.user.email,
+    };
+    db.collection("users").doc(data.userId).set(data);
   };
 
   const renderMobileView = () => {
