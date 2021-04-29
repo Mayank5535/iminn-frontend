@@ -1,5 +1,6 @@
 import React from "react";
 import Document, { Head, Main, NextScript, Html } from "next/document";
+import Images from "@config/images";
 export default class MyDocument extends Document {
   render() {
     return (
@@ -25,6 +26,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             crossOrigin="true"
           />
+          <link rel="icon" type="image/png" href={Images.brandLogo} />
         </Head>
         <body>
           <Main />
