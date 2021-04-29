@@ -78,7 +78,6 @@ function Signin() {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        console.log("userCredential", userCredential);
         createNewUser(userCredential);
         handleSignin({ email, password }); //Directly Login After creating an account
       })

@@ -32,7 +32,7 @@ export const initializeTheme = () => {
     typeof window !== "undefined" ? window.__NEXT_REDUX_WRAPPER_STORE__ : false;
   const activeTheme = store?.getState().theme.theme;
   let root = document.documentElement;
-  console.log("initializing theme", activeTheme);
+  // console.log("initializing theme", activeTheme);
   if (activeTheme === "light") {
     store.dispatch(ThemeActions.setTheme("light"));
     root.style.setProperty("--theme", lightColor);

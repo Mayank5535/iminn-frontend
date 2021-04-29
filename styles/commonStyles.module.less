@@ -107,13 +107,20 @@ body {
 .ant-input {
   color: @darkBlack !important;
 }
-.ant-btn {
+.ant-btn-primary-lg {
   box-shadow: 0px 10x 20px rgba(54, 53, 52, 0.219) !important;
   font-weight: 500 !important;
   padding: 6.4px 35px !important;
   color: @textPrimary;
 }
-
+.ant-modal-footer {
+  & .ant-btn {
+    color: @textPrimary;
+    &-primary {
+      color: var(--themeText);
+    }
+  }
+}
 .ant-divider-horizontal {
   border-color: var(--themeText) !important;
   color: var(--themeText) !important;
