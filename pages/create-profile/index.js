@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Head from "next/head";
 import firebase from "firebase";
 import useMediaQuery from "utils/useMediaQuery";
@@ -40,7 +40,7 @@ function CreateProfile() {
   const { isXs, isMd, isSm } = useMediaQuery();
   const [form] = Form.useForm();
   const router = useRouter();
-  const [profileForm, setProfileForm] = useState(false); //render condtion
+  const [profileForm, setProfileForm] = useState(true); //render condtion
   const [profilePic, setProfilePic] = useState(""); // to be uploaded
   const [picBase64, setPicBase64] = useState(""); // to display preview
   const [selectedRole, setSelectedRole] = useState({}); // to display preview
@@ -59,7 +59,7 @@ function CreateProfile() {
     }
   };
 
-  const submitForm = async () => {
+  const submitForm = async (isMobile = false) => {
     const user = firebase.auth().currentUser;
     setBtnLoading(true);
     const userObject = {
@@ -68,6 +68,10 @@ function CreateProfile() {
       dob: form.getFieldValue("dob").format(dateFormat),
       role: selectedRole.name,
     };
+
+    if (isMobile) {
+      userObject.role = roles[activeRolePage].name;
+    }
 
     try {
       const res = await uploadPhoto(profilePic, user.uid);
@@ -259,10 +263,7 @@ function CreateProfile() {
               size="large"
               shape="round"
               loading={btnLoading}
-              onClick={() => {
-                setSelectedRole(roles[activeRolePage]);
-                handleContinue();
-              }}
+              onClick={() => submitForm(true)}
             >
               SELECT
             </Button>
