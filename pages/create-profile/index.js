@@ -1,7 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import firebase from "firebase";
+import { useDispatch } from "react-redux";
 import useMediaQuery from "utils/useMediaQuery";
 import Images from "@config/images";
 import {
@@ -29,25 +30,36 @@ import {
   validateImage,
 } from "utils/commonFunctions";
 import { roles } from "@config/staticData";
-import { isEmpty } from "lodash";
+import { isEmpty, set } from "lodash";
 import db from "@config/firebaseConfig";
 import BackIcon from "@components/UI/BackIcon";
+import AuthActions from "@redux/reducers/auth/actions";
 import "./styles.module.less";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { PageLoading } from "@components";
 
+const { setUserData } = AuthActions;
 const dateFormat = "DD/MM/YYYY";
 
 function CreateProfile() {
+  const dispatch = useDispatch();
   const { isXs, isMd, isSm } = useMediaQuery();
   const [form] = Form.useForm();
   const router = useRouter();
+  const [pageLoader, setPageLoader] = useState(true);
   const [profileForm, setProfileForm] = useState(true); //render condtion
   const [profilePic, setProfilePic] = useState(""); // to be uploaded
   const [picBase64, setPicBase64] = useState(""); // to display preview
   const [selectedRole, setSelectedRole] = useState({}); // to display preview
   const [btnLoading, setBtnLoading] = useState(false); //Btn
+  const [user, loading, error] = useAuthState(firebase.auth());
 
   //For Mobile View selected Role
   const [activeRolePage, setActiveRolePage] = useState(0);
+
+  useEffect(() => {
+    user?.displayName !== "" ? router.push("/") : setPageLoader(false);
+  }, [user]);
 
   const handleProfileImage = async (info) => {
     const imageVal = validateImage(info);
@@ -60,7 +72,7 @@ function CreateProfile() {
   };
 
   const submitForm = async (isMobile = false) => {
-    const user = firebase.auth().currentUser;
+    // const user = firebase.auth().currentUser;
     setBtnLoading(true);
     const userObject = {
       firstName: form.getFieldValue("firstName"),
@@ -98,7 +110,10 @@ function CreateProfile() {
     db.collection("users")
       .doc(user.uid)
       .update(userObject)
-      .then(() => router.replace("/home"))
+      .then(() => {
+        dispatch(setUserData(user, userObject));
+        router.replace("/");
+      })
       .catch((e) => {
         message.error(e.message);
         console.error(e);
@@ -448,6 +463,12 @@ function CreateProfile() {
       return renderRoleMobile();
     }
   };
+
+  if (pageLoader) return <PageLoading />;
+
+  if (error) {
+    router.replace("/");
+  }
 
   return (
     <>

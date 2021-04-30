@@ -6,4 +6,19 @@ import Work from "@components/LandingPage/Work";
 import Banner from "@components/LandingPage/Banner";
 import Footer from "@components/LandingPage/Footer";
 
-export { Hero, Features, Work, Banner, Footer };
+import Dashboard from "@components/Dashboard";
+
+//UI Components
+import PageLoading from "@components/UI/PageLoading";
+import BackIcon from "@components/UI/BackIcon";
+
+export {
+  Hero,
+  Features,
+  Work,
+  Banner,
+  Footer,
+  Dashboard,
+  PageLoading,
+  BackIcon,
+};

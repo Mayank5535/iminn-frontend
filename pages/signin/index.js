@@ -1,32 +1,50 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import useMediaQuery from "utils/useMediaQuery";
 import Images from "@config/images";
 import firebase from "firebase";
 import db from "@config/firebaseConfig";
-import { Button, Checkbox, Divider, Form, Input, notification } from "antd";
-import "./styles.module.less";
+import {
+  Button,
+  Checkbox,
+  Divider,
+  Form,
+  Input,
+  message,
+  notification,
+} from "antd";
 import { isEmpty } from "lodash";
-import { useDispatch } from "react-redux";
-import AuthActions from "@redux/reducers/auth/actions";
-const { setUserData } = AuthActions;
+import { getUpdatedUser } from "utils/commonFunctions";
+import { useSelector } from "react-redux";
+import { PageLoading } from "@components";
+import "./styles.module.less";
 
 function Signin() {
+  const { token } = useSelector((state) => state.auth);
   const router = useRouter();
-  const dispatch = useDispatch();
   const { isXs, isMd, isSm } = useMediaQuery();
   const [form] = Form.useForm();
+  const [pageLoader, setPageLoader] = useState(true);
 
   const [formSwitch, setFormSwitch] = useState(true); // true for login Form, False for signup Form
   const [termscheck, setTermscheck] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
 
+  useLayoutEffect(() => {
+    if (!isEmpty(token)) {
+      router.replace("/");
+    } else {
+      setPageLoader(false);
+    }
+  }, []);
+
   useEffect(() => {
     form.resetFields();
     setTermscheck(false);
   }, [formSwitch]);
+
   const checkBoxValidation = (rule, value) => {
     return new Promise((resolve, reject) => {
       if (termscheck || formSwitch) {
@@ -51,15 +69,20 @@ function Signin() {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        // console.log("Logged In", userCredential);
         if (isEmpty(userCredential.user.displayName)) {
-          dispatch(setUserData(userCredential, {}));
-          router.push("/create-profile");
+          router.replace("/create-profile");
+          setBtnLoading(false);
         } else {
-          router.push("/home");
+          getUpdatedUser(userCredential.user, (res) => {
+            if (res) {
+              setBtnLoading(false);
+              router.replace("/");
+            } else {
+              setBtnLoading(false);
+              message.error("Oops! Something went wrong.");
+            }
+          });
         }
-        // Signed in
-        setBtnLoading(false);
       })
       .catch((error) => {
         console.error("Signin Failed", error);
@@ -313,6 +336,8 @@ function Signin() {
       </div>
     );
   };
+
+  if (pageLoader) return <PageLoading />;
 
   return (
     <>

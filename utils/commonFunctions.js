@@ -1,7 +1,9 @@
 import firebase from "firebase";
+import db from "@config/firebaseConfig";
 import ThemeActions from "@redux/reducers/theme/actions";
-import { message } from "antd";
+import AuthActions from "@redux/reducers/auth/actions";
 import _ from "lodash-es";
+import { message } from "antd";
 import fetchHelper from "./apiHelper";
 import siteConfig from "@config/siteConfig";
 
@@ -61,14 +63,38 @@ export const switchTheme = () => {
 };
 
 export const getAuthState = async () => {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      return user.uid;
-      // ...
-    } else {
-      console.log("User just logged outttt", user);
-    }
+  return new Promise(async (resolve, reject) => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        resolve(user);
+      } else {
+        reject(false);
+      }
+    });
   });
+};
+
+export const getUpdatedUser = async (fauth, callback = () => {}) => {
+  let store =
+    typeof window !== "undefined" ? window.__NEXT_REDUX_WRAPPER_STORE__ : false;
+
+  await db
+    .collection("users")
+    .doc(fauth.uid)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        store.dispatch(AuthActions.setUserData(fauth, doc.data()));
+        callback(true);
+      } else {
+        store.dispatch(AuthActions.setUserData({}, {}));
+        callback(true);
+      }
+    })
+    .catch((error) => {
+      console.log("Error getting user Doc:", error);
+      callback(false);
+    });
 };
 
 export const signOut = async () => {
@@ -76,6 +102,11 @@ export const signOut = async () => {
     .auth()
     .signOut()
     .then(() => {
+      let store =
+        typeof window !== "undefined"
+          ? window.__NEXT_REDUX_WRAPPER_STORE__
+          : false;
+      store.dispatch(AuthActions.setUserData({}, {}));
       return true;
     })
     .catch((error) => {

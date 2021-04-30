@@ -5,9 +5,10 @@ import useMediaQuery from "utils/useMediaQuery";
 import Images from "@config/images";
 import db from "@config/firebaseConfig";
 import { Button, Checkbox, Form, Input, notification } from "antd";
-import "../styles/dashboard.module.less";
+import "./styles.module.less";
+import { signOut } from "utils/commonFunctions";
 
-function Home() {
+function Dashboard() {
   return (
     <>
       <Head>
@@ -19,9 +20,10 @@ function Home() {
       </Head>
       <div>
         <h1>Welcome to Iminn</h1>
+        <a onClick={() => signOut()}>Sign out</a>
       </div>
     </>
   );
 }
 
-export default Home;
+export default Dashboard;
