@@ -454,29 +454,29 @@ const AwardIcon = (props) => <Icon component={AwardIconSvg} {...props} />;
 
 const PlusIconSvg = () => (
   <svg
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
+    width="14"
+    height="14"
+    viewBox="0 0 14 14"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <line
-      x1="1"
-      y1="8"
-      x2="15"
-      y2="8"
+      x1="2"
+      y1="6"
+      x2="10"
+      y2="6"
       stroke="#2EBAAB"
-      strokeWidth="2"
+      strokeWidth="1.6"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <line
-      x1="8"
-      y1="15"
-      x2="8"
-      y2="1"
+      x1="6"
+      y1="10"
+      x2="6"
+      y2="2"
       stroke="#2EBAAB"
-      strokeWidth="2"
+      strokeWidth="1.6"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
