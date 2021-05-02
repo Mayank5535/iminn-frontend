@@ -118,7 +118,7 @@ function Games(props) {
           </Text>
         </Col>
         <Col>
-          <Text h4 className="robotoFamily" weight="500">
+          <Text h4 primary className="robotoFamily" weight="500">
             See all
           </Text>
         </Col>
