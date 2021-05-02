@@ -9,13 +9,15 @@ import { LogoutIcon } from "@components/UI/Icons";
 import { signOut } from "utils/commonFunctions";
 import "./styles.module.less";
 
+const activeKey = 1;
+
 const renderMenuItems = () => {
   return navMenus.map((m) => {
     return (
       <Row
         key={m.id}
         align="middle"
-        className={`menuItem ${false && "menuItem-active"}`}
+        className={`menuItem ${m.id == activeKey && "menuItem-active"}`}
       >
         <Col>
           <div className="menuIconWrapper">{m.icon}</div>
