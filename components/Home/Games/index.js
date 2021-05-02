@@ -75,7 +75,10 @@ const renderGamesCard = () => {
                   size={35}
                   src={`https://picsum.photos/seed/picsum/200/300`}
                   icon={<UserOutlined />}
-                  style={{ cursor: "pointer" }}
+                  style={{
+                    cursor: "pointer",
+                    border: "2px solid white",
+                  }}
                 />
                 {[1, 2, 3, 4].map((n) => {
                   return (
@@ -84,7 +87,11 @@ const renderGamesCard = () => {
                       size={35}
                       src="https://picsum.photos/400"
                       icon={<UserOutlined />}
-                      style={{ cursor: "pointer", marginLeft: -10 }}
+                      style={{
+                        cursor: "pointer",
+                        marginLeft: -10,
+                        border: "2px solid white",
+                      }}
                     />
                   );
                 })}
