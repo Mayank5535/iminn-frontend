@@ -1,25 +1,69 @@
 import React from "react";
-import { Avatar, Col, Row } from "antd";
+import { Avatar, Col, Popover, Row } from "antd";
 import Images from "@config/images";
 import Text from "@components/UI/Text";
-import Card from "@components/UI/Card";
-import { HeartOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { HeartOutlined, UserOutlined } from "@ant-design/icons";
 import {
+  AwardIcon,
   BellIcon,
   DropArrow,
-  HeartIcon,
   InboxIcon,
-  KickBallIcon,
-  LogoutIcon,
+  PlusIcon,
+  RankIcon,
 } from "@components/UI/Icons";
-import { signOut } from "utils/commonFunctions";
 import Searchbar from "@components/UI/Searchbar";
-import "./styles.module.less";
 import { useSelector } from "react-redux";
+import { useState } from "react";
+import "./styles.module.less";
 
 function Header(props) {
   const { userData } = useSelector((state) => state.auth);
-  console.log("===> ~ Header ~ userData", userData);
+
+  const [profileMenuVisible, setProfileMenuVisible] = useState(false);
+
+  const DropDownContent = () => {
+    const menuData = [
+      {
+        id: 1,
+        name: "Legend",
+        icon: <AwardIcon />,
+      },
+      {
+        id: 2,
+        name: "928",
+        icon: <RankIcon />,
+      },
+      {
+        id: 3,
+        name: "Edit Profile",
+        icon: <PlusIcon />,
+      },
+    ];
+
+    return (
+      <div>
+        {menuData.map((m) => {
+          return (
+            <Row
+              justify="space-between"
+              align="middle"
+              key={m.id}
+              className="profileMenuItem"
+            >
+              <Col>
+                <div className="mr-2">{m.icon}</div>
+              </Col>
+              <Col>
+                <Text semiBold primary>
+                  {m.name}
+                </Text>
+              </Col>
+            </Row>
+          );
+        })}
+      </div>
+    );
+  };
 
   return (
     <Row justify="space-between" align="middle">
@@ -38,14 +82,27 @@ function Header(props) {
             <BellIcon className="headerMenu" />
           </Col>
           <Col>
-            <Row className="headerMenuProfile">
-              <Avatar
-                size={60}
-                icon={<UserOutlined />}
-                src={userData.profileImage.secure_url}
-              />
-              <DropArrow className="headerMenuProfileDropIcon" />
-            </Row>
+            <Popover
+              content={DropDownContent}
+              overlayClassName="profilePover"
+              trigger="hover"
+              placement="bottomRight"
+              visible={profileMenuVisible}
+              onVisibleChange={(visible) => setProfileMenuVisible(visible)}
+            >
+              <Row
+                className={`headerMenuProfile ${
+                  profileMenuVisible && "headerMenuProfile-active"
+                }`}
+              >
+                <Avatar
+                  size={60}
+                  icon={<UserOutlined />}
+                  src={userData.profileImage.secure_url}
+                />
+                <DropArrow className="headerMenuProfileDropIcon" />
+              </Row>
+            </Popover>
           </Col>
         </Row>
       </Col>

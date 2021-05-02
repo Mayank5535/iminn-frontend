@@ -31,3 +31,32 @@
     color: @primary;
   }
 }
+.profileMenuItem {
+  background-color: #00af9c1a;
+  padding: 10px 20px;
+  color: @primary;
+  cursor: pointer;
+  & svg {
+    height: 1.8rem;
+    width: 1.8rem;
+  }
+  &:hover {
+    background-color: @primaryLight;
+    color: @white;
+  }
+}
+.profilePover {
+  :global {
+    .ant-popover-content {
+      border-radius: 10px !important;
+      overflow: hidden;
+    }
+    .ant-popover-arrow {
+      display: none;
+    }
+    .ant-popover-inner-content {
+      padding: 0px;
+      border-radius: 15px !important;
+    }
+  }
+}
