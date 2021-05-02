@@ -14,6 +14,7 @@ const options = [
 const StyledAc = styled(AutoComplete)`
   .ant-input-affix-wrapper > input.ant-input {
     background-color: transparent !important;
+    color: ${theme[getActiveTheme()].text} !important;
   }
   .ant-input-affix-wrapper-lg {
     border: 0px;

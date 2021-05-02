@@ -60,14 +60,14 @@ const changeActiveTheme = (type) => {
 export const getActiveTheme = () => {
   let store =
     typeof window !== "undefined" ? window.__NEXT_REDUX_WRAPPER_STORE__ : false;
-  const activeTheme = store?.getState().theme.theme;
+  const activeTheme = (store && store?.getState().theme.theme) || "light";
   return activeTheme;
 };
 
 export const initializeTheme = () => {
   let store =
     typeof window !== "undefined" ? window.__NEXT_REDUX_WRAPPER_STORE__ : false;
-  const activeTheme = store?.getState().theme.theme;
+  const activeTheme = (store && store?.getState().theme.theme) || "light";
   changeActiveTheme(activeTheme);
 };
 
