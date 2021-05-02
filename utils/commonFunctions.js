@@ -7,8 +7,25 @@ import { message } from "antd";
 import fetchHelper from "./apiHelper";
 import siteConfig from "@config/siteConfig";
 
-const darkColor = "#222222";
-const lightColor = "#FEFEFE";
+export const theme = {
+  colors: {
+    primary: "#2ebaab",
+    shadow: "#04af86",
+    cardTrans: "#2ebaab1a",
+  },
+  light: {
+    main: "#fefefe", //For backgorund
+    text: "#222222", //For text
+    secondaryText: "#b8b9bb", // secondaryText
+    cardOpaque: "#FFF",
+  },
+  dark: {
+    main: "#222222", //For backgorund
+    text: "#FFF", //For text
+    secondaryText: "#3E4041", // secondaryText
+    cardOpaque: "#293130",
+  },
+};
 
 export const getBase64 = (img, callback) => {
   const reader = new FileReader();
@@ -29,36 +46,39 @@ export const validateImage = (file) => {
   return isJpg && isLt2M;
 };
 
+const changeActiveTheme = (type) => {
+  let store =
+    typeof window !== "undefined" ? window.__NEXT_REDUX_WRAPPER_STORE__ : false;
+  let root = document.documentElement;
+
+  store.dispatch(ThemeActions.setTheme(type));
+  root.style.setProperty("--theme", theme[type].main);
+  root.style.setProperty("--themeTextSecondary", theme[type].secondaryText);
+  root.style.setProperty("--themeText", theme[type].text);
+};
+
+export const getActiveTheme = () => {
+  let store =
+    typeof window !== "undefined" ? window.__NEXT_REDUX_WRAPPER_STORE__ : false;
+  const activeTheme = store?.getState().theme.theme;
+  return activeTheme;
+};
+
 export const initializeTheme = () => {
   let store =
     typeof window !== "undefined" ? window.__NEXT_REDUX_WRAPPER_STORE__ : false;
   const activeTheme = store?.getState().theme.theme;
-  let root = document.documentElement;
-  // console.log("initializing theme", activeTheme);
-  if (activeTheme === "light") {
-    store.dispatch(ThemeActions.setTheme("light"));
-    root.style.setProperty("--theme", lightColor);
-    root.style.setProperty("--themeText", darkColor);
-  } else {
-    store.dispatch(ThemeActions.setTheme("dark"));
-    root.style.setProperty("--theme", darkColor);
-    root.style.setProperty("--themeText", lightColor);
-  }
+  changeActiveTheme(activeTheme);
 };
 
 export const switchTheme = () => {
   let store =
     typeof window !== "undefined" ? window.__NEXT_REDUX_WRAPPER_STORE__ : false;
   const activeTheme = store?.getState().theme.theme;
-  let root = document.documentElement;
   if (activeTheme === "light") {
-    store.dispatch(ThemeActions.setTheme("dark"));
-    root.style.setProperty("--theme", darkColor);
-    root.style.setProperty("--themeText", lightColor);
+    changeActiveTheme("dark");
   } else {
-    store.dispatch(ThemeActions.setTheme("light"));
-    root.style.setProperty("--theme", lightColor);
-    root.style.setProperty("--themeText", darkColor);
+    changeActiveTheme("light");
   }
 };
 

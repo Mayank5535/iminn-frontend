@@ -1,0 +1,33 @@
+.headerMenu {
+  padding: 1rem;
+  color: @text-color-secondary;
+  cursor: pointer;
+  & svg {
+    height: 28px;
+    width: 28px;
+  }
+  &:hover,
+  &-active {
+    color: @primary;
+  }
+}
+.headerMenuProfile {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1.3rem;
+  color: @text-color-secondary;
+  cursor: pointer;
+  .headerMenuProfileDropIcon {
+    padding: 1rem 0px 1rem 1rem;
+    color: inherit;
+  }
+  & .ant-avatar {
+    border: 1.5px solid @primary;
+  }
+  &:hover,
+  &-active {
+    color: @primary;
+  }
+}

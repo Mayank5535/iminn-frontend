@@ -32,7 +32,7 @@ import {
 import { roles } from "@config/staticData";
 import { isEmpty, set } from "lodash";
 import db from "@config/firebaseConfig";
-import BackIcon from "@components/UI/BackIcon";
+import { BackIcon } from "@components/UI/Icons";
 import AuthActions from "@redux/reducers/auth/actions";
 import "./styles.module.less";
 import { useAuthState } from "react-firebase-hooks/auth";

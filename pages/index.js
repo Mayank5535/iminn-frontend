@@ -8,8 +8,8 @@ import {
   Work,
   Banner,
   Footer,
-  Dashboard,
   PageLoading,
+  Home,
 } from "@components";
 import { useSelector } from "react-redux";
 import { isEmpty } from "lodash";
@@ -27,20 +27,8 @@ function LandingPage() {
 
   if (isEmpty(token) && loading) return <PageLoading />;
 
-  if (!isEmpty(token)) {
-    return (
-      <>
-        <Head>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-          />
-          <title>Iminn - Home</title>
-        </Head>
-        <Dashboard />
-      </>
-    );
-  }
+  //! Not Logged In -> Show Redirect to Dashboard
+  if (!isEmpty(token)) return <Home />;
 
   //! Not Logged In -> Show Landign Page
   return (

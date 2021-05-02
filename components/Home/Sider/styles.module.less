@@ -1,0 +1,52 @@
+.siderContainer {
+  padding-right: 2rem;
+  height: 100%;
+}
+.logoText2 {
+  font-size: 2.4rem !important;
+  margin-left: 1rem;
+  @media @md {
+    font-size: 1.3rem !important;
+    margin-left: 0.5rem;
+  }
+}
+.plusButtonWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 48px !important;
+  width: 55px !important;
+  .plusButton {
+    font-size: 1.5rem;
+    margin: 1rem;
+    color: white;
+  }
+}
+.menuIconWrapper {
+  margin-right: 1rem;
+}
+.menuItem {
+  margin: 25px 15px;
+  cursor: pointer;
+  & .path {
+    fill: var(--themeText);
+  }
+  &-active,
+  &:hover {
+    & span {
+      color: @primary;
+    }
+    & .path {
+      fill: @primary;
+    }
+  }
+}
+.logoutSection {
+  height: 100%;
+  display: flex;
+}
+.lastMenuSection {
+  display: flex;
+  align-items: flex-end;
+}
