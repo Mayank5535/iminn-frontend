@@ -1,12 +1,13 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { Col, Row } from "antd";
-import Images from "@config/images";
 import Text from "@components/UI/Text";
 import Card from "@components/UI/Card";
 import { PlusOutlined } from "@ant-design/icons";
 import { navMenus } from "@config/staticData";
 import { LogoutIcon } from "@components/UI/Icons";
 import { signOut } from "utils/commonFunctions";
+import { HeaderLogo } from "@components";
 import "./styles.module.less";
 
 const activeKey = 1;
@@ -30,18 +31,12 @@ const renderMenuItems = () => {
   });
 };
 
-function Sider(props) {
+const renderCommonSider = () => {
   return (
-    <Row className="siderContainer">
+    <>
       <Col span={24}>
         <Row>
-          <div className="brandLogoContainer rowFlex allCenter">
-            <img src={Images.brandLogo} />
-            <Text className="logoText logoText2">IMINN</Text>
-          </div>
-        </Row>
-        <Row>
-          <Card trans padding="25px" className="rowFlex alignCenter mt-2 mb-2">
+          <Card trans padding="25px" className="rowFlex alignCenter mb-2">
             <Text bold primary className="robotoFamily">
               Add New Player
             </Text>
@@ -65,7 +60,20 @@ function Sider(props) {
           </Col>
         </Row>
       </Col>
-    </Row>
+    </>
+  );
+};
+
+function Sider({ children }) {
+  return (
+    <div className={!children ? "siderContainer pr-2" : "siderContainer"}>
+      <Row>
+        <Col span={24}>
+          <HeaderLogo /> {/* STATIC FOR ALL */}
+        </Col>
+        {children ? children : renderCommonSider()}
+      </Row>
+    </div>
   );
 }
 

@@ -14,7 +14,7 @@ const options = [
 const StyledAc = styled(AutoComplete)`
   .ant-input-affix-wrapper > input.ant-input {
     background-color: transparent !important;
-    color: ${theme[getActiveTheme()].text + " !important"};
+    color: ${(props) => theme[props.activeTheme].text + " !important"};
   }
   .ant-input-affix-wrapper-lg {
     border: 0px;
@@ -35,8 +35,14 @@ const StyledAc = styled(AutoComplete)`
 `;
 
 function Searchbar(props) {
+  const activeTheme = getActiveTheme();
   return (
-    <StyledAc dropdownMatchSelectWidth={252} style={{ width: 450 }} {...props}>
+    <StyledAc
+      activeTheme={activeTheme}
+      dropdownMatchSelectWidth={252}
+      style={{ width: 450 }}
+      {...props}
+    >
       <Input
         size="large"
         prefix={<SearchOutlined />}
