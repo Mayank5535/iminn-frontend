@@ -95,7 +95,9 @@ function Home() {
         <title>Iminn - Get early access</title>
       </Head>
       <Row className="layoutContainer">
-        <MenuCtx.Provider value={{ active: activeMenu }}>
+        <MenuCtx.Provider
+          value={{ active: activeMenu, setActiveMenu: setActiveMenu }}
+        >
           {renderContent()}
         </MenuCtx.Provider>
       </Row>

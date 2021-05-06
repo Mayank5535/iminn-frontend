@@ -9,10 +9,12 @@ const Text = styled.span`
     (props.h3 && "24px") ||
     (props.h4 && "20px") ||
     (props.h4 && "18px") ||
+    (props.footnote && "13px") ||
     "16px"};
   color: ${(props) =>
     (props.primary && theme.colors.primary) ||
     (props.secondary && theme[getActiveTheme()].secondaryText) ||
+    (props.white && theme.colors.white) ||
     theme[getActiveTheme()].text};
   font-weight: ${(props) =>
     (props.bold && "bold") ||

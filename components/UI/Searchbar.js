@@ -5,12 +5,6 @@ import styled from "styled-components";
 import { getActiveTheme, theme } from "utils/commonFunctions";
 const { Option } = AutoComplete;
 
-const options = [
-  { label: "one", value: 1 },
-  { label: "two", value: 2 },
-  { label: "three", value: 3 },
-];
-
 const StyledAc = styled(AutoComplete)`
   .ant-input-affix-wrapper > input.ant-input {
     background-color: transparent !important;
