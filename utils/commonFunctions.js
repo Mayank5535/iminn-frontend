@@ -12,6 +12,8 @@ export const theme = {
     primary: "#2ebaab",
     shadow: "#04af86",
     cardTrans: "#2ebaab1a",
+    white: "#fff",
+    black: "#222222",
   },
   light: {
     main: "#fefefe", //For backgorund

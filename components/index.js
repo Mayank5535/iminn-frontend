@@ -13,9 +13,13 @@ import Sider from "@components/Home/Sider";
 import Header from "@components/Home/Header";
 import Action from "@components/Home/Action";
 import Games from "@components/Home/Games";
+import CoverImg from "@components/Home/CoverImg";
 
 //UI Components
 import PageLoading from "@components/UI/PageLoading";
+import HeaderLogo from "@components/UI/HeaderLogo";
+
+const MenuCtx = React.createContext();
 
 export {
   Hero,
@@ -29,4 +33,7 @@ export {
   Header,
   Action,
   Games,
+  CoverImg,
+  HeaderLogo,
+  MenuCtx,
 };

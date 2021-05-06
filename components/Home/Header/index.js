@@ -66,47 +66,49 @@ function Header(props) {
   };
 
   return (
-    <Row justify="space-between" align="middle">
-      <Col>
-        <Searchbar />
-      </Col>
-      <Col>
-        <Row align="middle">
-          <Col>
-            <HeartOutlined className="headerMenu" />
-          </Col>
-          <Col>
-            <InboxIcon className="headerMenu" />
-          </Col>
-          <Col>
-            <BellIcon className="headerMenu" />
-          </Col>
-          <Col>
-            <Popover
-              content={DropDownContent}
-              overlayClassName="profilePover"
-              trigger="hover"
-              placement="bottomRight"
-              visible={profileMenuVisible}
-              onVisibleChange={(visible) => setProfileMenuVisible(visible)}
-            >
-              <Row
-                className={`headerMenuProfile ${
-                  profileMenuVisible && "headerMenuProfile-active"
-                }`}
+    <div className="mb-2">
+      <Row justify="space-between" align="middle">
+        <Col>
+          <Searchbar />
+        </Col>
+        <Col>
+          <Row align="middle">
+            <Col>
+              <HeartOutlined className="headerMenu" />
+            </Col>
+            <Col>
+              <InboxIcon className="headerMenu" />
+            </Col>
+            <Col>
+              <BellIcon className="headerMenu" />
+            </Col>
+            <Col>
+              <Popover
+                content={DropDownContent}
+                overlayClassName="profilePover"
+                trigger="hover"
+                placement="bottomRight"
+                visible={profileMenuVisible}
+                onVisibleChange={(visible) => setProfileMenuVisible(visible)}
               >
-                <Avatar
-                  size={60}
-                  icon={<UserOutlined />}
-                  src={userData.profileImage.secure_url}
-                />
-                <DropArrow className="headerMenuProfileDropIcon" />
-              </Row>
-            </Popover>
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+                <Row
+                  className={`headerMenuProfile ${
+                    profileMenuVisible && "headerMenuProfile-active"
+                  }`}
+                >
+                  <Avatar
+                    size={60}
+                    icon={<UserOutlined />}
+                    src={userData.profileImage.secure_url}
+                  />
+                  <DropArrow className="headerMenuProfileDropIcon" />
+                </Row>
+              </Popover>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </div>
   );
 }
 

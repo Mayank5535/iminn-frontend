@@ -109,11 +109,63 @@ body {
 }
 
 //OVERRIDEEN ANT STYLES
+.ant-switch-checked .ant-switch-handle {
+  left: calc(100% - 20px);
+}
+.ant-picker {
+  background-color: #2ebaab1a;
+  width: 100%;
+}
+
+.ant-picker-ant-picker-dropdown,
+.ant-picker-input > input {
+  color: var(--themeText) !important;
+}
+.ant-picker {
+  width: 100% !important;
+  height: 38px;
+  border: 0px;
+  border-radius: 10px;
+  &-cell-in-view,
+  &-ant-picker-dropdown {
+    color: @textPrimary !important;
+  }
+  &-suffix {
+    color: @primary;
+    font-size: 20px;
+  }
+  &-clear {
+    background: transparent;
+    color: var(--themeText) !important;
+  }
+}
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border: 0px;
+  border-radius: 10px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  background-color: #2ebaab1a;
+}
+.ant-select-dropdown {
+  border-radius: 10px;
+}
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  color: @primary !important;
+}
+.ant-select-item {
+  color: @darkTheme !important;
+}
+.ant-select-arrow {
+  color: @primary;
+  font-size: 13px;
+}
 .ant-avatar {
   background-color: @primaryLight;
 }
 .ant-input {
-  color: @darkBlack !important;
+  color: @darkBlack;
 }
 .ant-btn-primary-lg {
   box-shadow: 0px 10x 20px rgba(54, 53, 52, 0.219) !important;
@@ -140,15 +192,6 @@ body {
 .ant-notification {
   & .ant-notification-notice-description {
     color: @textPrimary;
-  }
-}
-
-.ant-picker {
-  width: 100% !important;
-  &-cell-in-view,
-  &-ant-picker-dropdown,
-  &-input > input {
-    color: @textPrimary !important;
   }
 }
 
@@ -336,4 +379,7 @@ body {
 }
 .pr-5 {
   padding-right: 5rem !important;
+}
+.pointer {
+  cursor: pointer !important;
 }

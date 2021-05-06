@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Col, Row } from "antd";
 import Text from "@components/UI/Text";
 import Card from "@components/UI/Card";
@@ -7,6 +7,7 @@ import {
   CreateMatchIcon,
   CreateTeamIcon,
 } from "@components/UI/Icons";
+import { MenuCtx } from "@components";
 
 const ACTION_MENUS = [
   {
@@ -29,35 +30,43 @@ const ACTION_MENUS = [
   },
 ];
 
-const renderActionItems = () => {
-  return ACTION_MENUS.map((mI) => {
-    return (
-      <Col span={8} key={mI.id}>
-        <Card themed shadow padding="1.5rem">
-          <Row justify="start" align="middle">
-            <Col>
-              <Card small padding="12px" className="rowFlex allCenter mr-1">
-                {mI.icon}
-              </Card>
-            </Col>
-            <Col>
-              <Row>
-                <Text h4 bold>
-                  {mI.title}
-                </Text>
-              </Row>
-              <Row>
-                <Text light>{mI.text}</Text>
-              </Row>
-            </Col>
-          </Row>
-        </Card>
-      </Col>
-    );
-  });
-};
-
 function Action(props) {
+  const mc = useContext(MenuCtx);
+
+  const renderActionItems = () => {
+    return ACTION_MENUS.map((mI) => {
+      return (
+        <Col span={8} key={mI.id}>
+          <Card
+            themed
+            shadow
+            padding="1.5rem"
+            style={{ cursor: "pointer" }}
+            onClick={() => mc.setActiveMenu(6)}
+          >
+            <Row justify="start" align="middle">
+              <Col>
+                <Card small padding="12px" className="rowFlex allCenter mr-1">
+                  {mI.icon}
+                </Card>
+              </Col>
+              <Col>
+                <Row>
+                  <Text h4 bold>
+                    {mI.title}
+                  </Text>
+                </Row>
+                <Row>
+                  <Text light>{mI.text}</Text>
+                </Row>
+              </Col>
+            </Row>
+          </Card>
+        </Col>
+      );
+    });
+  };
+
   return (
     <div>
       <Row>
