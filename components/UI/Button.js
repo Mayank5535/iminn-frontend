@@ -10,6 +10,9 @@ const StyledButton = styled(ABtn)`
   height: 38px;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+  &:hover {
+    color: ${(props) => props.type === "ghost" && theme.colors.primary};
+  }
 `;
 
 function Button(props) {

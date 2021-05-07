@@ -15,6 +15,7 @@ const Text = styled.span`
     (props.primary && theme.colors.primary) ||
     (props.secondary && theme[getActiveTheme()].secondaryText) ||
     (props.white && theme.colors.white) ||
+    (props.black && theme.colors.black) ||
     theme[getActiveTheme()].text};
   font-weight: ${(props) =>
     (props.bold && "bold") ||

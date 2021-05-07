@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Avatar,
   Col,
@@ -12,7 +12,7 @@ import {
   Upload,
 } from "antd";
 import Text from "@components/UI/Text";
-import { Header, Sider } from "@components";
+import { Header, MenuCtx, Sider } from "@components";
 import {
   FootballIcon,
   GalleryIcon,
@@ -30,28 +30,41 @@ import {
   UnLockedIcon,
 } from "@components/UI/Icons";
 import Card from "@components/UI/Card";
-import { capitalize } from "lodash";
-import {
-  getActiveTheme,
-  getBase64,
-  theme,
-  validateImage,
-} from "utils/commonFunctions";
+import { capitalize, isEmpty, isEqual } from "lodash";
+import { getBase64, theme, validateImage } from "utils/commonFunctions";
 import TextInput from "@components/UI/TextInput";
 import { CalendarOutlined, SearchOutlined } from "@ant-design/icons";
 import Dropdown from "@components/UI/Dropdown";
 import Button from "@components/UI/Button";
 import ImgCrop from "antd-img-crop";
+import SportCenterModal from "./SportCenterModal";
+import {
+  cancellationDuration,
+  paymentTypes,
+  pitchTypes,
+} from "@config/staticData";
 const { Option } = Select;
 
 const { Step } = Steps;
 
 function CreateGame(props) {
+  const mc = useContext(MenuCtx);
+
   const [currentStep, setCurrentStep] = useState(0);
+  const [showCentersModal, setShowCentersModal] = useState(false);
 
   const [pitch, setPitch] = useState("");
-  const [participants, setParticipants] = useState();
+  const [center, setCenter] = useState({});
+  const [payment, setPayment] = useState({});
+  const [cost, setCost] = useState("");
+  const [gameDate, setGameDate] = useState("");
+  const [participants, setParticipants] = useState({});
+  const [cancellationTerms, setCancellationTerms] = useState({});
+  const [isCoverdPitch, setIsCoverdPitch] = useState(false);
+  const [teamA, setTeamA] = useState();
+  const [teamB, setTeamB] = useState();
   const [gamePic, setGamePic] = useState(""); // to be uploaded
+
   const [picBase64, setPicBase64] = useState(""); // to display preview
 
   const handleProfileImage = async (info) => {
@@ -92,18 +105,23 @@ function CreateGame(props) {
           </div>
         </Row>
         <Row gutter={24}>
-          {["5vs5", "7vs7", "11vs11"].map((name) => {
+          {pitchTypes.map((p) => {
             return (
-              <Col key={name}>
+              <Col key={p.id}>
                 <Card
-                  trans={pitch !== name}
+                  trans={!isEqual(pitch.id, p.id)}
                   className={`pitchCard ${
-                    pitch !== name && "pitchCard-active"
+                    isEqual(pitch.id, p.id) && "pitchCard-active"
                   }`}
-                  onClick={() => setPitch(name)}
+                  onClick={() => setPitch(p)}
                 >
-                  <Text h4 bold primary={pitch !== name} white={pitch == name}>
-                    {name}
+                  <Text
+                    h4
+                    bold
+                    primary={!isEqual(pitch.id, p.id)}
+                    white={isEqual(pitch.id, p.id)}
+                  >
+                    {p.label}
                   </Text>
                 </Card>
               </Col>
@@ -111,27 +129,46 @@ function CreateGame(props) {
           })}
         </Row>
         <Row align="middle">
-          <div className="mt-2 mb-1">
+          <div className="mt-2 mb-1" style={{ wordBreak: "break-all" }}>
             <PlaceIcon className="formLabelIcon" />
             <Text h4>Sports Center</Text>
           </div>
         </Row>
         <Row gutter={[48, 24]}>
-          <Col span={10}>
+          <Col
+            span={10}
+            onClick={() => setShowCentersModal(true)}
+            className="pointer"
+          >
             <TextInput
               placeholder="Search Sports Center"
+              value={center.Name || undefined}
               suffix={<SearchOutlined />}
               disabled={true}
+              className="pointer"
             />
           </Col>
           <Col span={10}>
-            <Dropdown placeholder="Payment" onChange={() => {}}>
-              <Option value="cash">Cash</Option>
+            <Dropdown
+              placeholder="Payment"
+              value={payment?.value || undefined}
+              onChange={(p) => setPayment(p)}
+            >
+              {paymentTypes.map((p) => {
+                return (
+                  <Option key={p.id} value={p.value}>
+                    {p.label}
+                  </Option>
+                );
+              })}
             </Dropdown>
           </Col>
           <Col span={10}>
             <TextInput
+              type="number"
               placeholder="Cost per person"
+              value={cost}
+              onChange={(e) => setCost(e.target.value)}
               prefix={
                 <Text primary style={{ fontSize: 16 }}>
                   &pound;
@@ -140,7 +177,12 @@ function CreateGame(props) {
             />
           </Col>
           <Col span={10}>
-            <DatePicker allowClear={false} />
+            <DatePicker
+              allowClear={false}
+              showTime
+              value={gameDate.moment}
+              onChange={(m, s) => setGameDate({ moment: m, string: s })}
+            />
           </Col>
         </Row>
         <Row align="middle">
@@ -151,11 +193,18 @@ function CreateGame(props) {
         </Row>
         <Row gutter={[48, 24]}>
           <Col span={10}>
-            <Dropdown placeholder="Cancellation terms">
-              <Option value="4">4 hours</Option>
-              <Option value="8">8 hours</Option>
-              <Option value="12">12 hours</Option>
-              <Option value="24">24 hours</Option>
+            <Dropdown
+              placeholder="Cancellation terms"
+              value={cancellationTerms?.value || undefined}
+              onChange={(v) => setCancellationTerms(v)}
+            >
+              {cancellationDuration.map((c) => {
+                return (
+                  <Option key={c.id} value={c.value}>
+                    {c.label}
+                  </Option>
+                );
+              })}
             </Dropdown>
           </Col>
           <Col span={10}>
@@ -166,7 +215,10 @@ function CreateGame(props) {
             >
               <Text>Covered Pitch</Text>
               <div>
-                <Switch onChange={() => {}} />
+                <Switch
+                  checked={isCoverdPitch}
+                  onChange={(v, e) => setIsCoverdPitch(v)}
+                />
               </div>
             </Row>
           </Col>
@@ -223,7 +275,7 @@ function CreateGame(props) {
         <Row>
           <Col span={20}>
             <Row justify="end">
-              <span className="mt-1 mb-4">
+              <span className="mt-1 mb-2">
                 <Button type="primary" onClick={handleContinue}>
                   CONTINUE
                 </Button>
@@ -272,6 +324,8 @@ function CreateGame(props) {
                 <Row justify="center" align="middle">
                   <TextInput
                     placeholder="Team A"
+                    value={teamA}
+                    onChange={(e) => setTeamA(e.target.value)}
                     className="teamNameInput ml-1 mr-1"
                   />
                 </Row>
@@ -280,6 +334,8 @@ function CreateGame(props) {
                 <Row justify="center" align="middle">
                   <TextInput
                     placeholder="Team B"
+                    value={teamB}
+                    onChange={(e) => setTeamB(e.target.value)}
                     className="teamNameInput ml-1 mr-1"
                   />
                 </Row>
@@ -363,7 +419,7 @@ function CreateGame(props) {
                         <FootballIcon className="formLabelIcon primaryColor" />
                       </Col>
                       <Col flex="auto">
-                        <Text>5 vs 5</Text>
+                        <Text>{pitch.label || "-"}</Text>
                       </Col>
                     </Row>
                     <Row align="middle">
@@ -372,11 +428,11 @@ function CreateGame(props) {
                       </Col>
                       <Col flex="auto">
                         <Row>
-                          <Text>Stadium Name</Text>
+                          <Text>{center.Name || "-"}</Text>
                         </Row>
                         <Row>
                           <Text style={{ fontWeight: "400 !important" }}>
-                            Stadium Address
+                            {center.Address || "-"}
                           </Text>
                         </Row>
                       </Col>
@@ -389,7 +445,7 @@ function CreateGame(props) {
                         />
                       </Col>
                       <Col flex="auto">
-                        <Text>2nd of December, 4:15 PM</Text>
+                        <Text>{gameDate.string}</Text>
                       </Col>
                     </Row>
                     <Row align="middle">
@@ -397,7 +453,7 @@ function CreateGame(props) {
                         <MoneyIcon className="formLabelIcon primaryColor" />
                       </Col>
                       <Col flex="auto">
-                        <Text>6.00 $ per person</Text>
+                        <Text>{cost} £ per person</Text>
                       </Col>
                     </Row>
                   </Space>
@@ -412,7 +468,7 @@ function CreateGame(props) {
               BACK
             </Button>
             <Button type="primary" onClick={handleContinue}>
-              CONTINUE
+              PUBLISH
             </Button>
           </span>
         </Row>
@@ -423,7 +479,13 @@ function CreateGame(props) {
   return (
     <>
       <Col flex="4">
-        <Sider>
+        <Sider
+          bottomFix={
+            <Button type="text" onClick={() => mc.setActiveMenu(1)}>
+              CANCEL
+            </Button>
+          }
+        >
           <Col span={24}>
             <Text h3 className="robotoFamily mb-2" weight="500">
               Create Game
@@ -446,6 +508,15 @@ function CreateGame(props) {
         {currentStep === 1 && renderSecondStep()}
         {currentStep === 2 && renderThirdStep()}
       </Col>
+      <SportCenterModal
+        visible={showCentersModal}
+        dismiss={(v) => {
+          setShowCentersModal(false);
+          if (!isEmpty(v)) {
+            setCenter(v);
+          }
+        }}
+      />
     </>
   );
 }

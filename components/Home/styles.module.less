@@ -99,3 +99,21 @@ body {
 .rightBorder {
   border-right: 1px solid #b8b9bb;
 }
+
+.sporCenterRow {
+  cursor: pointer;
+  &:hover {
+    & .t {
+      color: @primary;
+    }
+  }
+}
+.sportsCenterModal {
+  :global {
+    .ant-modal-body {
+      max-height: 680px;
+      overflow: hidden;
+      overflow-y: auto;
+    }
+  }
+}
