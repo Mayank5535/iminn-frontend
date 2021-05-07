@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import React from "react";
-import { Col, Row } from "antd";
+import React, { isValidElement } from "react";
+import { Button, Col, Row } from "antd";
 import Text from "@components/UI/Text";
 import Card from "@components/UI/Card";
 import { PlusOutlined } from "@ant-design/icons";
@@ -9,6 +9,7 @@ import { LogoutIcon } from "@components/UI/Icons";
 import { signOut } from "utils/commonFunctions";
 import { HeaderLogo } from "@components";
 import "./styles.module.less";
+import { isFunction } from "lodash";
 
 const activeKey = 1;
 
@@ -64,15 +65,24 @@ const renderCommonSider = () => {
   );
 };
 
-function Sider({ children }) {
+function Sider(props) {
+  const { children, bottomFix } = props;
   return (
     <div className={!children ? "siderContainer pr-2" : "siderContainer"}>
-      <Row>
+      <Row align="top">
         <Col span={24}>
           <HeaderLogo /> {/* STATIC FOR ALL */}
         </Col>
         {children ? children : renderCommonSider()}
       </Row>
+      <div
+        style={{
+          position: "absolute",
+          bottom: "2rem",
+        }}
+      >
+        {isValidElement(bottomFix) && bottomFix}
+      </div>
     </div>
   );
 }

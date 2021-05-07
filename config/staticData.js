@@ -59,6 +59,55 @@ export const navMenus = [
   },
 ];
 
+export const pitchTypes = [
+  {
+    id: 1,
+    label: "5 vs 5",
+    value: "5vs5",
+  },
+  {
+    id: 2,
+    label: "7 vs 7",
+    value: "7vs7",
+  },
+  {
+    id: 3,
+    label: "11 vs 11",
+    value: "11vs11",
+  },
+];
+
+export const cancellationDuration = [
+  {
+    id: 1,
+    label: "4 hours",
+    value: "4",
+  },
+  {
+    id: 2,
+    label: "8 hours",
+    value: "8",
+  },
+  {
+    id: 3,
+    label: "12 hours",
+    value: "12",
+  },
+  {
+    id: 4,
+    label: "24 hours",
+    value: "24",
+  },
+];
+
+export const paymentTypes = [
+  {
+    id: 1,
+    label: "Cash",
+    value: "cash",
+  },
+];
+
 export const sportsCenters = [
   {
     Name: "The Victory Academy",

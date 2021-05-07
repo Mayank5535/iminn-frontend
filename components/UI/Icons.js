@@ -1097,6 +1097,61 @@ const FootballSvg = () => (
 
 const FootballIcon = (props) => <Icon component={FootballSvg} {...props} />;
 
+const CircleOutlinedSvg = () => (
+  <svg
+    width="21"
+    height="21"
+    viewBox="0 0 21 21"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="0.698633"
+      y="0.44375"
+      width="19.3"
+      height="19.3"
+      rx="9.65"
+      stroke="#222222"
+      strokeWidth="0.7"
+    />
+  </svg>
+);
+
+const CircleOutlinedIcon = (props) => (
+  <Icon component={CircleOutlinedSvg} {...props} />
+);
+
+const CircleCheckedSvg = () => (
+  <svg
+    width="21"
+    height="21"
+    viewBox="0 0 21 21"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g clipPath="url(#clip0)">
+      <path
+        d="M20.8486 10.5938C20.8486 13.2459 19.7951 15.7895 17.9197 17.6648C16.0443 19.5402 13.5008 20.5938 10.8486 20.5938C8.19647 20.5938 5.65293 19.5402 3.77757 17.6648C1.9022 15.7895 0.848633 13.2459 0.848633 10.5938C0.848633 7.94159 1.9022 5.39805 3.77757 3.52268C5.65293 1.64732 8.19647 0.59375 10.8486 0.59375C13.5008 0.59375 16.0443 1.64732 17.9197 3.52268C19.7951 5.39805 20.8486 7.94159 20.8486 10.5938ZM15.8861 6.80625C15.7968 6.71727 15.6905 6.64722 15.5735 6.60027C15.4566 6.55332 15.3313 6.53045 15.2053 6.53301C15.0793 6.53558 14.955 6.56354 14.8401 6.61521C14.7251 6.66688 14.6217 6.74121 14.5361 6.83375L10.1949 12.365L7.57863 9.7475C7.40091 9.5819 7.16586 9.49175 6.92298 9.49603C6.6801 9.50032 6.44837 9.59871 6.27661 9.77047C6.10484 9.94224 6.00645 10.174 6.00216 10.4168C5.99788 10.6597 6.08803 10.8948 6.25363 11.0725L9.56113 14.3812C9.65024 14.4702 9.75634 14.5403 9.87311 14.5873C9.98989 14.6344 10.1149 14.6574 10.2408 14.6551C10.3667 14.6527 10.4908 14.6251 10.6058 14.5737C10.7207 14.5224 10.8241 14.4484 10.9099 14.3563L15.8999 8.11875C16.07 7.94187 16.164 7.70534 16.1616 7.45995C16.1593 7.21455 16.0608 6.97985 15.8874 6.80625H15.8861Z"
+        fill="#2EBAAB"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0">
+        <rect
+          width="20"
+          height="20"
+          fill="white"
+          transform="translate(0.848633 0.59375)"
+        />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+const CircleCheckedIcon = (props) => (
+  <Icon component={CircleCheckedSvg} {...props} />
+);
+
 export {
   BackIcon,
   DashboardIcon,
@@ -1128,4 +1183,6 @@ export {
   InfoCircleIcon,
   MoneyIcon,
   FootballIcon,
+  CircleOutlinedIcon,
+  CircleCheckedIcon,
 };

@@ -116,7 +116,9 @@ body {
   background-color: #2ebaab1a;
   width: 100%;
 }
-
+.ant-picker-time-panel-cell-inner {
+  color: @darkTheme !important;
+}
 .ant-picker-ant-picker-dropdown,
 .ant-picker-input > input {
   color: var(--themeText) !important;
@@ -175,6 +177,10 @@ body {
 }
 .ant-btn {
   font-weight: 500 !important;
+}
+.ant-modal-content {
+  overflow: hidden;
+  border-radius: 20px;
 }
 .ant-modal-footer {
   & .ant-btn {
@@ -381,5 +387,7 @@ body {
   padding-right: 5rem !important;
 }
 .pointer {
-  cursor: pointer !important;
+  & * {
+    cursor: pointer !important;
+  }
 }
