@@ -144,8 +144,14 @@ function GameList() {
   const renderData = () => {
     if (loading) {
       return (
-        <Row justify="center" align="center">
-          <Spin spinning size="large" />
+        <Row justify="center" align="center" className="w100">
+          <Col
+            span={24}
+            className="w100 colFlex allCenter"
+            style={{ height: "55vh" }}
+          >
+            <Spin spinning size="large" />
+          </Col>
         </Row>
       );
     }
