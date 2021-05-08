@@ -3,7 +3,8 @@ import {
   Avatar,
   Col,
   DatePicker,
-  Divider,
+  message,
+  notification,
   Row,
   Select,
   Space,
@@ -30,8 +31,13 @@ import {
   UnLockedIcon,
 } from "@components/UI/Icons";
 import Card from "@components/UI/Card";
-import { capitalize, isEmpty, isEqual } from "lodash";
-import { getBase64, theme, validateImage } from "utils/commonFunctions";
+import { capitalize, has, isEmpty, isEqual } from "lodash";
+import {
+  getBase64,
+  theme,
+  uploadPhoto,
+  validateImage,
+} from "utils/commonFunctions";
 import TextInput from "@components/UI/TextInput";
 import { CalendarOutlined, SearchOutlined } from "@ant-design/icons";
 import Dropdown from "@components/UI/Dropdown";
@@ -43,6 +49,8 @@ import {
   paymentTypes,
   pitchTypes,
 } from "@config/staticData";
+import db from "@config/firebaseConfig";
+import CongratsModal from "./CongratsModal";
 const { Option } = Select;
 
 const { Step } = Steps;
@@ -51,38 +59,107 @@ function CreateGame(props) {
   const mc = useContext(MenuCtx);
 
   const [currentStep, setCurrentStep] = useState(0);
+  const [btnLoading, setBtnLoading] = useState(false);
   const [showCentersModal, setShowCentersModal] = useState(false);
+  const [showCongratsModal, setCongratsModal] = useState(false);
 
   const [pitch, setPitch] = useState("");
   const [center, setCenter] = useState({});
-  const [payment, setPayment] = useState({});
+  const [payment, setPayment] = useState(paymentTypes[0]);
   const [cost, setCost] = useState("");
   const [gameDate, setGameDate] = useState("");
   const [participants, setParticipants] = useState({});
-  const [cancellationTerms, setCancellationTerms] = useState({});
+  const [cancellationTerms, setCancellationTerms] = useState(
+    cancellationDuration[0]
+  );
   const [isCoverdPitch, setIsCoverdPitch] = useState(false);
   const [teamA, setTeamA] = useState();
   const [teamB, setTeamB] = useState();
-  const [gamePic, setGamePic] = useState(""); // to be uploaded
+  const [gamePic, setGamePic] = useState({}); // to be uploaded when updated success! store the object in same state.
 
   const [picBase64, setPicBase64] = useState(""); // to display preview
 
   const handleProfileImage = async (info) => {
     const imageVal = validateImage(info);
     if (imageVal) {
-      setGamePic(info);
       getBase64(info, (imgUrl) => {
         setPicBase64(imgUrl);
       });
+      setGamePic(info);
+      try {
+        const res = await uploadPhoto(info, Date.now(), "game_pic");
+        setGamePic(res);
+      } catch (error) {
+        message.error(error.message);
+        console.error(error);
+      }
     }
   };
 
   const handleContinue = () => {
-    console.log("Onclick CONTINUE");
-    if ([0, 1].includes(currentStep)) {
+    if (validateOne()) {
       setCurrentStep(currentStep + 1);
-    } else {
-      // Handle Publish
+    }
+  };
+
+  const validateOne = () => {
+    if (isEmpty(pitch)) {
+      message.error("Please select type of pitch!");
+      return false;
+    }
+    if (isEmpty(center)) {
+      message.error("Please select a sports center!");
+      return false;
+    }
+    if (isEmpty(cost)) {
+      message.error("Please enter cost per person for game!");
+      return false;
+    }
+    if (isEmpty(gameDate) || isEmpty(gameDate.string)) {
+      message.error("Please select date and time!");
+      return false;
+    }
+    if (isEmpty(participants)) {
+      message.error("Please select participants type!");
+      return false;
+    }
+    return true;
+  };
+
+  const handlePublish = async () => {
+    const gameObj = {
+      pitch,
+      center,
+      payment,
+      cost,
+      dateTime: gameDate.string,
+      isPrivate: participants === "private" || false,
+      isCoverdPitch,
+      teams: {
+        teamA: {},
+        teamB: {},
+      },
+    };
+
+    if (has(gamePic, "asset_id")) {
+      gameObj.image = gamePic;
+    }
+
+    if (btnLoading) return;
+    setBtnLoading(true);
+    try {
+      let result = await db.collection("games").add(gameObj);
+      if (result.id) {
+        setCongratsModal(true);
+      }
+      setBtnLoading(false);
+    } catch (error) {
+      console.log("Error adding document: ", error);
+      notification.error({
+        message: "Oops!",
+        description: "something went wrong while creating your game",
+      });
+      setBtnLoading(false);
     }
   };
 
@@ -95,6 +172,7 @@ function CreateGame(props) {
     }
   };
 
+  //! ------------------ RENDERS -----------------------!
   const renderFirstStep = () => {
     return (
       <>
@@ -178,8 +256,10 @@ function CreateGame(props) {
           </Col>
           <Col span={10}>
             <DatePicker
+              inputReadOnly
+              format="MM-DD-YYYY HH:mm"
               allowClear={false}
-              showTime
+              showTime={{ format: "HH:mm" }}
               value={gameDate.moment}
               onChange={(m, s) => setGameDate({ moment: m, string: s })}
             />
@@ -365,7 +445,7 @@ function CreateGame(props) {
     return (
       <>
         <Row align="top" style={{ marginTop: "6rem" }}>
-          <Col span={12}>
+          <Col span={10}>
             <div className="rightBorder">
               <Row justify="center" align="middle">
                 <div className="mb-1">
@@ -397,17 +477,17 @@ function CreateGame(props) {
               </Row>
             </div>
           </Col>
-          <Col span={12}>
+          <Col span={14}>
             <Row justify="center" align="middle">
               <Col span={12}>
                 <div className="mb-1">
                   <InfoCircleIcon className="formLabelIcon" />
-                  <Text h4>Cover Image</Text>
+                  <Text h4>Recap information</Text>
                 </div>
               </Col>
             </Row>
             <Row justify="center">
-              <Col span={12}>
+              <Col span={14}>
                 <div className="mt-2">
                   <Space
                     direction="vertical"
@@ -415,18 +495,18 @@ function CreateGame(props) {
                     style={{ width: "100%" }}
                   >
                     <Row align="middle">
-                      <Col flex="40px">
+                      <Col span={2}>
                         <FootballIcon className="formLabelIcon primaryColor" />
                       </Col>
-                      <Col flex="auto">
+                      <Col span={20} offset={1}>
                         <Text>{pitch.label || "-"}</Text>
                       </Col>
                     </Row>
-                    <Row align="middle">
-                      <Col flex="40px">
+                    <Row align="top">
+                      <Col span={2}>
                         <PlaceIcon className="formLabelIcon primaryColor" />
                       </Col>
-                      <Col flex="auto">
+                      <Col span={20} offset={1}>
                         <Row>
                           <Text>{center.Name || "-"}</Text>
                         </Row>
@@ -438,21 +518,21 @@ function CreateGame(props) {
                       </Col>
                     </Row>
                     <Row align="middle">
-                      <Col flex="40px">
+                      <Col span={2}>
                         <CalendarOutlined
                           style={{ fontSize: 20 }}
                           className="formLabelIcon primaryColor"
                         />
                       </Col>
-                      <Col flex="auto">
+                      <Col span={20} offset={1}>
                         <Text>{gameDate.string}</Text>
                       </Col>
                     </Row>
                     <Row align="middle">
-                      <Col flex="40px">
+                      <Col span={2}>
                         <MoneyIcon className="formLabelIcon primaryColor" />
                       </Col>
-                      <Col flex="auto">
+                      <Col span={20} offset={1}>
                         <Text>{cost} £ per person</Text>
                       </Col>
                     </Row>
@@ -467,7 +547,7 @@ function CreateGame(props) {
             <Button type="text" className="mr-1" onClick={handleBack}>
               BACK
             </Button>
-            <Button type="primary" onClick={handleContinue}>
+            <Button type="primary" loading={btnLoading} onClick={handlePublish}>
               PUBLISH
             </Button>
           </span>
@@ -494,7 +574,7 @@ function CreateGame(props) {
               <div className="mt-2 stepsCounter">
                 <Steps direction="vertical" current={currentStep}>
                   <Step title="Game information" />
-                  <Step title="In Progress" />
+                  {/* <Step title="In Progress" /> */}
                   <Step title="Recap & Publish" />
                 </Steps>
               </div>
@@ -505,8 +585,8 @@ function CreateGame(props) {
       <Col flex="20" className="pl-2">
         <Header />
         {currentStep === 0 && renderFirstStep()}
-        {currentStep === 1 && renderSecondStep()}
-        {currentStep === 2 && renderThirdStep()}
+        {currentStep === 1 && renderThirdStep()}
+        {/* {currentStep === 2 && renderThirdStep()} */}
       </Col>
       <SportCenterModal
         visible={showCentersModal}
@@ -515,6 +595,13 @@ function CreateGame(props) {
           if (!isEmpty(v)) {
             setCenter(v);
           }
+        }}
+      />
+      <CongratsModal
+        visible={showCongratsModal}
+        dismiss={() => {
+          mc.setActiveMenu(7);
+          setCongratsModal(false);
         }}
       />
     </>

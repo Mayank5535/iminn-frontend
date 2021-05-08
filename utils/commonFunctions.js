@@ -156,11 +156,15 @@ export const getActiveSource = (src, isActive = false) => {
   return src;
 };
 
-export const uploadPhoto = async (imageToUpload, id) => {
+export const uploadPhoto = async (
+  imageToUpload,
+  id,
+  preset = "profile_pic"
+) => {
   return new Promise(async (resolve, reject) => {
     var fd = new FormData();
     fd.append("file", imageToUpload);
-    fd.append("upload_preset", "profile_pic");
+    fd.append("upload_preset", preset);
     fd.append("public_id", id);
 
     let url = siteConfig.cloud.apiBaseUrl;

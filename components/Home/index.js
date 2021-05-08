@@ -1,12 +1,20 @@
 import React, { useContext, useState } from "react";
 import Head from "next/head";
 import { Col, Row } from "antd";
-import { Header, Sider, Action, Games, CoverImg, MenuCtx } from "@components";
+import {
+  Header,
+  Sider,
+  Action,
+  Games,
+  CoverImg,
+  MenuCtx,
+  GameList,
+} from "@components";
 import CreateGame from "./CreateGame";
 import "./styles.module.less";
 
 function Home() {
-  const [activeMenu, setActiveMenu] = useState(1);
+  const [activeMenu, setActiveMenu] = useState(7);
   // CUSTOM VIEWS
   const DashboardView = () => (
     <>
@@ -80,6 +88,8 @@ function Home() {
         return <MatchesView />;
       case 6:
         return <CreateGame />;
+      case 7:
+        return <GameList />;
       default:
         return <DashboardView />;
     }

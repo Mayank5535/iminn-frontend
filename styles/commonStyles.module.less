@@ -98,6 +98,18 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 //Shadows
 @text-shadow-theme: 0px 0px 2px @lightTheme !important;
 @text-shadow-primary: 0px 0px 2px @primary !important;
@@ -111,6 +123,9 @@ body {
 //OVERRIDEEN ANT STYLES
 .ant-switch-checked .ant-switch-handle {
   left: calc(100% - 20px);
+}
+.ant-message-notice-content {
+  color: @darkBlack;
 }
 .ant-picker {
   background-color: #2ebaab1a;
@@ -387,6 +402,7 @@ body {
   padding-right: 5rem !important;
 }
 .pointer {
+  cursor: pointer !important;
   & * {
     cursor: pointer !important;
   }

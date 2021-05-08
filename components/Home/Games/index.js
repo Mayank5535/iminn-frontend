@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Col, Row } from "antd";
 import Text from "@components/UI/Text";
 import Card from "@components/UI/Card";
 import Images from "@config/images";
 import Avatar from "antd/lib/avatar/avatar";
 import { UserOutlined } from "@ant-design/icons";
+import { MenuCtx } from "@components";
 
 const GAMES_DATA = [
   {
@@ -116,6 +117,8 @@ const renderGamesCard = () => {
 };
 
 function Games(props) {
+  const mc = useContext(MenuCtx);
+
   return (
     <div>
       <Row justify="space-between" align="middle" className="mb-1 mt-2">
@@ -125,7 +128,13 @@ function Games(props) {
           </Text>
         </Col>
         <Col>
-          <Text h4 primary className="robotoFamily" weight="500">
+          <Text
+            h4
+            primary
+            className="robotoFamily pointer"
+            weight="500"
+            onClick={() => mc.setActiveMenu(7)}
+          >
             See all
           </Text>
         </Col>

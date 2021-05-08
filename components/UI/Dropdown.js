@@ -1,10 +1,8 @@
 /* eslint-disable react/prop-types */
-import { SearchOutlined } from "@ant-design/icons";
-import { Select, Input } from "antd";
+import { Select } from "antd";
 import React from "react";
 import styled from "styled-components";
 import { getActiveTheme, theme } from "utils/commonFunctions";
-import { DropArrow } from "./Icons";
 const { Option } = Select;
 
 const StyledSelect = styled(Select)`
@@ -12,7 +10,6 @@ const StyledSelect = styled(Select)`
 `;
 
 function Dropdown(props) {
-  console.log("===> ~ Dropdown ~ props", props);
   const activeTheme = getActiveTheme();
   return (
     <StyledSelect

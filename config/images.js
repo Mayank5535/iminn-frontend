@@ -27,7 +27,7 @@ const Images = {
   roleStrikerActive: "/assets/images/role-striker-active.svg",
   roleMidFielderActive: "/assets/images/role-midfielder-active.svg",
   goalCover: "/assets/images/goalCover.png",
-  SuccessBadge: "/assets/images/SuccessBadge.png",
+  SuccessBadge: "/assets/images/SuccessBadge.svg",
 };
 
 export default Images;
