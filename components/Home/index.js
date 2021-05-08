@@ -14,7 +14,7 @@ import CreateGame from "./CreateGame";
 import "./styles.module.less";
 
 function Home() {
-  const [activeMenu, setActiveMenu] = useState(7);
+  const [activeMenu, setActiveMenu] = useState(1);
   // CUSTOM VIEWS
   const DashboardView = () => (
     <>
