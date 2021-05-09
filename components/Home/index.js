@@ -12,9 +12,11 @@ import {
 } from "@components";
 import CreateGame from "./CreateGame";
 import "./styles.module.less";
+import { useSelector } from "react-redux";
 
 function Home() {
   const [activeMenu, setActiveMenu] = useState(1);
+  const { theme } = useSelector((state) => state.theme);
   // CUSTOM VIEWS
   const DashboardView = () => (
     <>
@@ -75,6 +77,7 @@ function Home() {
   );
 
   const renderContent = () => {
+    let th = theme; //! IMPORTANT: Do not remove. Used for rerender on theme Change
     switch (activeMenu) {
       case 1:
         return <DashboardView />;

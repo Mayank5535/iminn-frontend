@@ -8,13 +8,22 @@ import {
   BellIcon,
   DropArrow,
   InboxIcon,
+  MoonIcon,
   PlusIcon,
   RankIcon,
+  SunIcon,
+  LogoutIcon,
 } from "@components/UI/Icons";
 import Searchbar from "@components/UI/Searchbar";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import "./styles.module.less";
+import {
+  getActiveTheme,
+  signOut,
+  switchTheme,
+  theme,
+} from "utils/commonFunctions";
 
 function Header(props) {
   const { userData } = useSelector((state) => state.auth);
@@ -38,6 +47,16 @@ function Header(props) {
         name: "Edit Profile",
         icon: <PlusIcon />,
       },
+      {
+        id: 4,
+        name: "Change Theme",
+        icon: getActiveTheme() === "light" ? <MoonIcon /> : <SunIcon />,
+      },
+      {
+        id: 5,
+        name: "Log Out",
+        icon: <LogoutIcon className="logoutIconProfileMenu" />,
+      },
     ];
 
     return (
@@ -45,6 +64,7 @@ function Header(props) {
         {menuData.map((m) => {
           return (
             <Row
+              onClick={() => handleMenuClick(m)}
               justify="space-between"
               align="middle"
               key={m.id}
@@ -63,6 +83,17 @@ function Header(props) {
         })}
       </div>
     );
+  };
+
+  const handleMenuClick = (item) => {
+    if (item.id === 4) {
+      switchTheme();
+      return;
+    }
+    if (item.id === 5) {
+      signOut();
+      return;
+    }
   };
 
   return (
