@@ -9,6 +9,7 @@ import {
   CoverImg,
   MenuCtx,
   GameList,
+  ProfileEdit,
 } from "@components";
 import CreateGame from "./CreateGame";
 import "./styles.module.less";
@@ -93,6 +94,8 @@ function Home() {
         return <CreateGame />;
       case 7:
         return <GameList />;
+      case 8:
+        return <ProfileEdit />;
       default:
         return <DashboardView />;
     }

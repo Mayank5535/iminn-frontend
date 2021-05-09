@@ -15,6 +15,7 @@ import Action from "@components/Home/Action";
 import Games from "@components/Home/Games";
 import CoverImg from "@components/Home/CoverImg";
 import GameList from "@components/Home/GameList";
+import ProfileEdit from "@components/Home/ProfileEdit";
 
 //UI Components
 import PageLoading from "@components/UI/PageLoading";
@@ -37,5 +38,6 @@ export {
   CoverImg,
   HeaderLogo,
   GameList,
+  ProfileEdit,
   MenuCtx,
 };

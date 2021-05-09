@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Avatar, Col, Popover, Row } from "antd";
-import Images from "@config/images";
 import Text from "@components/UI/Text";
 import { HeartOutlined, UserOutlined } from "@ant-design/icons";
 import {
@@ -17,16 +16,13 @@ import {
 import Searchbar from "@components/UI/Searchbar";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { MenuCtx } from "@components";
+import { getActiveTheme, signOut, switchTheme } from "utils/commonFunctions";
 import "./styles.module.less";
-import {
-  getActiveTheme,
-  signOut,
-  switchTheme,
-  theme,
-} from "utils/commonFunctions";
 
 function Header(props) {
   const { userData } = useSelector((state) => state.auth);
+  const mc = useContext(MenuCtx);
 
   const [profileMenuVisible, setProfileMenuVisible] = useState(false);
 
@@ -59,6 +55,21 @@ function Header(props) {
       },
     ];
 
+    const handleMenuClick = (item) => {
+      if (item.id === 3) {
+        mc.setActiveMenu(8);
+        return;
+      }
+      if (item.id === 4) {
+        switchTheme();
+        return;
+      }
+      if (item.id === 5) {
+        signOut();
+        return;
+      }
+    };
+
     return (
       <div>
         {menuData.map((m) => {
@@ -85,17 +96,6 @@ function Header(props) {
     );
   };
 
-  const handleMenuClick = (item) => {
-    if (item.id === 4) {
-      switchTheme();
-      return;
-    }
-    if (item.id === 5) {
-      signOut();
-      return;
-    }
-  };
-
   return (
     <div className="mb-2">
       <Row justify="space-between" align="middle">
@@ -116,7 +116,7 @@ function Header(props) {
             <Col>
               <Popover
                 content={DropDownContent}
-                overlayClassName="profilePover"
+                overlayClassName="profilePover noSelect"
                 trigger="hover"
                 placement="bottomRight"
                 visible={profileMenuVisible}
@@ -130,7 +130,7 @@ function Header(props) {
                   <Avatar
                     size={60}
                     icon={<UserOutlined />}
-                    src={userData.profileImage.secure_url}
+                    src={userData?.profileImage?.secure_url || ""}
                   />
                   <DropArrow className="headerMenuProfileDropIcon" />
                 </Row>

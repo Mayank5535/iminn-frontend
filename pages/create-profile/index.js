@@ -343,6 +343,8 @@ function CreateProfile() {
               ]}
             >
               <DatePicker
+                allowClear={false}
+                inputReadOnly
                 placeholder="Enter your date of birth"
                 size="large"
                 format={dateFormat}
@@ -413,6 +415,8 @@ function CreateProfile() {
               ]}
             >
               <DatePicker
+                inputReadOnly
+                allowClear={false}
                 placeholder="Enter your date of birth"
                 size="large"
                 format={dateFormat}
