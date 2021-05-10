@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Avatar,
   Col,
@@ -12,8 +13,8 @@ import {
   Switch,
   Upload,
 } from "antd";
-import Text from "@components/UI/Text";
 import { Header, MenuCtx, Sider } from "@components";
+import Text from "@components/UI/Text";
 import {
   FootballIcon,
   GalleryIcon,
@@ -52,11 +53,11 @@ import {
 import db from "@config/firebaseConfig";
 import CongratsModal from "./CongratsModal";
 const { Option } = Select;
-
 const { Step } = Steps;
 
 function CreateGame(props) {
   const mc = useContext(MenuCtx);
+  const { userData } = useSelector((state) => state.auth);
 
   const [currentStep, setCurrentStep] = useState(0);
   const [btnLoading, setBtnLoading] = useState(false);
@@ -135,6 +136,7 @@ function CreateGame(props) {
       dateTime: gameDate.string,
       isPrivate: participants === "private" || false,
       isCoverdPitch,
+      managerId: userData.userId,
       teams: {
         teamA: {},
         teamB: {},
