@@ -19,6 +19,7 @@ import { isEmpty } from "lodash";
 import { getUpdatedUser } from "utils/commonFunctions";
 import { useSelector } from "react-redux";
 import { PageLoading } from "@components";
+import TextInput from "@components/UI/TextInput";
 import "./styles.module.less";
 
 function Signin() {
@@ -150,13 +151,13 @@ function Signin() {
                 { type: "email", message: "Please enter a valid email!" },
               ]}
             >
-              <Input size="large" placeholder="Enter your email" />
+              <TextInput placeholder="Enter your email" />
             </Form.Item>
             <Form.Item
               name="password"
               rules={[{ required: true, message: "Password is required!" }]}
             >
-              <Input.Password size="large" placeholder="Enter your password" />
+              <TextInput passwordType placeholder="Enter your password" />
             </Form.Item>
             <Form.Item name="terms" rules={[{ validator: checkBoxValidation }]}>
               <Checkbox
@@ -259,16 +260,13 @@ function Signin() {
                     { type: "email", message: "Please enter a valid email!" },
                   ]}
                 >
-                  <Input size="large" placeholder="Enter your email" />
+                  <TextInput placeholder="Enter your email" />
                 </Form.Item>
                 <Form.Item
                   name="password"
                   rules={[{ required: true, message: "Password is required!" }]}
                 >
-                  <Input.Password
-                    size="large"
-                    placeholder="Enter your password"
-                  />
+                  <TextInput passwordType placeholder="Enter your password" />
                 </Form.Item>
                 <Form.Item
                   name="terms"
