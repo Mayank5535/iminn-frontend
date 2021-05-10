@@ -27,6 +27,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   getActiveSource,
   getBase64,
+  getUpdatedUser,
   uploadPhoto,
   validateImage,
 } from "utils/commonFunctions";
@@ -86,7 +87,11 @@ function ProfileEdit() {
 
     if (!isEmpty(profilePic)) {
       try {
-        const res = await uploadPhoto(profilePic, userData.userId);
+        const res = await uploadPhoto(
+          profilePic,
+          userData.profileImage.public_id,
+          "profile_pic"
+        );
         setProfilePic(res);
         userObject.profileImage = res;
       } catch (error) {
@@ -99,7 +104,7 @@ function ProfileEdit() {
       .doc(userData.userId)
       .update(userObject)
       .then(() => {
-        dispatch(setUserData(token, userObject));
+        getUpdatedUser(token);
         notification.success({
           message: "Success",
           description: "Your profile details updated!",
