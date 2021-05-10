@@ -165,7 +165,11 @@ export const uploadPhoto = async (
     var fd = new FormData();
     fd.append("file", imageToUpload);
     fd.append("upload_preset", preset);
-    fd.append("public_id", id);
+
+    if (!_.isEmpty(id)) {
+      fd.append("public_id", id);
+    }
+    fd.append("filename_override", true);
 
     let url = siteConfig.cloud.apiBaseUrl;
     try {

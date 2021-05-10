@@ -87,11 +87,7 @@ function ProfileEdit() {
 
     if (!isEmpty(profilePic)) {
       try {
-        const res = await uploadPhoto(
-          profilePic,
-          userData.profileImage.public_id,
-          "profile_pic"
-        );
+        const res = await uploadPhoto(profilePic, "", "profile_pic");
         setProfilePic(res);
         userObject.profileImage = res;
       } catch (error) {
