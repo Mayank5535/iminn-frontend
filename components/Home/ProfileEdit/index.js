@@ -339,17 +339,15 @@ function ProfileEdit() {
                         },
                       ]}
                     >
-                      <TextInput placeholder="Enter your email" disabled />
+                      <TextInput placeholder="Enter your email" />
                     </Form.Item>
                     <Form.Item
-                      initialValue="Aaaaaa"
                       name="password"
                       rules={[
                         { required: true, message: "Password is required!" },
                       ]}
                     >
                       <TextInput
-                        disabled
                         passwordType
                         placeholder="Enter your password"
                       />
