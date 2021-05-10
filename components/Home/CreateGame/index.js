@@ -174,7 +174,7 @@ function CreateGame(props) {
     }
   };
 
-  //! ------------------ RENDERS -----------------------!
+  //! ------------------ RENDERS ---------------------!
   const renderFirstStep = () => {
     return (
       <>
