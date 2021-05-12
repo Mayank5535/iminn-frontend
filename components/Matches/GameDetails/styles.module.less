@@ -1,0 +1,23 @@
+.minHeight {
+  min-height: calc(100vh - 130px) !important;
+}
+.seeSquadLink {
+  cursor: pointer;
+  &:hover {
+    color: @primary;
+  }
+}
+.teamsIconSelect {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &-no-select {
+    & svg {
+      & .opClass {
+        fill: rgba(0, 0, 0, 0.25);
+      }
+    }
+  }
+}

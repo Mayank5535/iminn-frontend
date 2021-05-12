@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import {
   Avatar,
   Col,
@@ -57,6 +58,7 @@ const { Step } = Steps;
 
 function CreateGame(props) {
   const mc = useContext(MenuCtx);
+  const router = useRouter();
   const { userData } = useSelector((state) => state.auth);
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -602,7 +604,7 @@ function CreateGame(props) {
       <CongratsModal
         visible={showCongratsModal}
         dismiss={() => {
-          mc.setActiveMenu(7);
+          router.push("/matches");
           setCongratsModal(false);
         }}
       />

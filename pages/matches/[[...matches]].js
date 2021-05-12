@@ -1,41 +1,38 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
+import Head from "next/head";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import { useCollection } from "react-firebase-hooks/firestore";
 import Text from "@components/UI/Text";
 import Card from "@components/UI/Card";
 import Button from "@components/UI/Button";
-import { Header, MenuCtx, Sider } from "@components";
+import { GameDetails, Header, Sider } from "@components";
 import { ArrowLeftOutlined, UserOutlined } from "@ant-design/icons";
 import db from "@config/firebaseConfig";
 import Images from "@config/images";
 import { Avatar, Col, Empty, Row, Spin } from "antd";
-import { isEmpty } from "lodash";
-
-const GAMES_DATA = [
-  {
-    id: 1,
-    time: "5:00 pm",
-    place: "London",
-    teams: ["CUFC", "MUFC"],
-    type: "Match Now",
-  },
-  {
-    id: 1,
-    time: "5:00 pm",
-    place: "London",
-    teams: ["CUFC", "MUFC"],
-    type: "Game Nearby",
-  },
-];
+import { has, isEmpty } from "lodash";
+import "./styles.module.less";
 
 function GameList() {
-  const mc = useContext(MenuCtx);
+  const router = useRouter();
+  const { theme } = useSelector((state) => state.theme);
+
   const [value, loading, error] = useCollection(db.collection("games"), {
     snapshotListenOptions: { includeMetadataChanges: true },
   });
 
+  const handleNavigation = (game) => {
+    if (game) {
+      router.push(`${game.id}`);
+    } else {
+      console.log("PUSHING ROUTER");
+      router.back();
+    }
+  };
+
   const renderGamesCard = () => {
     return value.docs.map((game, index) => {
-      console.log(game.data());
       const data = game.data();
       const type = "Match Now";
       const img = data?.image?.secure_url || false;
@@ -96,7 +93,7 @@ function GameList() {
               <Text>{data?.center?.Name || "-"}</Text> ,&nbsp;
               <Text light>{data?.center?.Address || "-"}</Text>
             </Row>
-            <Row justify="space-between" align="middle" className="mt-1">
+            <Row justify="space-between" align="middle" className="mt-2">
               <Col>
                 <Row>
                   <Avatar
@@ -124,15 +121,23 @@ function GameList() {
                 </Row>
               </Col>
               <Col>
-                {type === "Match Now" ? (
+                <Button
+                  size="large"
+                  type="primary"
+                  shape="round"
+                  onClick={() => handleNavigation(game)}
+                >
+                  SEE
+                </Button>
+                {/* {type === "Match Now" ? (
                   <Button size="large" type="primary" shape="round">
-                    JOIN NOW
+                    SEE
                   </Button>
                 ) : (
                   <Button size="large" type="primary" shape="round">
                     FULL
                   </Button>
-                )}
+                )} */}
               </Col>
             </Row>
           </Card>
@@ -176,7 +181,7 @@ function GameList() {
     );
   };
 
-  return (
+  const GameList = () => (
     <>
       <Col flex="4">
         <Sider>
@@ -184,7 +189,7 @@ function GameList() {
             <Button
               type="text"
               icon={<ArrowLeftOutlined style={{ fontSize: 20 }} />}
-              onClick={() => mc.setActiveMenu(1)}
+              onClick={() => handleNavigation("back")}
             >
               <Text h4>Back</Text>
             </Button>
@@ -206,6 +211,41 @@ function GameList() {
           </Row>
         </div>
       </Col>
+    </>
+  );
+
+  const routeBased = () => {
+    let Theme = theme; // !IMPORTANT FOR RERENDERING ON CHANGE THEME
+
+    if (
+      !isEmpty(router) &&
+      !isEmpty(router.query) &&
+      has(router.query, "matches") &&
+      router?.query?.matches.length === 1
+    ) {
+      return <GameDetails />;
+    } else if (
+      !isEmpty(router) &&
+      !isEmpty(router.query) &&
+      has(router.query, "matches") &&
+      router?.query?.matches.length != 1
+    ) {
+      router.replace("/matches");
+    } else {
+      return <GameList />;
+    }
+  };
+
+  return (
+    <>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <title>Iminn - Get early access</title>
+      </Head>
+      <Row className="layoutContainer">{routeBased()}</Row>
     </>
   );
 }

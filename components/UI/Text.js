@@ -9,6 +9,7 @@ const Text = styled.span`
     (props.h3 && "24px") ||
     (props.h4 && "20px") ||
     (props.h4 && "18px") ||
+    (props.small && "14px") ||
     (props.footnote && "13px") ||
     "16px"};
   color: ${(props) =>
