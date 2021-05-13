@@ -8,6 +8,8 @@ import {
 } from "@components/UI/Icons";
 import Images from "@config/images";
 
+export const shareMsg = "Hi! Come and join me for a football game at Iminn";
+
 export const roles = [
   {
     id: 1,
