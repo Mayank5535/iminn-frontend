@@ -271,7 +271,7 @@ function GameDetails() {
             </Col>
             <Col flex="auto">
               <Row>
-                <Text black bold small>
+                <Text bold small>
                   {`${p.firstName} ${p.lastName}`}
                 </Text>
               </Row>
