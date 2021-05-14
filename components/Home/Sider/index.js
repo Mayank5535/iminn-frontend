@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { isValidElement } from "react";
+import React, { isValidElement, useContext } from "react";
 import { useRouter } from "next/router";
 import { Button, Col, Row } from "antd";
 import Text from "@components/UI/Text";
@@ -8,13 +8,14 @@ import { PlusOutlined } from "@ant-design/icons";
 import { navMenus } from "@config/staticData";
 import { LogoutIcon } from "@components/UI/Icons";
 import { signOut } from "utils/commonFunctions";
-import { HeaderLogo } from "@components";
+import { HeaderLogo, MenuCtx } from "@components";
 import "./styles.module.less";
 
 const activeKey = 1;
 
 function Sider(props) {
   const router = useRouter();
+  const mc = useContext(MenuCtx);
 
   const { children, bottomFix } = props;
 
@@ -70,10 +71,19 @@ function Sider(props) {
     );
   };
 
+  const handleLogoClick = () => {
+    if (router.asPath == "/") {
+      mc && mc?.setActiveMenu(1);
+    } else {
+      mc && mc?.setActiveMenu(1);
+      router.push("/");
+    }
+  };
+
   return (
     <div className={!children ? "siderContainer pr-2" : "siderContainer"}>
       <Row align="top">
-        <Col span={24} className="pointer" onClick={() => router.push("/")}>
+        <Col span={24} className="pointer" onClick={() => handleLogoClick()}>
           <HeaderLogo /> {/* STATIC FOR ALL */}
         </Col>
         {children ? children : renderCommonSider()}
