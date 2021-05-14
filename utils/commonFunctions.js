@@ -84,6 +84,10 @@ export const switchTheme = () => {
   }
 };
 
+export const getInitials = (uObj) => {
+  return `${uObj.firstName.charAt(0)}${uObj.lastName.charAt(0)}`;
+};
+
 export const getAuthState = async () => {
   return new Promise(async (resolve, reject) => {
     firebase.auth().onAuthStateChanged((user) => {

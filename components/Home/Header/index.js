@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { Avatar, Col, Popover, Row } from "antd";
 import Text from "@components/UI/Text";
 import { HeartOutlined, UserOutlined } from "@ant-design/icons";
@@ -19,15 +19,33 @@ import { useState } from "react";
 import { MenuCtx } from "@components";
 import { getActiveTheme, signOut, switchTheme } from "utils/commonFunctions";
 import "./styles.module.less";
+import { isEmpty } from "lodash";
+import { useRouter } from "next/router";
 
 function Header(props) {
   const { userData } = useSelector((state) => state.auth);
+  const router = useRouter();
   const mc = useContext(MenuCtx);
 
   const [profileMenuVisible, setProfileMenuVisible] = useState(false);
 
-  const DropDownContent = () => {
-    const menuData = [
+  const menuData = useMemo(() => {
+    if (isEmpty(userData)) {
+      return [
+        {
+          id: 4,
+          name: "Change Theme",
+          icon: getActiveTheme() === "light" ? <MoonIcon /> : <SunIcon />,
+        },
+        {
+          id: 6,
+          name: "Signin",
+          icon: <LogoutIcon className="logoutIconProfileMenu" />,
+        },
+      ];
+    }
+
+    return [
       {
         id: 1,
         name: "Legend",
@@ -54,22 +72,32 @@ function Header(props) {
         icon: <LogoutIcon className="logoutIconProfileMenu" />,
       },
     ];
+  });
 
-    const handleMenuClick = (item) => {
-      if (item.id === 3) {
-        mc.setActiveMenu(8);
-        return;
-      }
-      if (item.id === 4) {
-        switchTheme();
-        return;
-      }
-      if (item.id === 5) {
-        signOut();
-        return;
-      }
-    };
+  const handleMenuClick = (item) => {
+    if (item.id === 3) {
+      mc.setActiveMenu(8);
+      setProfileMenuVisible(false);
+      return;
+    }
+    if (item.id === 4) {
+      switchTheme();
+      setProfileMenuVisible(false);
+      return;
+    }
+    if (item.id === 5) {
+      signOut();
+      setProfileMenuVisible(false);
+      return;
+    }
+    if (item.id === 6) {
+      router.push("/signin");
+      setProfileMenuVisible(false);
+      return;
+    }
+  };
 
+  const DropDownContent = () => {
     return (
       <div>
         {menuData.map((m) => {
