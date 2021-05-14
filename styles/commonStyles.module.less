@@ -204,7 +204,11 @@ input[type="number"] {
   border-color: var(--themeTextSecondary) !important;
   color: var(--themeTextSecondary) !important;
 }
-
+.ant-dropdown-menu-item {
+  & span {
+    color: @textPrimary !important;
+  }
+}
 .ant-notification {
   & .ant-notification-notice-description {
     color: @textPrimary;

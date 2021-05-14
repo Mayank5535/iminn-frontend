@@ -220,7 +220,7 @@ function GameDetails() {
           />
         }
       >
-        <Text>Via Facebook</Text>
+        <Text black>Via Facebook</Text>
       </Menu.Item>
       <Menu.Item
         key="2"
@@ -234,7 +234,7 @@ function GameDetails() {
           />
         }
       >
-        <Text>Via Twitter</Text>
+        <Text black>Via Twitter</Text>
       </Menu.Item>
       <Menu.Item
         key="3"
@@ -248,7 +248,7 @@ function GameDetails() {
           />
         }
       >
-        <Text>Via Whatsapp</Text>
+        <Text black>Via Whatsapp</Text>
       </Menu.Item>
     </Menu>
   );
