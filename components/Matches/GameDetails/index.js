@@ -261,13 +261,7 @@ function GameDetails() {
         return (
           <Row align="middle" key={index} className="mt-1 pl-2">
             <Col flex="60px">
-              <Badge count={2} overflowCount={999} offset={[-5, 3]}>
-                <Avatar
-                  size={50}
-                  src={p.avatar || ""}
-                  icon={<UserOutlined />}
-                />
-              </Badge>
+              <Avatar size={44} src={p.avatar || ""} icon={<UserOutlined />} />
             </Col>
             <Col flex="auto">
               <Row>
@@ -366,7 +360,7 @@ function GameDetails() {
           </Row>
         ) : value.exists ? (
           <div className="minHeight">
-            <Row align="middle" className="mb-2 mt-2">
+            <Row align="middle" className=" mt-2">
               <Col>
                 <Row align="middle">
                   <PitchIcon className="primaryColor mr-1" />
