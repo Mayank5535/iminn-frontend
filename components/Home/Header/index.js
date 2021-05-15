@@ -23,9 +23,9 @@ import {
   signOut,
   switchTheme,
 } from "utils/commonFunctions";
-import "./styles.module.less";
 import { isEmpty } from "lodash";
 import { useRouter } from "next/router";
+import "./styles.module.less";
 
 function Header(props) {
   const { noSearch } = props;
@@ -83,6 +83,8 @@ function Header(props) {
 
   const handleMenuClick = (item) => {
     if (item.id === 3) {
+      console.log("route", router);
+      router && router.pathname !== "/" && router.push("/");
       mc.setActiveMenu(7);
       setProfileMenuVisible(false);
       return;

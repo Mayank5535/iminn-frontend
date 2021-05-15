@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useCollection } from "react-firebase-hooks/firestore";
 import Text from "@components/UI/Text";
 import Button from "@components/UI/Button";
-import { GameDetails, Header, Sider } from "@components";
+import { GameDetails, Header, MenuCtx, Sider } from "@components";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import db from "@config/firebaseConfig";
 import { Col, Empty, Row, Spin } from "antd";

@@ -1,14 +1,5 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from "react";
-import Text from "@components/UI/Text";
-import Button from "@components/UI/Button";
-import { Header, MenuCtx, Sider } from "@components";
-import {
-  ArrowLeftOutlined,
-  EditOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import db from "@config/firebaseConfig";
 import {
   Avatar,
   Col,
@@ -21,6 +12,12 @@ import {
   Space,
   Upload,
 } from "antd";
+import {
+  ArrowLeftOutlined,
+  EditOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import db from "@config/firebaseConfig";
 import { capitalize, isEmpty } from "lodash";
 import ImgCrop from "antd-img-crop";
 import { useSelector, useDispatch } from "react-redux";
@@ -31,11 +28,15 @@ import {
   uploadPhoto,
   validateImage,
 } from "utils/commonFunctions";
+import { Header, MenuCtx, Sider } from "@components";
 import Card from "@components/UI/Card";
+import Text from "@components/UI/Text";
+import Button from "@components/UI/Button";
 import TextInput from "@components/UI/TextInput";
 import { roles } from "@config/staticData";
 import moment from "moment";
 import AuthActions from "@redux/reducers/auth/actions";
+
 const { setUserData } = AuthActions;
 
 function ProfileEdit() {
@@ -119,10 +120,10 @@ function ProfileEdit() {
       <>
         <Card
           round
-          className="mr-1 mb-2 colFlex allCenter"
+          className="colFlex allCenter mr-1 mb-2"
           style={{ height: 37, width: 37 }}
         >
-          <Text white bold h4 className="m-1">
+          <Text white bold h4>
             {props.n}
           </Text>
         </Card>

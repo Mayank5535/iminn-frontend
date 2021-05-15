@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Head from "next/head";
 import { Col, Row } from "antd";
 import {
@@ -11,12 +11,12 @@ import {
   ProfileEdit,
 } from "@components";
 import CreateGame from "./CreateGame";
-import "./styles.module.less";
 import { useSelector } from "react-redux";
+import "./styles.module.less";
 
 function Home() {
-  const [activeMenu, setActiveMenu] = useState(1);
   const { theme } = useSelector((state) => state.theme);
+  const mc = useContext(MenuCtx);
   // CUSTOM VIEWS
   const DashboardView = () => (
     <>
@@ -78,7 +78,7 @@ function Home() {
 
   const renderContent = () => {
     let th = theme; //! IMPORTANT: Do not remove. Used for rerender on theme Change
-    switch (activeMenu) {
+    switch (mc.active) {
       case 1:
         return <DashboardView />;
       case 2:
@@ -107,13 +107,7 @@ function Home() {
         />
         <title>Iminn - Get early access</title>
       </Head>
-      <Row className="layoutContainer">
-        <MenuCtx.Provider
-          value={{ active: activeMenu, setActiveMenu: setActiveMenu }}
-        >
-          {renderContent()}
-        </MenuCtx.Provider>
-      </Row>
+      <Row className="layoutContainer">{renderContent()}</Row>
     </>
   );
 }

@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import "antd/dist/antd.less";
+import React, { useEffect, useState } from "react";
 import { useStore } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { wrapper } from "../redux/store/configureStore";
-import "antd/dist/antd.less";
 import "../styles/commonStyles.module.less";
 import { initializeTheme } from "../utils/commonFunctions";
+import { MenuCtx } from "@components";
 
 const App = ({ Component, pageProps }) => {
   const store = useStore((state) => state);
+  const [activeMenu, setActiveMenu] = useState(1);
 
   useEffect(() => {
     initializeTheme();
@@ -15,7 +17,11 @@ const App = ({ Component, pageProps }) => {
 
   return (
     <PersistGate persistor={store.__persistor} loading={<div>...Loading</div>}>
-      <Component {...pageProps} />
+      <MenuCtx.Provider
+        value={{ active: activeMenu, setActiveMenu: setActiveMenu }}
+      >
+        <Component {...pageProps} />
+      </MenuCtx.Provider>
     </PersistGate>
   );
 };

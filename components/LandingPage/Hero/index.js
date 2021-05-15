@@ -4,8 +4,8 @@ import { Button, Row } from "antd";
 import { useRouter } from "next/router";
 import useMediaQuery from "utils/useMediaQuery";
 import { switchTheme } from "utils/commonFunctions";
-import "../styles.module.less";
 import { useSelector } from "react-redux";
+import "../styles.module.less";
 
 function Hero() {
   const router = useRouter();

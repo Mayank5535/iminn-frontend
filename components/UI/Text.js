@@ -29,7 +29,7 @@ const Text = styled.span`
   display: ${(props) => (props.clamp && "-webkit-box") || "inherit"};
   -webkit-box-orient: ${(props) => (props.clamp && "verticle") || "inherit"};
   -webkit-line-clamp: ${(props) => props.clamp || "inherit"};
-  overflow: hidden;
+  overflow: ${(props) => (props.clamp && "hidden") || "inherit"};
 `;
 
 export default Text;
