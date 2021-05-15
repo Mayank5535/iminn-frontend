@@ -28,6 +28,8 @@ import { isEmpty } from "lodash";
 import { useRouter } from "next/router";
 
 function Header(props) {
+  const { noSearch } = props;
+
   const { userData } = useSelector((state) => state.auth);
   const router = useRouter();
   const mc = useContext(MenuCtx);
@@ -132,9 +134,7 @@ function Header(props) {
   return (
     <div className="mb-2">
       <Row justify="space-between" align="middle">
-        <Col>
-          <Searchbar />
-        </Col>
+        <Col>{!noSearch && <Searchbar />}</Col>
         <Col>
           <Row align="middle">
             <Col>

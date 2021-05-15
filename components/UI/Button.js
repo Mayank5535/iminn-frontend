@@ -10,11 +10,16 @@ const StyledButton = styled(ABtn)`
   height: 38px;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+  display: flex;
+  align-items: center;
   background-color: ${(props) =>
     props.type === "text" && "transparent !important"};
   &:hover {
-    color: ${(props) =>
-      ["ghost", "text"].includes(props.type) && theme.colors.primary};
+    &,
+    & span {
+      color: ${(props) =>
+        ["ghost", "text"].includes(props.type) && theme.colors.primary};
+    }
     background-color: ${(props) =>
       props.type === "text" && "transparent !important"};
   }

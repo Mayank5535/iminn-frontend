@@ -276,9 +276,11 @@ function GameDetails() {
             className="mt-1 pl-2"
           >
             <Col flex="60px">
-              <Avatar size={44} src={p.avatar || ""} className="primaryBg">
-                {getInitials(p)}
-              </Avatar>
+              <Badge count={0} overflowCount={999} offset={[-5, 3]}>
+                <Avatar size={44} src={p.avatar || ""} className="primaryBg">
+                  {getInitials(p)}
+                </Avatar>
+              </Badge>
             </Col>
             <Col flex="auto">
               <Row>
@@ -301,11 +303,11 @@ function GameDetails() {
         return (
           <Row align="middle" key={index} className="mt-1 pl-2">
             <Col flex="60px">
-              {/* <Badge count={2} overflowCount={999} offset={[-5, 3]}> */}
-              <Avatar size={44} src={p.avatar || ""} className="primaryBg">
-                {getInitials(p)}
-              </Avatar>
-              {/* </Badge> */}
+              <Badge count={0} overflowCount={999} offset={[-5, 3]}>
+                <Avatar size={44} src={p.avatar || ""} className="primaryBg">
+                  {getInitials(p)}
+                </Avatar>
+              </Badge>
             </Col>
             <Col flex="auto">
               <Row>
@@ -368,7 +370,7 @@ function GameDetails() {
         </Sider>
       </Col>
       <Col flex="20" className="pl-2">
-        <Header />
+        <Header noSearch={true} />
         {loading || finalLoader ? (
           <Row justify="center" align="middle" style={{ height: "50vh" }}>
             <Spin spinning size="large" />
@@ -383,7 +385,7 @@ function GameDetails() {
               </Col>
               <Col>
                 <Text h3 className="bold" weight="500">
-                  Team A vs Team B
+                  {data.pitch.label}
                 </Text>
               </Col>
             </Row>
@@ -498,7 +500,7 @@ function GameDetails() {
                 <Row justify="center" align="stretch" className="w100">
                   <Col span={11} className="colFlex allCenter">
                     <Row>
-                      <TeamAIcon stle={{ height: 80, width: 80 }} />
+                      <TeamAIcon className="squadLogos" />
                     </Row>
                     <Row>
                       <Text bold>Team A</Text>
@@ -513,13 +515,11 @@ function GameDetails() {
                     </Row>
                   </Col>
                   <Col span={2} className="colFlex textCenter">
-                    <Text black style={{ marginTop: 58 }}>
-                      VS
-                    </Text>
+                    <Text style={{ marginTop: 58 }}>VS</Text>
                   </Col>
                   <Col span={11} className="colFlex allCenter">
                     <Row>
-                      <TeamBIcon stle={{ height: 80, width: 80 }} />
+                      <TeamBIcon className="squadLogos" />
                     </Row>
                     <Row>
                       <Text bold>Team B</Text>
@@ -535,8 +535,10 @@ function GameDetails() {
                   </Col>
                 </Row>
                 <Row justify="space-between" className="w100">
-                  <Col span={11}>{renderTeam("A")}</Col>
-                  <Col offset={2} span={11}>
+                  <Col offset={1} span={10}>
+                    {renderTeam("A")}
+                  </Col>
+                  <Col offset={1} span={10}>
                     {renderTeam("B")}
                   </Col>
                 </Row>
