@@ -17,7 +17,12 @@ import Searchbar from "@components/UI/Searchbar";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { MenuCtx } from "@components";
-import { getActiveTheme, signOut, switchTheme } from "utils/commonFunctions";
+import {
+  getActiveTheme,
+  getInitials,
+  signOut,
+  switchTheme,
+} from "utils/commonFunctions";
 import "./styles.module.less";
 import { isEmpty } from "lodash";
 import { useRouter } from "next/router";
@@ -158,8 +163,11 @@ function Header(props) {
                   <Avatar
                     size={60}
                     icon={<UserOutlined />}
+                    className={!isEmpty(userData) ? "primaryBg" : ""}
                     src={userData?.profileImage?.secure_url || ""}
-                  />
+                  >
+                    {getInitials(userData)}
+                  </Avatar>
                   <DropArrow className="headerMenuProfileDropIcon" />
                 </Row>
               </Popover>

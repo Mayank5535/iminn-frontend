@@ -43,7 +43,7 @@ import {
   TShirtIcon,
 } from "@components/UI/Icons";
 import "./styles.module.less";
-import { theme } from "utils/commonFunctions";
+import { getInitials, theme } from "utils/commonFunctions";
 import Card from "@components/UI/Card";
 import { shareMsg } from "@config/staticData";
 import siteConfig from "@config/siteConfig";
@@ -89,7 +89,7 @@ function GameDetails() {
       playerId: userData.userId,
       firstName: userData.firstName,
       lastName: userData.lastName,
-      avatar: userData.profileImage.secure_url,
+      avatar: userData.profileImage.secure_url || "",
       role: userData.role,
       email: userData.email,
     };
@@ -271,7 +271,9 @@ function GameDetails() {
         return (
           <Row align="middle" key={index} className="mt-1 pl-2">
             <Col flex="60px">
-              <Avatar size={44} src={p.avatar || ""} icon={<UserOutlined />} />
+              <Avatar size={44} src={p.avatar || ""} className="primaryBg">
+                {getInitials(p)}
+              </Avatar>
             </Col>
             <Col flex="auto">
               <Row>
@@ -295,7 +297,9 @@ function GameDetails() {
           <Row align="middle" key={index} className="mt-1 pl-2">
             <Col flex="60px">
               {/* <Badge count={2} overflowCount={999} offset={[-5, 3]}> */}
-              <Avatar size={50} src={p.avatar || ""} icon={<UserOutlined />} />
+              <Avatar size={44} src={p.avatar || ""} className="primaryBg">
+                {getInitials(p)}
+              </Avatar>
               {/* </Badge> */}
             </Col>
             <Col flex="auto">

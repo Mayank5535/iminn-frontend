@@ -2,7 +2,7 @@ import firebase from "firebase";
 import db from "@config/firebaseConfig";
 import ThemeActions from "@redux/reducers/theme/actions";
 import AuthActions from "@redux/reducers/auth/actions";
-import _ from "lodash-es";
+import _, { isEmpty } from "lodash-es";
 import { message } from "antd";
 import fetchHelper from "./apiHelper";
 import siteConfig from "@config/siteConfig";
@@ -85,7 +85,10 @@ export const switchTheme = () => {
 };
 
 export const getInitials = (uObj) => {
-  return `${uObj.firstName.charAt(0)}${uObj.lastName.charAt(0)}`;
+  if (!_.isEmpty(uObj)) {
+    return `${uObj.firstName.charAt(0)}${uObj.lastName.charAt(0)}`;
+  }
+  return "";
 };
 
 export const getAuthState = async () => {
