@@ -22,6 +22,8 @@ import {
   Dropdown,
   Empty,
   Menu,
+  message,
+  notification,
   Popover,
   Row,
   Space,
@@ -79,6 +81,10 @@ function GameDetails() {
   };
 
   const joinTeam = (team) => {
+    if (isEmpty(userData)) {
+      router.push("/signin");
+      return;
+    }
     const playerData = {
       playerId: userData.userId,
       firstName: userData.firstName,
@@ -174,6 +180,10 @@ function GameDetails() {
   }, [value]);
 
   const handleFollow = () => {
+    if (isEmpty(userData)) {
+      message.info("You must be signed in to use this feature!");
+      return;
+    }
     const operationType = !following ? "arrayUnion" : "arrayRemove";
     db.collection("games")
       .doc(`${router?.query.matches[0]}`)
