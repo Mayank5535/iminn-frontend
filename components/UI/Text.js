@@ -26,6 +26,10 @@ const Text = styled.span`
     "inherit"};
   line-height: ${(props) =>
     (props.h1 && "64px") || (props.h2 && "30px") || "inherit"};
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: ${(props) => props.clamp || "inherit"};
+  overflow: hidden;
 `;
 
 export default Text;

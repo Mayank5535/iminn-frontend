@@ -269,7 +269,12 @@ function GameDetails() {
     if (name == "A" && !isEmpty(teams.teamA) && isArray(teams.teamA)) {
       listRender = teams.teamA.map((p, index) => {
         return (
-          <Row align="middle" key={index} className="mt-1 pl-2">
+          <Row
+            justify="center"
+            align="middle"
+            key={index}
+            className="mt-1 pl-2"
+          >
             <Col flex="60px">
               <Avatar size={44} src={p.avatar || ""} className="primaryBg">
                 {getInitials(p)}
@@ -277,7 +282,7 @@ function GameDetails() {
             </Col>
             <Col flex="auto">
               <Row>
-                <Text bold small>
+                <Text bold small clamp={1}>
                   {`${p.firstName} ${p.lastName}`}
                 </Text>
               </Row>
@@ -304,7 +309,7 @@ function GameDetails() {
             </Col>
             <Col flex="auto">
               <Row>
-                <Text bold small>
+                <Text bold small clamp={1}>
                   {`${p.firstName} ${p.lastName}`}
                 </Text>
               </Row>
