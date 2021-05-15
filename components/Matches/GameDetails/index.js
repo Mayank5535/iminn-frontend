@@ -284,17 +284,13 @@ function GameDetails() {
         return (
           <Row align="middle" key={index} className="mt-1 pl-2">
             <Col flex="60px">
-              <Badge count={2} overflowCount={999} offset={[-5, 3]}>
-                <Avatar
-                  size={50}
-                  src={p.avatar || ""}
-                  icon={<UserOutlined />}
-                />
-              </Badge>
+              {/* <Badge count={2} overflowCount={999} offset={[-5, 3]}> */}
+              <Avatar size={50} src={p.avatar || ""} icon={<UserOutlined />} />
+              {/* </Badge> */}
             </Col>
             <Col flex="auto">
               <Row>
-                <Text black bold small>
+                <Text bold small>
                   {`${p.firstName} ${p.lastName}`}
                 </Text>
               </Row>
@@ -373,47 +369,46 @@ function GameDetails() {
               </Col>
             </Row>
             <Row justify="space-between">
-              <Space direction="vertical" className="mt-2">
-                <Row align="top">
-                  <Col style={{ width: 36 }}>
-                    <PlaceIcon className="formLabelIcon primaryColor mr-1" />
-                  </Col>
-                  <Col>
-                    <Row>
-                      <Text>{data.center.Name || "-"}</Text>
-                    </Row>
-                    <Row>
-                      <Text style={{ fontWeight: "400 !important" }}>
-                        {data.center.Address || "-"}
-                      </Text>
-                    </Row>
-                  </Col>
-                </Row>
-                <Row align="middle">
-                  <Col style={{ width: 36 }}>
-                    <CalendarOutlined
-                      style={{ fontSize: 20 }}
-                      className="formLabelIcon primaryColor mr-1"
-                    />
-                  </Col>
-                  <Col>
-                    <Text>{data.dateTime}</Text>
-                  </Col>
-                </Row>
-                <Row align="middle">
-                  <Col style={{ width: 36 }}>
-                    <MoneyIcon className="formLabelIcon primaryColor mr-1" />
-                  </Col>
-                  <Col>
-                    <Text>{data.cost} £ per person</Text>
-                  </Col>
-                </Row>
-              </Space>
-            </Row>
-            <Row>
               <Col span={leftSpan}>
-                <Divider type="horizontal" className="divider" />
-                <Row align="middle">
+                <Space direction="vertical" className="mt-2">
+                  <Row align="top">
+                    <Col style={{ width: 36 }}>
+                      <PlaceIcon className="formLabelIcon primaryColor mr-1" />
+                    </Col>
+                    <Col>
+                      <Row>
+                        <Text>{data.center.Name || "-"}</Text>
+                      </Row>
+                      <Row>
+                        <Text style={{ fontWeight: "400 !important" }}>
+                          {data.center.Address || "-"}
+                        </Text>
+                      </Row>
+                    </Col>
+                  </Row>
+                  <Row align="middle">
+                    <Col style={{ width: 36 }}>
+                      <CalendarOutlined
+                        style={{ fontSize: 20 }}
+                        className="formLabelIcon primaryColor mr-1"
+                      />
+                    </Col>
+                    <Col>
+                      <Text>{data.dateTime}</Text>
+                    </Col>
+                  </Row>
+                  <Row align="middle">
+                    <Col style={{ width: 36 }}>
+                      <MoneyIcon className="formLabelIcon primaryColor mr-1" />
+                    </Col>
+                    <Col>
+                      <Text>{data.cost} £ per person</Text>
+                    </Col>
+                  </Row>
+                </Space>
+              </Col>
+              <Col span={24 - leftSpan}>
+                <Row align="middle" wrap={false}>
                   <Col>
                     <Avatar
                       className="mr-2"
@@ -424,18 +419,29 @@ function GameDetails() {
                   </Col>
                   <Col>
                     <Space direction="vertical">
-                      <Row align="middle">
+                      <Row align="middle" justify="space-between" wrap={false}>
                         <Text
                           bold
                           h4
+                          ellipsis
                         >{`${manager.firstName} ${manager.lastName}`}</Text>
-                      </Row>
-                      <Row align="middle">
                         <Tag color={theme.colors.primary}>Manager</Tag>
+                      </Row>
+
+                      <Row align="middle">
+                        <Text>
+                          Hi! everyone see you on the ground! Come with Green
+                          Jersey
+                        </Text>
                       </Row>
                     </Space>
                   </Col>
                 </Row>
+                <Divider type="horizontal" className="divider" />
+              </Col>
+            </Row>
+            {/* <Row>
+              <Col span={leftSpan}>
                 <Divider type="horizontal" className="divider" />
                 <Row align="middle" justify="space-between">
                   <Col>
@@ -448,12 +454,9 @@ function GameDetails() {
                       </Row>
                     </Row>
                   </Col>
-                  {/* <Col>
-                    <RightOutlined style={{ fontSize: 24 }} />
-                  </Col> */}
                 </Row>
               </Col>
-            </Row>
+            </Row> */}
             {/* <Row justify="end">
               <span className="mt-2 mb-2">
                 <Button
@@ -471,8 +474,8 @@ function GameDetails() {
                 </Button>
               </span>
             </Row> */}
-            <Row>
-              <Col span={leftSpan} className="colFlex allCenter mt-1">
+            <Row className="mt-2">
+              <Col span={leftSpan} className="colFlex allCenter">
                 <Row justify="center" align="stretch" className="w100">
                   <Col span={11} className="colFlex allCenter">
                     <Row>

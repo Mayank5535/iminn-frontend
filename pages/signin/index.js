@@ -70,7 +70,7 @@ function Signin() {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        if (isEmpty(userCredential.user.displayName)) {
+        if (!userCredential.user.displayName) {
           router.replace("/create-profile");
           setBtnLoading(false);
         } else {

@@ -89,7 +89,6 @@ export function GameListCard({ data, onOpen, skeleton = false }) {
                 maxStyle={{ color: theme.colors.primary }}
               >
                 {players.map((n, index) => {
-                  console.log("Platers", n);
                   return (
                     <Avatar key={index} src={n.avatar}>
                       {getInitials(n)}

@@ -76,7 +76,7 @@ function Header(props) {
 
   const handleMenuClick = (item) => {
     if (item.id === 3) {
-      mc.setActiveMenu(8);
+      mc.setActiveMenu(7);
       setProfileMenuVisible(false);
       return;
     }

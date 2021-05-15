@@ -37,6 +37,7 @@ import AuthActions from "@redux/reducers/auth/actions";
 import "./styles.module.less";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { PageLoading } from "@components";
+import TextInput from "@components/UI/TextInput";
 
 const { setUserData } = AuthActions;
 const dateFormat = "DD/MM/YYYY";
@@ -58,7 +59,10 @@ function CreateProfile() {
   const [activeRolePage, setActiveRolePage] = useState(0);
 
   useEffect(() => {
-    user?.displayName !== "" ? router.push("/") : setPageLoader(false);
+    if (!isEmpty(user)) {
+      console.log("IN CREATE PROFILE --> ", user?.displayName);
+      user.displayName !== null ? router.push("/") : setPageLoader(false);
+    }
   }, [user]);
 
   const handleProfileImage = async (info) => {
@@ -326,7 +330,7 @@ function CreateProfile() {
               name="firstName"
               rules={[{ required: true, message: "Please enter your name." }]}
             >
-              <Input size="large" placeholder="Enter your name" />
+              <TextInput placeholder="Enter your name" />
             </Form.Item>
             <Form.Item
               name="lastName"
@@ -334,7 +338,7 @@ function CreateProfile() {
                 { required: true, message: "Please enter your surname." },
               ]}
             >
-              <Input size="large" placeholder="Enter your surname" />
+              <TextInput placeholder="Enter your surname" />
             </Form.Item>
             <Form.Item
               name="dob"
