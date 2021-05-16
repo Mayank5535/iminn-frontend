@@ -453,6 +453,11 @@ function GameDetails() {
             />
           }
         >
+          {isEmpty(messageList) && (
+            <Row justify="center" align="middle">
+              <Text secondary>No notices yet!</Text>
+            </Row>
+          )}
           {messageList.map((m, k) => {
             let sender = allMembers.find((p) => m.senderId === p.playerId);
             let avatarSrc;
