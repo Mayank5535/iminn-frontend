@@ -121,6 +121,27 @@ input[type="number"] {
 }
 
 //OVERRIDEEN ANT STYLES
+/* width */
+::-webkit-scrollbar {
+  width: 5px !important;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: darken(@primary, -10%);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: darken(@primary, -10%);
+}
+
 .ant-tag {
   border-radius: 20px;
 }

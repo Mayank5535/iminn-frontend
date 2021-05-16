@@ -10,6 +10,10 @@ import {
   CalendarOutlined,
   HeartFilled,
   HeartOutlined,
+  MessageOutlined,
+  MinusOutlined,
+  PlusOutlined,
+  SendOutlined,
   ShareAltOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -47,8 +51,11 @@ import { getInitials, theme } from "utils/commonFunctions";
 import Card from "@components/UI/Card";
 import { shareMsg } from "@config/staticData";
 import siteConfig from "@config/siteConfig";
+import TextInput from "@components/UI/TextInput";
+import moment from "moment";
 
-const leftSpan = 14;
+const leftSpan = 13;
+const rightSpan = 24 - leftSpan - 2;
 
 function GameDetails() {
   const router = useRouter();
@@ -64,6 +71,11 @@ function GameDetails() {
   const [finalLoader, setFinalLoader] = useState(true);
   const [manager, setManager] = useState({});
   const [following, setFollowing] = useState(false);
+  const [openChatInput, setOpenChatInput] = useState(false);
+  const [cInp, setCInp] = useState("");
+  const [msgSending, setMsgSending] = useState(false);
+
+  const [messageList, setMessageList] = useState([]);
 
   const [value, loading] = useDocument(
     db.doc(`games/${router?.query.matches[0]}`),
@@ -174,10 +186,24 @@ function GameDetails() {
       } else {
         setFollowing(false);
       }
+      if (has(value.data(), "messages")) {
+        setMessageList(value.data().messages.reverse());
+      }
       console.log("%cALL DATA", "color:blue", value.data());
       return value.data();
     }
   }, [value]);
+
+  const noticeAccess = useMemo(() => {
+    //If person is a manager or person's is a part of any team can send message
+    if (data && data.managerId === userData.userId) {
+      return true;
+    }
+    if (myTeam !== null) {
+      return true;
+    }
+    return false;
+  }, [data, myTeam, userData]);
 
   const handleFollow = () => {
     if (isEmpty(userData)) {
@@ -214,6 +240,30 @@ function GameDetails() {
     console.log("===> ~ handleShare ~ url", key, url);
 
     window && window.open(url, "_blank");
+  };
+
+  const handleSend = () => {
+    if (msgSending) return;
+    const msg = cInp.trim();
+    const msgData = {
+      time: moment().format(),
+      text: msg,
+      senderId: userData.userId,
+    };
+    setMsgSending(true);
+    setCInp("");
+    db.collection("games")
+      .doc(`${router?.query.matches[0]}`)
+      .update({
+        messages: firebase.firestore.FieldValue.arrayUnion(msgData),
+      })
+      .then(() => {
+        setMsgSending(false);
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+        setMsgSending(false);
+      });
   };
 
   const renderShareLinks = () => (
@@ -351,6 +401,106 @@ function GameDetails() {
     return listRender;
   };
 
+  const renderMessages = () => {
+    let allMembers = [manager];
+    if (data && data.teams && isArray(data.teams.teamA)) {
+      allMembers = [...allMembers, ...data.teams.teamA];
+    }
+    if (data && data.teams && isArray(data.teams.teamB)) {
+      allMembers = [...allMembers, ...data.teams.teamB];
+    }
+    return (
+      <>
+        {openChatInput && noticeAccess && (
+          <Row className="w100 pl-1 pr-1 mb-1">
+            <Col flex="auto">
+              <TextInput
+                onKeyPress={(e) => e.key === "Enter" && handleSend()}
+                value={cInp}
+                onChange={(e) => setCInp(e.target.value)}
+                placeholder="Type your message..."
+                autoSize={{ minRows: 1, maxRows: 1 }}
+              />
+            </Col>
+            <Col>
+              <Button
+                onClick={() => handleSend()}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginLeft: 10,
+                  borderRadius: 10,
+                  height: 37,
+                }}
+                type="primary"
+                shape="square"
+                icon={<SendOutlined style={{ fontSize: 18 }} />}
+              />
+            </Col>
+          </Row>
+        )}
+        <Space
+          direction="vertical"
+          className="w100 messageBox pl-1 pr-1"
+          style={{
+            maxHeight: `calc(100vh - ${noticeAccess ? 480 : 420}px)`,
+          }}
+          split={
+            <Divider
+              type="horizontal"
+              style={{ margin: "8px 5px", width: "80%" }}
+            />
+          }
+        >
+          {messageList.map((m, k) => {
+            let sender = allMembers.find((p) => m.senderId === p.playerId);
+            let avatarSrc;
+            if (m.senderId === data?.managerId) {
+              avatarSrc = manager && manager.profileImage.secure_url;
+            } else {
+              avatarSrc = sender.avatar;
+            }
+            return (
+              <Row justify="center" align="middle" key={k}>
+                <Col flex="60px">
+                  <Badge count={0} overflowCount={999} offset={[-5, 3]}>
+                    <Avatar
+                      size={44}
+                      src={avatarSrc || ""}
+                      className="primaryBg"
+                    >
+                      {getInitials(sender)}
+                    </Avatar>
+                  </Badge>
+                </Col>
+                <Col flex="auto">
+                  <Row justify="space-between">
+                    <Col>
+                      <Text bold small clamp={1}>
+                        {`${sender.firstName} ${sender.lastName}`}
+                      </Text>
+                    </Col>
+                    <Col>
+                      <Text footnote light secondary>
+                        {moment(m.time).fromNow(true)}
+                      </Text>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Text light small clamp={10}>
+                      {m.text}
+                    </Text>
+                  </Row>
+                </Col>
+              </Row>
+            );
+          })}
+        </Space>
+      </>
+    );
+  };
+
   let totalA = 0;
   let totalB = 0;
 
@@ -428,15 +578,17 @@ function GameDetails() {
                   </Row>
                 </Space>
               </Col>
-              <Col span={24 - leftSpan}>
-                <Row align="middle" wrap={false}>
+              <Col span={rightSpan}>
+                <Row align="middle" wrap={false} className="mt-2">
                   <Col>
                     <Avatar
-                      className="mr-2"
-                      size={85}
+                      className="primaryBg mr-2"
+                      size={65}
                       icon={<UserOutlined />}
                       src={(manager && manager?.profileImage?.secure_url) || ""}
-                    />
+                    >
+                      {getInitials(manager)}
+                    </Avatar>
                   </Col>
                   <Col>
                     <Space direction="vertical">
@@ -448,7 +600,6 @@ function GameDetails() {
                         >{`${manager.firstName} ${manager.lastName}`}</Text>
                         <Tag color={theme.colors.primary}>Manager</Tag>
                       </Row>
-
                       <Row align="middle">
                         <Text>
                           Hi! everyone see you on the ground! Come with Green
@@ -495,8 +646,8 @@ function GameDetails() {
                 </Button>
               </span>
             </Row> */}
-            <Row className="mt-2">
-              <Col span={leftSpan} className="colFlex allCenter">
+            <Row justify="space-between">
+              <Col span={leftSpan} className="colFlex mt-2">
                 <Row justify="center" align="stretch" className="w100">
                   <Col span={11} className="colFlex allCenter">
                     <Row>
@@ -515,7 +666,12 @@ function GameDetails() {
                     </Row>
                   </Col>
                   <Col span={2} className="colFlex textCenter">
-                    <Text style={{ marginTop: 58 }}>VS</Text>
+                    <Text
+                      style={{ marginTop: 58 }}
+                      className="colFlex textCenter"
+                    >
+                      VS
+                    </Text>
                   </Col>
                   <Col span={11} className="colFlex allCenter">
                     <Row>
@@ -543,8 +699,6 @@ function GameDetails() {
                   </Col>
                 </Row>
                 <Divider type="horizontal" className="divider" />
-              </Col>
-              <Col span={leftSpan}>
                 <Row>
                   <Button
                     style={{ display: "flex", width: 145 }}
@@ -570,6 +724,44 @@ function GameDetails() {
                     </Button>
                   </Dropdown>
                 </Row>
+              </Col>
+              <Col span={rightSpan}>
+                <Card trans className="noSelect">
+                  <Row align="middle" className="p-1">
+                    <Col flex="32px">
+                      <MessageOutlined
+                        style={{ fontSize: 28 }}
+                        className="primaryColor mr-1"
+                      />
+                    </Col>
+                    <Col flex="auto">
+                      <Text h3 className="bold" weight="500">
+                        Notice Board
+                      </Text>
+                    </Col>
+                    <Col flex="35px">
+                      <Card
+                        onClick={() => setOpenChatInput(!openChatInput)}
+                        round
+                        style={{ height: 30, width: 30 }}
+                        className="colFlex allCenter pointer"
+                      >
+                        {!openChatInput ? (
+                          <PlusOutlined
+                            style={{ fontSize: 18 }}
+                            className="whiteColor"
+                          />
+                        ) : (
+                          <MinusOutlined
+                            style={{ fontSize: 18 }}
+                            className="whiteColor"
+                          />
+                        )}
+                      </Card>
+                    </Col>
+                  </Row>
+                  {openChatInput ? renderMessages() : null}
+                </Card>
               </Col>
             </Row>
           </div>
