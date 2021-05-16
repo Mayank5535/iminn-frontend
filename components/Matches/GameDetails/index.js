@@ -797,7 +797,9 @@ function GameDetails() {
                   </Col>
                 </Row>
                 <Row justify="space-between" className="w100">
-                  <Col span={10}>{renderTeam("A")}</Col>
+                  <Col offset={1} span={10}>
+                    {renderTeam("A")}
+                  </Col>
                   <Col offset={1} span={10}>
                     {renderTeam("B")}
                   </Col>
