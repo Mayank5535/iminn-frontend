@@ -27,6 +27,7 @@ import {
   Empty,
   Menu,
   message,
+  Modal,
   notification,
   Popover,
   Row,
@@ -64,6 +65,8 @@ function GameDetails() {
   // const [showConfirmModal, setShowConfirmModal] = useState(false);
   // const [showSquadModal, setShowSquadModal] = useState(false);
   // const [showSelectTeamModal, setShowSelectTeamModal] = useState(false);
+  const [openManagerNote, setOpenManagerNote] = useState(false);
+
   const [myTeam, setMyTeam] = useState(null);
 
   const [btnLoadingA, setBtnLoadingA] = useState(false);
@@ -73,7 +76,10 @@ function GameDetails() {
   const [following, setFollowing] = useState(false);
   const [openChatInput, setOpenChatInput] = useState(false);
   const [cInp, setCInp] = useState("");
+  const [mNote, setMNote] = useState("");
+
   const [msgSending, setMsgSending] = useState(false);
+  const [managerNoteLoader, setManagerNoteLoader] = useState(false);
 
   const [messageList, setMessageList] = useState([]);
 
@@ -180,7 +186,7 @@ function GameDetails() {
       }
       if (
         has(value.data(), "followers") &&
-        value.data().followers.includes(userData.userId)
+        value.data().followers?.includes(userData.userId)
       ) {
         setFollowing(true);
       } else {
@@ -188,6 +194,9 @@ function GameDetails() {
       }
       if (has(value.data(), "messages")) {
         setMessageList(value.data().messages.reverse());
+      }
+      if (has(value.data(), "managerNote")) {
+        setMNote(value.data().managerNote);
       }
       console.log("%cALL DATA", "color:blue", value.data());
       return value.data();
@@ -263,6 +272,22 @@ function GameDetails() {
       .catch((error) => {
         console.error("Error writing document: ", error);
         setMsgSending(false);
+      });
+  };
+
+  const handleManagersNote = () => {
+    setManagerNoteLoader(true);
+    db.collection("games")
+      .doc(`${router?.query.matches[0]}`)
+      .update({
+        managerNote: mNote.trim() || "",
+      })
+      .then(() => {
+        setManagerNoteLoader(false);
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+        setManagerNoteLoader(false);
       });
   };
 
@@ -506,6 +531,66 @@ function GameDetails() {
     );
   };
 
+  const renderManagerNoteModal = () => {
+    return (
+      <Modal
+        visible={openManagerNote}
+        onCancel={() => {
+          setOpenManagerNote(false);
+          setMNote("");
+        }}
+        centered
+        footer={null}
+        width="400px"
+      >
+        <Row>
+          <Col span={24} className="colFlex">
+            <Row>
+              <Text h4 black bold className="mb-1">
+                Note for players
+              </Text>
+            </Row>
+            <Row>
+              <TextInput
+                inModal
+                textAreaType
+                autofocus
+                onKeyPress={(e) => e.key === "Enter" && handleSend()}
+                value={mNote}
+                onChange={(e) => setMNote(e.target.value)}
+                placeholder="Type your message..."
+                autoSize={{ minRows: 1, maxRows: 3 }}
+              />
+            </Row>
+            <Row justify="end" className="mt-2">
+              <Button
+                className="primaryColor mr-1"
+                inModal
+                type="text"
+                onClick={() => {
+                  setOpenManagerNote(false);
+                }}
+              >
+                CANCEL
+              </Button>
+              <Button
+                loading={managerNoteLoader}
+                disabled={managerNoteLoader}
+                type="primary"
+                onClick={() => {
+                  setOpenManagerNote(false);
+                  handleManagersNote();
+                }}
+              >
+                OK
+              </Button>
+            </Row>
+          </Col>
+        </Row>
+      </Modal>
+    );
+  };
+
   let totalA = 0;
   let totalB = 0;
 
@@ -595,22 +680,38 @@ function GameDetails() {
                       {getInitials(manager)}
                     </Avatar>
                   </Col>
-                  <Col>
-                    <Space direction="vertical">
+                  <Col flex="auto" className="w100">
+                    <Space direction="vertical" className="w100">
                       <Row align="middle" justify="space-between" wrap={false}>
-                        <Text
-                          bold
-                          h4
-                          ellipsis
-                        >{`${manager.firstName} ${manager.lastName}`}</Text>
-                        <Tag color={theme.colors.primary}>Manager</Tag>
+                        <Col>
+                          <Text
+                            bold
+                            h4
+                            clamp={1}
+                          >{`${manager.firstName} ${manager.lastName}`}</Text>
+                        </Col>
+                        <Col>
+                          <Tag color={theme.colors.primary}>Manager</Tag>
+                        </Col>
                       </Row>
-                      <Row align="middle">
-                        <Text>
-                          Hi! everyone see you on the ground! Come with Green
-                          Jersey
-                        </Text>
-                      </Row>
+                      {data.managerId === userData.userId && (
+                        <Row align="middle">
+                          {!data.managerNote ? (
+                            <a onClick={() => setOpenManagerNote(true)}>
+                              Add a message for teams!
+                            </a>
+                          ) : (
+                            <a onClick={() => setOpenManagerNote(true)}>
+                              {data?.managerNote}
+                            </a>
+                          )}
+                        </Row>
+                      )}
+                      {data.managerId !== userData.userId && data?.managerNote && (
+                        <Row align="middle">
+                          <Text clamp={3}>{data?.managerNote}</Text>
+                        </Row>
+                      )}
                     </Space>
                   </Col>
                 </Row>
@@ -769,6 +870,7 @@ function GameDetails() {
                 </Card>
               </Col>
             </Row>
+            {renderManagerNoteModal()}
           </div>
         ) : (
           <Empty

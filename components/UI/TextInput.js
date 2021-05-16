@@ -6,13 +6,19 @@ import { getActiveTheme, theme } from "utils/commonFunctions";
 
 const StyledInput = styled(Input)`
   background-color: ${theme.colors.cardTrans + " !important"};
-  color: ${(props) => theme[props.activeTheme].text + " !important"};
+  color: ${(props) =>
+    props.inModal
+      ? theme.colors.black
+      : theme[props.activeTheme].text + " !important"};
   border-radius: 10px !important;
   cursor: pointer !important;
   & > input.ant-input {
     padding: 0;
     background-color: transparent !important;
-    color: ${(props) => theme[props.activeTheme].text + " !important"};
+    color: ${(props) =>
+      props.inModal
+        ? theme.colors.black
+        : theme[props.activeTheme].text + " !important"};
   }
   .ant-input {
     &[disabled] {
@@ -61,13 +67,19 @@ const StyledInputPass = styled(Input.Password)`
 
 const StyledTextArea = styled(Input.TextArea)`
   background-color: ${theme.colors.cardTrans + " !important"};
-  color: ${(props) => theme[props.activeTheme].text + " !important"};
+  color: ${(props) =>
+    props.inModal
+      ? theme.colors.black
+      : theme[props.activeTheme].text + " !important"};
   border-radius: 10px !important;
   cursor: pointer !important;
   & > input.ant-input {
     padding: 0;
     background-color: transparent !important;
-    color: ${(props) => theme[props.activeTheme].text + " !important"};
+    color: ${(props) =>
+      props.inModal
+        ? theme.colors.black
+        : theme[props.activeTheme].text + " !important"};
   }
   .ant-input {
     &[disabled] {
