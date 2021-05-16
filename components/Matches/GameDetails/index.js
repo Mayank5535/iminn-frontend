@@ -74,7 +74,7 @@ function GameDetails() {
   const [finalLoader, setFinalLoader] = useState(true);
   const [manager, setManager] = useState({});
   const [following, setFollowing] = useState(false);
-  const [openChatInput, setOpenChatInput] = useState(false);
+  const [openChatInput, setOpenChatInput] = useState(true);
   const [cInp, setCInp] = useState("");
   const [mNote, setMNote] = useState("");
 
