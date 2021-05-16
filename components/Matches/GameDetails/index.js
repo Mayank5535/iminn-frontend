@@ -485,6 +485,7 @@ function GameDetails() {
           )}
           {messageList.map((m, k) => {
             let sender = allMembers.find((p) => m.senderId === p.playerId);
+            if (!sender) return;
             let avatarSrc;
             if (m.senderId === data?.managerId) {
               avatarSrc = manager && manager.profileImage.secure_url;
@@ -492,7 +493,7 @@ function GameDetails() {
               avatarSrc = sender.avatar;
             }
             return (
-              <Row justify="center" align="middle" key={k}>
+              <Row justify="center" align="middle" key={k} wrap={false}>
                 <Col flex="60px">
                   <Badge count={0} overflowCount={999} offset={[-5, 3]}>
                     <Avatar
