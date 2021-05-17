@@ -53,6 +53,7 @@ import Card from "@components/UI/Card";
 import { shareMsg } from "@config/staticData";
 import siteConfig from "@config/siteConfig";
 import TextInput from "@components/UI/TextInput";
+import useMediaQuery from "utils/useMediaQuery";
 import moment from "moment";
 
 const leftSpan = 13;
@@ -65,6 +66,7 @@ function GameDetails() {
   // const [showConfirmModal, setShowConfirmModal] = useState(false);
   // const [showSquadModal, setShowSquadModal] = useState(false);
   // const [showSelectTeamModal, setShowSelectTeamModal] = useState(false);
+  const { isXs, isSm } = useMediaQuery();
   const [openManagerNote, setOpenManagerNote] = useState(false);
 
   const [myTeam, setMyTeam] = useState(null);
@@ -249,6 +251,13 @@ function GameDetails() {
     console.log("===> ~ handleShare ~ url", key, url);
 
     window && window.open(url, "_blank");
+  };
+
+  const copyLink = () => {
+    const postUrl = `http://${siteConfig.domainUrl}/matches/${value.id}`;
+
+    navigator.clipboard.writeText(postUrl);
+    message.info("Match link Copied!");
   };
 
   const handleSend = () => {
@@ -821,15 +830,26 @@ function GameDetails() {
                   >
                     {following ? "Following" : "Follow"}
                   </Button>
-                  <Dropdown overlay={renderShareLinks} arrow trigger="click">
+                  {isXs || isSm ? (
+                    <Dropdown overlay={renderShareLinks} arrow trigger="click">
+                      <Button
+                        style={{ display: "flex" }}
+                        type="text"
+                        icon={<ShareAltOutlined className="shareFollowIcon" />}
+                      >
+                        Share
+                      </Button>
+                    </Dropdown>
+                  ) : (
                     <Button
                       style={{ display: "flex" }}
                       type="text"
+                      onClick={() => copyLink()}
                       icon={<ShareAltOutlined className="shareFollowIcon" />}
                     >
-                      Share
+                      Copy Sharable Link
                     </Button>
-                  </Dropdown>
+                  )}
                 </Row>
               </Col>
               <Col span={rightSpan}>
