@@ -75,7 +75,8 @@ function Sider(props) {
     <div className={!children ? "siderContainer pr-2" : "siderContainer"}>
       <Row align="top">
         <Col span={24} className="pointer" onClick={() => handleLogoClick()}>
-          <HeaderLogo /> {/* STATIC FOR ALL */}
+          <HeaderLogo />
+          {/* STATIC FOR ALL */}
         </Col>
         {children ? children : renderCommonSider()}
       </Row>

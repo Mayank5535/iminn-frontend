@@ -34,7 +34,7 @@ function Searchbar(props) {
     <StyledAc
       activeTheme={activeTheme}
       dropdownMatchSelectWidth={252}
-      style={{ width: 450 }}
+      className="headerSearchBar"
       {...props}
     >
       <Input

@@ -1,7 +1,11 @@
 import React, { useContext, useMemo } from "react";
 import { Avatar, Col, Popover, Row } from "antd";
 import Text from "@components/UI/Text";
-import { HeartOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  HeartOutlined,
+  MenuUnfoldOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import {
   AwardIcon,
   BellIcon,
@@ -26,9 +30,11 @@ import {
 import { isEmpty } from "lodash";
 import { useRouter } from "next/router";
 import "./styles.module.less";
+import useMediaQuery from "utils/useMediaQuery";
 
 function Header(props) {
   const { noSearch } = props;
+  const { isXs, isSm } = useMediaQuery();
 
   const { userData } = useSelector((state) => state.auth);
   const router = useRouter();
@@ -133,12 +139,36 @@ function Header(props) {
     );
   };
 
+  const prop1 =
+    isSm || isXs
+      ? { xs: { span: 24, order: 2 }, sm: { span: 24, order: 2 } }
+      : {};
+  const prop2 =
+    isSm || isXs
+      ? { xs: { span: 24, order: 1 }, sm: { span: 24, order: 1 } }
+      : {};
+
   return (
     <div className="mb-2">
       <Row justify="space-between" align="middle">
-        <Col>{!noSearch && <Searchbar />}</Col>
-        <Col>
-          <Row align="middle">
+        <Col {...prop1}>{!noSearch && <Searchbar />}</Col>
+        <Col {...prop2}>
+          <Row
+            align="middle"
+            style={
+              isXs || isSm
+                ? {
+                    justifyContent: "space-between",
+                    marginBottom: "1rem",
+                  }
+                : {}
+            }
+          >
+            {(isXs || isSm) && (
+              <Col onClick={() => mc.setSideDrawer(true)}>
+                <MenuUnfoldOutlined className="headerMenu primaryColor" />
+              </Col>
+            )}
             <Col>
               <HeartOutlined className="headerMenu" />
             </Col>

@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { UserOutlined } from "@ant-design/icons";
 import Button from "@components/UI/Button";
 import Card from "@components/UI/Card";
 import Text from "@components/UI/Text";

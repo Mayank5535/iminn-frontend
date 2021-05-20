@@ -10,6 +10,7 @@ import "../styles/commonStyles.module.less";
 const App = ({ Component, pageProps }) => {
   const store = useStore((state) => state);
   const [activeMenu, setActiveMenu] = useState(1);
+  const [sideDrawer, setSideDrawer] = useState(false);
 
   useEffect(() => {
     initializeTheme();
@@ -18,7 +19,12 @@ const App = ({ Component, pageProps }) => {
   return (
     <PersistGate persistor={store.__persistor} loading={<div>...Loading</div>}>
       <MenuCtx.Provider
-        value={{ active: activeMenu, setActiveMenu: setActiveMenu }}
+        value={{
+          active: activeMenu,
+          setActiveMenu: setActiveMenu,
+          sideDrawer: sideDrawer,
+          setSideDrawer: setSideDrawer,
+        }}
       >
         <Component {...pageProps} />
       </MenuCtx.Provider>
