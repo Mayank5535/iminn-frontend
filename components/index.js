@@ -15,6 +15,7 @@ import Action from "@components/Home/Action";
 import Games from "@components/Home/Games";
 import CoverImg from "@components/Home/CoverImg";
 import ProfileEdit from "@components/Home/ProfileEdit";
+import DashboardView from "@components/Home/DashboardView";
 
 //For MatchDetails
 import GameDetails from "@components/Matches/GameDetails";
@@ -41,5 +42,6 @@ export {
   HeaderLogo,
   ProfileEdit,
   GameDetails,
+  DashboardView,
   MenuCtx,
 };

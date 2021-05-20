@@ -44,28 +44,19 @@ function Sider(props) {
         <Col span={24}>
           <Row>
             <Card trans padding="25px" className="rowFlex alignCenter mb-2">
-              <Text bold primary className="robotoFamily">
-                Add New Player
+              <Text h4 bold className="robotoFamily">
+                Create Game
               </Text>
-              <Card round className="plusButtonWrapper">
+              <Card
+                className="plusButtonWrapper pointer"
+                onClick={() => mc.setActiveMenu(6)}
+              >
                 <PlusOutlined className="plusButton" />
               </Card>
             </Card>
           </Row>
           {/* MENUS */}
           {renderMenuItems()}
-        </Col>
-        <Col span={24} className="lastMenuSection">
-          <Row align="middle" className="menuItem" onClick={() => signOut()}>
-            <Col>
-              <div className="menuIconWrapper">
-                <LogoutIcon />
-              </div>
-            </Col>
-            <Col>
-              <Text>Log Out</Text>
-            </Col>
-          </Row>
         </Col>
       </>
     );

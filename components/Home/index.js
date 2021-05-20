@@ -1,15 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import Head from "next/head";
-import { Col, Row } from "antd";
-import {
-  Header,
-  Sider,
-  Action,
-  Games,
-  CoverImg,
-  MenuCtx,
-  ProfileEdit,
-} from "@components";
+import { Row } from "antd";
+import { Sider, MenuCtx, ProfileEdit, DashboardView } from "@components";
 import CreateGame from "./CreateGame";
 import { useSelector } from "react-redux";
 import "./styles.module.less";
@@ -18,19 +10,6 @@ function Home() {
   const { theme } = useSelector((state) => state.theme);
   const mc = useContext(MenuCtx);
   // CUSTOM VIEWS
-  const DashboardView = () => (
-    <>
-      <Col flex="4">
-        <Sider />
-      </Col>
-      <Col flex="20" className="pl-2">
-        <Header />
-        <CoverImg />
-        <Action />
-        <Games />
-      </Col>
-    </>
-  );
 
   const StatsView = () => (
     <>

@@ -64,13 +64,7 @@ export function GameListCard({ data, onOpen, skeleton = false }) {
         </Row>
         <Row align="middle" style={{ marginTop: 10 }}>
           <Text h3 bold>
-            Team A
-          </Text>
-          <Text h4 light style={{ marginLeft: 8, marginRight: 8 }}>
-            VS
-          </Text>
-          <Text h3 bold>
-            Team B
+            {data?.pitch?.label}
           </Text>
         </Row>
         <Row align="top">
