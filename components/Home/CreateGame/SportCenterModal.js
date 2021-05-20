@@ -9,6 +9,14 @@ import { isEqual } from "lodash";
 import { theme } from "utils/commonFunctions";
 import Button from "@components/UI/Button";
 
+// const sportsCentersList = sportsCenters.filter((s) => {
+//   let lc = s && s.Address && s.Address.toString().toLowerCase();
+//   console.log(lc);
+//   if (lc && lc.includes("leiciester")) {
+//     return true;
+//   }
+// });
+
 export default function SportCenterModal(props) {
   const { visible, dismiss } = props;
   const [checkCenter, setCheckedCenter] = useState({});
@@ -22,16 +30,20 @@ export default function SportCenterModal(props) {
       onCancel={() => dismiss()}
       centered
       footer={[
-        <Button type="ghost" key="Add" onClick={() => dismiss()}>
-          Return
-        </Button>,
-        <Button
-          key="SELECT"
-          type="primary"
-          onClick={() => dismiss(checkCenter)}
-        >
-          Submit
-        </Button>,
+        <>
+          <Row justify="center" align="middle">
+            <Button type="ghost" key="Add" onClick={() => dismiss()}>
+              Return
+            </Button>
+            <Button
+              key="SELECT"
+              type="primary"
+              onClick={() => dismiss(checkCenter)}
+            >
+              Submit
+            </Button>
+          </Row>
+        </>,
       ]}
     >
       <Row>

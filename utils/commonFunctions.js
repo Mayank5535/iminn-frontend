@@ -2,10 +2,10 @@ import firebase from "firebase";
 import db from "@config/firebaseConfig";
 import ThemeActions from "@redux/reducers/theme/actions";
 import AuthActions from "@redux/reducers/auth/actions";
-import _, { isEmpty } from "lodash-es";
-import { message } from "antd";
+import _ from "lodash-es";
 import fetchHelper from "./apiHelper";
 import siteConfig from "@config/siteConfig";
+import { message } from "antd";
 
 export const theme = {
   colors: {

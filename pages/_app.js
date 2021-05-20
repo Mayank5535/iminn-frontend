@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useStore } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { wrapper } from "../redux/store/configureStore";
-import "../styles/commonStyles.module.less";
 import { initializeTheme } from "../utils/commonFunctions";
 import { MenuCtx } from "@components";
+import "../styles/commonStyles.module.less";
 
 const App = ({ Component, pageProps }) => {
   const store = useStore((state) => state);

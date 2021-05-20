@@ -180,11 +180,9 @@ function CreateGame(props) {
   const renderFirstStep = () => {
     return (
       <>
-        <Row align="middle">
-          <div className="mt-4 mb-1">
-            <PitchIcon className="formLabelIcon" />
-            <Text h4>Type Pitch</Text>
-          </div>
+        <Row align="middle" className="mt-4 mb-1">
+          <PitchIcon className="formLabelIcon" />
+          <Text h4>Type Pitch</Text>
         </Row>
         <Row gutter={24}>
           {pitchTypes.map((p) => {
@@ -210,11 +208,13 @@ function CreateGame(props) {
             );
           })}
         </Row>
-        <Row align="middle">
-          <div className="mt-2 mb-1" style={{ wordBreak: "break-all" }}>
-            <PlaceIcon className="formLabelIcon" />
-            <Text h4>Sports Center</Text>
-          </div>
+        <Row
+          align="middle"
+          className="mt-2 mb-1"
+          style={{ wordBreak: "break-all" }}
+        >
+          <PlaceIcon className="formLabelIcon" />
+          <Text h4>Sports Center</Text>
         </Row>
         <Row gutter={[48, 24]}>
           <Col
@@ -269,11 +269,9 @@ function CreateGame(props) {
             />
           </Col>
         </Row>
-        <Row align="middle">
-          <div className="mt-2 mb-1">
-            <SettingsIcon className="formLabelIcon" />
-            <Text h4>Advance Options</Text>
-          </div>
+        <Row align="middle" className="mt-2 mb-1">
+          <SettingsIcon className="formLabelIcon" />
+          <Text h4>Advance Options</Text>
         </Row>
         <Row gutter={[48, 24]}>
           <Col span={10}>
@@ -307,11 +305,9 @@ function CreateGame(props) {
             </Row>
           </Col>
         </Row>
-        <Row align="middle">
-          <div className="mt-2 mb-1">
-            <PeoplesIcon className="formLabelIcon" />
-            <Text h4>Participants</Text>
-          </div>
+        <Row align="middle" className="mt-2 mb-1">
+          <PeoplesIcon className="formLabelIcon" />
+          <Text h4>Participants</Text>
         </Row>
         <Row gutter={24}>
           {["private", "public"].map((p) => {
@@ -429,15 +425,13 @@ function CreateGame(props) {
         </Row>
         <Row>
           <Col span={20}>
-            <Row justify="end">
-              <span className="mt-2 mb-4">
-                <Button type="text" className="mr-1" onClick={handleBack}>
-                  BACK
-                </Button>
-                <Button type="primary" onClick={handleContinue}>
-                  CONTINUE
-                </Button>
-              </span>
+            <Row justify="end" className="mt-2 mb-4">
+              <Button type="text" className="mr-1" onClick={handleBack}>
+                BACK
+              </Button>
+              <Button type="primary" onClick={handleContinue}>
+                CONTINUE
+              </Button>
             </Row>
           </Col>
         </Row>
@@ -451,11 +445,9 @@ function CreateGame(props) {
         <Row align="top" style={{ marginTop: "6rem" }}>
           <Col span={10}>
             <div className="rightBorder">
-              <Row justify="center" align="middle">
-                <div className="mb-1">
-                  <GalleryIcon className="formLabelIcon" />
-                  <Text h4>Cover Image</Text>
-                </div>
+              <Row justify="center" align="middle" className="mb-1">
+                <GalleryIcon className="formLabelIcon" />
+                <Text h4>Cover Image</Text>
               </Row>
               <Row justify="center">
                 <Col>
@@ -484,10 +476,10 @@ function CreateGame(props) {
           <Col span={14}>
             <Row justify="center" align="middle">
               <Col span={12}>
-                <div className="mb-1">
+                <Row className="mb-1" align="middle">
                   <InfoCircleIcon className="formLabelIcon" />
                   <Text h4>Recap information</Text>
-                </div>
+                </Row>
               </Col>
             </Row>
             <Row justify="center">
@@ -546,15 +538,13 @@ function CreateGame(props) {
             </Row>
           </Col>
         </Row>
-        <Row justify="end" align="bottom">
-          <span className="mt-3 mb-4">
-            <Button type="text" className="mr-1" onClick={handleBack}>
-              BACK
-            </Button>
-            <Button type="primary" loading={btnLoading} onClick={handlePublish}>
-              PUBLISH
-            </Button>
-          </span>
+        <Row justify="end" align="bottom" className="mt-3 mb-4">
+          <Button type="text" className="mr-1" onClick={handleBack}>
+            BACK
+          </Button>
+          <Button type="primary" loading={btnLoading} onClick={handlePublish}>
+            PUBLISH
+          </Button>
         </Row>
       </>
     );
