@@ -16,6 +16,14 @@ const App = ({ Component, pageProps }) => {
     initializeTheme();
   }, []);
 
+  useEffect(() => {
+    if (sideDrawer) {
+      document.body.style = "overflow: hidden";
+    } else {
+      document.body.style = "overflow:auto";
+    }
+  }, [sideDrawer]);
+
   return (
     <PersistGate persistor={store.__persistor} loading={<div>...Loading</div>}>
       <MenuCtx.Provider

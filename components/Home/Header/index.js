@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from "react";
-import { Avatar, Col, Popover, Row } from "antd";
+import { Affix, Avatar, Col, Popover, Row } from "antd";
 import Text from "@components/UI/Text";
 import {
   HeartOutlined,
@@ -149,64 +149,56 @@ function Header(props) {
       : {};
 
   return (
-    <div className="mb-2">
-      <Row justify="space-between" align="middle">
-        <Col {...prop1}>{!noSearch && <Searchbar />}</Col>
-        <Col {...prop2}>
-          <Row
-            align="middle"
-            style={
-              isXs || isSm
-                ? {
-                    justifyContent: "space-between",
-                    marginBottom: "1rem",
-                  }
-                : {}
-            }
-          >
-            {(isXs || isSm) && (
-              <Col onClick={() => mc.setSideDrawer(true)}>
-                <MenuUnfoldOutlined className="headerMenu primaryColor" />
+    <div>
+      <Affix offsetTop={0}>
+        <Row justify="space-between" align="middle" className="affixHeader">
+          <Col {...prop1}>{!noSearch && <Searchbar />}</Col>
+          <Col {...prop2} style={{ overflow: "visible" }}>
+            <Row align="middle" className={isSm || (isXs && "stickyHeader")}>
+              {(isXs || isSm) && (
+                <Col onClick={() => mc.setSideDrawer(true)}>
+                  <MenuUnfoldOutlined className="headerMenu primaryColor" />
+                </Col>
+              )}
+              <Col>
+                <HeartOutlined className="headerMenu" />
               </Col>
-            )}
-            <Col>
-              <HeartOutlined className="headerMenu" />
-            </Col>
-            <Col>
-              <InboxIcon className="headerMenu" />
-            </Col>
-            <Col>
-              <BellIcon className="headerMenu" />
-            </Col>
-            <Col>
-              <Popover
-                content={DropDownContent}
-                overlayClassName="profilePover noSelect"
-                trigger="hover"
-                placement="bottomRight"
-                visible={profileMenuVisible}
-                onVisibleChange={(visible) => setProfileMenuVisible(visible)}
-              >
-                <Row
-                  className={`headerMenuProfile ${
-                    profileMenuVisible && "headerMenuProfile-active"
-                  }`}
+              <Col>
+                <InboxIcon className="headerMenu" />
+              </Col>
+              <Col>
+                <BellIcon className="headerMenu" />
+              </Col>
+              <Col>
+                <Popover
+                  content={DropDownContent}
+                  overlayClassName="profilePover noSelect"
+                  trigger="hover"
+                  placement="bottomRight"
+                  visible={profileMenuVisible}
+                  onVisibleChange={(visible) => setProfileMenuVisible(visible)}
                 >
-                  <Avatar
-                    size={60}
-                    icon={<UserOutlined />}
-                    className={!isEmpty(userData) ? "primaryBg" : ""}
-                    src={userData?.profileImage?.secure_url || ""}
+                  <Row
+                    className={`headerMenuProfile ${
+                      profileMenuVisible && "headerMenuProfile-active"
+                    }`}
                   >
-                    {getInitials(userData)}
-                  </Avatar>
-                  <DropArrow className="headerMenuProfileDropIcon" />
-                </Row>
-              </Popover>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+                    <Avatar
+                      size={60}
+                      icon={<UserOutlined />}
+                      className={!isEmpty(userData) ? "primaryBg" : ""}
+                      src={userData?.profileImage?.secure_url || ""}
+                    >
+                      {getInitials(userData)}
+                    </Avatar>
+                    <DropArrow className="headerMenuProfileDropIcon" />
+                  </Row>
+                </Popover>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Affix>
     </div>
   );
 }

@@ -1,13 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, { isValidElement, useContext } from "react";
 import { useRouter } from "next/router";
-import { Button, Col, Row } from "antd";
+import { Affix, Col, Row } from "antd";
 import Text from "@components/UI/Text";
 import Card from "@components/UI/Card";
 import { PlusOutlined } from "@ant-design/icons";
 import { navMenus } from "@config/staticData";
-import { LogoutIcon } from "@components/UI/Icons";
-import { signOut } from "utils/commonFunctions";
 import { HeaderLogo, MenuCtx } from "@components";
 import "./styles.module.less";
 
@@ -73,21 +71,23 @@ function Sider(props) {
 
   return (
     <div className={!children ? "siderContainer pr-2" : "siderContainer"}>
-      <Row align="top">
-        <Col span={24} className="pointer" onClick={() => handleLogoClick()}>
-          <HeaderLogo />
-          {/* STATIC FOR ALL */}
-        </Col>
-        {children ? children : renderCommonSider()}
-      </Row>
-      <div
-        style={{
-          position: "absolute",
-          bottom: "2rem",
-        }}
-      >
-        {isValidElement(bottomFix) && bottomFix}
-      </div>
+      <Affix offsetTop={16}>
+        <Row align="top">
+          <Col span={24} className="pointer" onClick={() => handleLogoClick()}>
+            <HeaderLogo />
+            {/* STATIC FOR ALL */}
+          </Col>
+          {children ? children : renderCommonSider()}
+        </Row>
+        <div
+          style={{
+            position: "absolute",
+            bottom: "2rem",
+          }}
+        >
+          {isValidElement(bottomFix) && bottomFix}
+        </div>
+      </Affix>
     </div>
   );
 }
