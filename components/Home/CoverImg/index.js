@@ -3,8 +3,12 @@ import { Col, Row } from "antd";
 import Text from "@components/UI/Text";
 import Card from "@components/UI/Card";
 import Images from "@config/images";
+import { useSelector } from "react-redux";
+import { isEmpty } from "lodash";
 
 const CoverImg = () => {
+  const { userData } = useSelector((s) => s.auth);
+
   return (
     <>
       <Card className="mb-2">
@@ -13,7 +17,7 @@ const CoverImg = () => {
             <div className="textSectonOnImg">
               <Row align="middle">
                 <Text h1 bold className="whiteColor coverTitle">
-                  Hi, John!
+                  {!isEmpty(userData) ? `Hi, ${userData.firstName}` : "Hi"}
                 </Text>
               </Row>
               <Row align="middle">
