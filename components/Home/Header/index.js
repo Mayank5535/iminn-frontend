@@ -1,4 +1,5 @@
 import React, { useContext, useMemo } from "react";
+import p from "prop-types";
 import { Affix, Avatar, Col, Popover, Row } from "antd";
 import Text from "@components/UI/Text";
 import {
@@ -33,7 +34,7 @@ import "./styles.module.less";
 import useMediaQuery from "utils/useMediaQuery";
 
 function Header(props) {
-  const { noSearch } = props;
+  const { noSearch, noDrawerBtn, extraBtn } = props;
   const { isXs, isSm } = useMediaQuery();
 
   const { userData } = useSelector((state) => state.auth);
@@ -141,7 +142,10 @@ function Header(props) {
 
   const prop1 =
     isSm || isXs
-      ? { xs: { span: 24, order: 2 }, sm: { span: 24, order: 2 } }
+      ? {
+          xs: { span: 24, order: 2 },
+          sm: { span: 24, order: 2 },
+        }
       : {};
   const prop2 =
     isSm || isXs
@@ -152,14 +156,20 @@ function Header(props) {
     <div>
       <Affix offsetTop={0}>
         <Row justify="space-between" align="middle" className="affixHeader">
-          <Col {...prop1}>{!noSearch && <Searchbar />}</Col>
-          <Col {...prop2} style={{ overflow: "visible" }}>
-            <Row align="middle" className={isSm || (isXs && "stickyHeader")}>
-              {(isXs || isSm) && (
+          <Col
+            {...prop1}
+            className={(isSm || isXs) && !noSearch && "mobileSearchbar"}
+          >
+            {!noSearch && <Searchbar />}
+          </Col>
+          <Col {...prop2}>
+            <Row align="middle" className={(isSm || isXs) && "mobileHeader"}>
+              {(isXs || isSm) && !noDrawerBtn && (
                 <Col onClick={() => mc.setSideDrawer(true)}>
                   <MenuUnfoldOutlined className="headerMenu primaryColor" />
                 </Col>
               )}
+              {React.isValidElement(extraBtn) && <Col>{extraBtn}</Col>}
               <Col>
                 <HeartOutlined className="headerMenu" />
               </Col>
@@ -202,5 +212,17 @@ function Header(props) {
     </div>
   );
 }
+
+Header.defaultProps = {
+  noSearch: false,
+  noDrawerBtn: true,
+  extraBtn: () => {},
+};
+
+Header.propTypes = {
+  noSearch: p.bool,
+  noDrawerBtn: p.bool,
+  extraBtn: p.func,
+};
 
 export default Header;

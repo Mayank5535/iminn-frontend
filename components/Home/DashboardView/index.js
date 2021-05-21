@@ -1,25 +1,18 @@
 import React, { useContext } from "react";
 import { Col, Drawer } from "antd";
-import { Header, Sider, Games, CoverImg, MenuCtx } from "@components";
+import { Header, Sider, Games, CoverImg } from "@components";
 import useMediaQuery from "utils/useMediaQuery";
+import SideDrawerWrapper from "@components/UI/SideDrawerWrapper";
 
 const DashboardView = () => {
   const { isXs, isSm } = useMediaQuery();
-  const mc = useContext(MenuCtx);
 
   if (isXs || isSm) {
     return (
       <>
-        <Drawer
-          placement="left"
-          closable
-          onClose={() => mc && mc?.setSideDrawer(false)}
-          visible={(mc && mc?.sideDrawer) || false}
-          getContainer={false}
-          style={{ position: "absolute" }}
-        >
+        <SideDrawerWrapper>
           <Sider />
-        </Drawer>
+        </SideDrawerWrapper>
         <Col>
           <Header />
           <CoverImg />

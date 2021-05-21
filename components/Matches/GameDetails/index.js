@@ -56,9 +56,6 @@ import TextInput from "@components/UI/TextInput";
 import useMediaQuery from "utils/useMediaQuery";
 import moment from "moment";
 
-const leftSpan = 13;
-const rightSpan = 24 - leftSpan - 2;
-
 function GameDetails() {
   const router = useRouter();
   const { userData } = useSelector((state) => state.auth);
@@ -67,6 +64,10 @@ function GameDetails() {
   // const [showSquadModal, setShowSquadModal] = useState(false);
   // const [showSelectTeamModal, setShowSelectTeamModal] = useState(false);
   const { isXs, isSm } = useMediaQuery();
+
+  const leftSpan = isXs || isSm ? 24 : 13;
+  const rightSpan = isXs || isSm ? 24 : 24 - leftSpan - 2;
+
   const [openManagerNote, setOpenManagerNote] = useState(false);
 
   const [myTeam, setMyTeam] = useState(null);
@@ -357,7 +358,7 @@ function GameDetails() {
             justify="center"
             align="middle"
             key={index}
-            className="mt-1 pl-2"
+            className={`mt-1 ${!isMobile && "pl-2"}`}
           >
             <Col flex="60px">
               <Badge count={0} overflowCount={999} offset={[-5, 3]}>
@@ -385,7 +386,11 @@ function GameDetails() {
     if (name == "B" && !isEmpty(teams.teamB) && isArray(teams.teamB)) {
       listRender = teams.teamB.map((p, index) => {
         return (
-          <Row align="middle" key={index} className="mt-1 pl-2">
+          <Row
+            align="middle"
+            key={index}
+            className={`mt-1 ${!isMobile && "pl-2"}`}
+          >
             <Col flex="60px">
               <Badge count={0} overflowCount={999} offset={[-5, 3]}>
                 <Avatar size={44} src={p.avatar || ""} className="primaryBg">
@@ -604,30 +609,51 @@ function GameDetails() {
   let totalA = 0;
   let totalB = 0;
 
+  const noMobileProps = !(isSm || isXs)
+    ? { flex: "20", className: "pl-2" }
+    : {};
+
+  const isMobile = isSm || isXs;
+
   return (
     <>
-      <Col flex="4">
-        <Sider>
-          <Col span={24}>
-            <Button
-              type="text"
-              icon={<ArrowLeftOutlined style={{ fontSize: 20 }} />}
-              onClick={() => router.back()}
-            >
-              <Text h4>Back</Text>
-            </Button>
-          </Col>
-        </Sider>
-      </Col>
-      <Col flex="20" className="pl-2">
-        <Header noSearch={true} />
+      {isSm || isXs ? null : (
+        <Col flex="4">
+          <Sider>
+            <Col span={24}>
+              <Button
+                type="text"
+                icon={<ArrowLeftOutlined style={{ fontSize: 20 }} />}
+                onClick={() => router.back()}
+              >
+                <Text h4>Back</Text>
+              </Button>
+            </Col>
+          </Sider>
+        </Col>
+      )}
+      <Col {...noMobileProps}>
+        {isMobile ? (
+          <Header
+            noSearch={true}
+            noDrawerBtn={true}
+            extraBtn={
+              <ArrowLeftOutlined
+                className="headerMenu"
+                onClick={() => router.back()}
+              />
+            }
+          />
+        ) : (
+          <Header noSearch={true} />
+        )}
         {loading || finalLoader ? (
           <Row justify="center" align="middle" style={{ height: "50vh" }}>
             <Spin spinning size="large" />
           </Row>
         ) : value.exists ? (
           <div className="minHeight">
-            <Row align="middle" className=" mt-2">
+            <Row align="middle" className="mt-2">
               <Col>
                 <Row align="middle">
                   <PitchIcon className="primaryColor mr-1" />
@@ -763,7 +789,7 @@ function GameDetails() {
               </span>
             </Row> */}
             <Row justify="space-between">
-              <Col span={leftSpan} className="colFlex mt-2">
+              <Col span={leftSpan} className="colFlex mt-2 mb-2">
                 <Row justify="center" align="stretch" className="w100">
                   <Col span={11} className="colFlex allCenter">
                     <Row>
@@ -816,7 +842,7 @@ function GameDetails() {
                 </Row>
                 <Divider type="horizontal" className="divider" />
                 <Row>
-                  <Button
+                  {/* <Button
                     style={{ display: "flex", width: 145 }}
                     onClick={() => handleFollow()}
                     type="text"
@@ -829,7 +855,7 @@ function GameDetails() {
                     }
                   >
                     {following ? "Following" : "Follow"}
-                  </Button>
+                  </Button> */}
                   {isXs || isSm ? (
                     <Dropdown overlay={renderShareLinks} arrow trigger="click">
                       <Button
