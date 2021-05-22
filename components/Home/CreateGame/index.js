@@ -53,12 +53,17 @@ import {
 } from "@config/staticData";
 import db from "@config/firebaseConfig";
 import CongratsModal from "./CongratsModal";
+import useMediaQuery from "utils/useMediaQuery";
 const { Option } = Select;
 const { Step } = Steps;
 
 function CreateGame(props) {
   const mc = useContext(MenuCtx);
   const router = useRouter();
+
+  const { isXs, isSm } = useMediaQuery();
+  const isMobile = isSm || isXs;
+
   const { userData } = useSelector((state) => state.auth);
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -76,8 +81,8 @@ function CreateGame(props) {
     cancellationDuration[0]
   );
   const [isCoverdPitch, setIsCoverdPitch] = useState(false);
-  const [teamA, setTeamA] = useState();
-  const [teamB, setTeamB] = useState();
+  // const [teamA, setTeamA] = useState();
+  // const [teamB, setTeamB] = useState();
   const [gamePic, setGamePic] = useState({}); // to be uploaded when updated success! store the object in same state.
 
   const [picBase64, setPicBase64] = useState(""); // to display preview
@@ -367,77 +372,77 @@ function CreateGame(props) {
     );
   };
 
-  const renderSecondStep = () => {
-    return (
-      <>
-        <Row align="middle">
-          <div className="mt-4 mb-1">
-            <TShirtIcon className="formLabelIcon" />
-            <Text h4>Select Teams</Text>
-          </div>
-        </Row>
-        <Row justify="start" align="bottom">
-          <Col span={20}>
-            <Row justify="center" align="middle">
-              <Col span={11}>
-                <Row justify="center" align="middle">
-                  <TeamAIcon className="teamLogos" />
-                </Row>
-              </Col>
-              <Col span={2}>
-                <Row justify="center" align="middle">
-                  <Text h2>VS</Text>
-                </Row>
-              </Col>
-              <Col span={11}>
-                <Row justify="center" align="middle">
-                  <TeamBIcon className="teamLogos" />
-                </Row>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-        <Row justify="start">
-          <Col span={20}>
-            <Row justify="center" align="middle">
-              <Col span={11}>
-                <Row justify="center" align="middle">
-                  <TextInput
-                    placeholder="Team A"
-                    value={teamA}
-                    onChange={(e) => setTeamA(e.target.value)}
-                    className="teamNameInput ml-1 mr-1"
-                  />
-                </Row>
-              </Col>
-              <Col span={11} offset={2}>
-                <Row justify="center" align="middle">
-                  <TextInput
-                    placeholder="Team B"
-                    value={teamB}
-                    onChange={(e) => setTeamB(e.target.value)}
-                    className="teamNameInput ml-1 mr-1"
-                  />
-                </Row>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={20}>
-            <Row justify="end" className="mt-2 mb-4">
-              <Button type="text" className="mr-1" onClick={handleBack}>
-                BACK
-              </Button>
-              <Button type="primary" onClick={handleContinue}>
-                CONTINUE
-              </Button>
-            </Row>
-          </Col>
-        </Row>
-      </>
-    );
-  };
+  // const renderSecondStep = () => {
+  //   return (
+  //     <>
+  //       <Row align="middle">
+  //         <div className="mt-4 mb-1">
+  //           <TShirtIcon className="formLabelIcon" />
+  //           <Text h4>Select Teams</Text>
+  //         </div>
+  //       </Row>
+  //       <Row justify="start" align="bottom">
+  //         <Col span={20}>
+  //           <Row justify="center" align="middle">
+  //             <Col span={11}>
+  //               <Row justify="center" align="middle">
+  //                 <TeamAIcon className="teamLogos" />
+  //               </Row>
+  //             </Col>
+  //             <Col span={2}>
+  //               <Row justify="center" align="middle">
+  //                 <Text h2>VS</Text>
+  //               </Row>
+  //             </Col>
+  //             <Col span={11}>
+  //               <Row justify="center" align="middle">
+  //                 <TeamBIcon className="teamLogos" />
+  //               </Row>
+  //             </Col>
+  //           </Row>
+  //         </Col>
+  //       </Row>
+  //       <Row justify="start">
+  //         <Col span={20}>
+  //           <Row justify="center" align="middle">
+  //             <Col span={11}>
+  //               <Row justify="center" align="middle">
+  //                 <TextInput
+  //                   placeholder="Team A"
+  //                   value={teamA}
+  //                   onChange={(e) => setTeamA(e.target.value)}
+  //                   className="teamNameInput ml-1 mr-1"
+  //                 />
+  //               </Row>
+  //             </Col>
+  //             <Col span={11} offset={2}>
+  //               <Row justify="center" align="middle">
+  //                 <TextInput
+  //                   placeholder="Team B"
+  //                   value={teamB}
+  //                   onChange={(e) => setTeamB(e.target.value)}
+  //                   className="teamNameInput ml-1 mr-1"
+  //                 />
+  //               </Row>
+  //             </Col>
+  //           </Row>
+  //         </Col>
+  //       </Row>
+  //       <Row>
+  //         <Col span={20}>
+  //           <Row justify="end" className="mt-2 mb-4">
+  //             <Button type="text" className="mr-1" onClick={handleBack}>
+  //               BACK
+  //             </Button>
+  //             <Button type="primary" onClick={handleContinue}>
+  //               CONTINUE
+  //             </Button>
+  //           </Row>
+  //         </Col>
+  //       </Row>
+  //     </>
+  //   );
+  // };
 
   const renderThirdStep = () => {
     return (
@@ -552,32 +557,43 @@ function CreateGame(props) {
 
   return (
     <>
-      <Col flex="4">
-        <Sider
-          bottomFix={
-            <Button type="text" onClick={() => mc.setActiveMenu(1)}>
-              CANCEL
-            </Button>
-          }
-        >
-          <Col span={24}>
-            <Text h3 className="robotoFamily mb-2" weight="500">
-              Create Game
-            </Text>
-            <Col>
-              <div className="mt-2 stepsCounter">
-                <Steps direction="vertical" current={currentStep}>
-                  <Step title="Game information" />
-                  {/* <Step title="In Progress" /> */}
-                  <Step title="Recap & Publish" />
-                </Steps>
-              </div>
+      {!isMobile && (
+        <Col flex="4">
+          <Sider
+            bottomFix={
+              <Button type="text" onClick={() => mc.setActiveMenu(1)}>
+                CANCEL
+              </Button>
+            }
+          >
+            <Col span={24}>
+              <Text h3 className="robotoFamily mb-2" weight="500">
+                Create Game
+              </Text>
+              <Col>
+                <div className="mt-2 stepsCounter">
+                  <Steps direction="vertical" current={currentStep}>
+                    <Step title="Game information" />
+                    {/* <Step title="In Progress" /> */}
+                    <Step title="Recap & Publish" />
+                  </Steps>
+                </div>
+              </Col>
             </Col>
-          </Col>
-        </Sider>
-      </Col>
+          </Sider>
+        </Col>
+      )}
       <Col flex="20" className="pl-2">
         <Header />
+        <Row>
+          <div className="stepsCounter">
+            <Steps direction="horizontal" current={currentStep}>
+              <Step title="Game information" />
+              {/* <Step title="In Progress" /> */}
+              <Step title="Recap & Publish" />
+            </Steps>
+          </div>
+        </Row>
         {currentStep === 0 && renderFirstStep()}
         {currentStep === 1 && renderThirdStep()}
         {/* {currentStep === 2 && renderThirdStep()} */}

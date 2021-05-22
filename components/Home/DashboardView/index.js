@@ -14,7 +14,7 @@ const DashboardView = () => {
           <Sider />
         </SideDrawerWrapper>
         <Col>
-          <Header />
+          <Header noDrawerBtn={false} />
           <CoverImg />
           {/* <Action /> */}
           <Games />

@@ -10,6 +10,9 @@
   &-active {
     color: @primary;
   }
+  @media @xs {
+    padding: 0.6rem;
+  }
 }
 .headerMenuProfile {
   cursor: pointer;
@@ -22,6 +25,9 @@
   .headerMenuProfileDropIcon {
     padding: 1rem 0px 1rem 1rem;
     color: inherit;
+    @media @xs {
+      padding: 0.6rem 0px 0.6rem 0.6rem;
+    }
   }
   & .ant-avatar {
     border: 1.5px solid @primary;
@@ -29,6 +35,9 @@
   &:hover,
   &-active {
     color: @primary;
+  }
+  @media @xs {
+    margin-left: 0.3rem;
   }
 }
 .profileMenuItem {

@@ -70,8 +70,8 @@ function Sider(props) {
   };
 
   return (
-    <div className={!children ? "siderContainer pr-2" : "siderContainer"}>
-      <Affix offsetTop={16}>
+    <Affix offsetTop={16} className="siderContainer">
+      <div className={!children ? "siderContainer pr-2" : "siderContainer"}>
         <Row align="top">
           <Col span={24} className="pointer" onClick={() => handleLogoClick()}>
             <HeaderLogo />
@@ -87,8 +87,8 @@ function Sider(props) {
         >
           {isValidElement(bottomFix) && bottomFix}
         </div>
-      </Affix>
-    </div>
+      </div>
+    </Affix>
   );
 }
 

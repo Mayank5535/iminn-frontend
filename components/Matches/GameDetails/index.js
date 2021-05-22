@@ -86,6 +86,8 @@ function GameDetails() {
 
   const [messageList, setMessageList] = useState([]);
 
+  console.log("===> ~ messageBoxHeight ~ messageBoxHeight", messageBoxHeight);
+
   const [value, loading] = useDocument(
     db.doc(`games/${router?.query.matches[0]}`),
     {
@@ -217,22 +219,29 @@ function GameDetails() {
     return false;
   }, [data, myTeam, userData]);
 
-  const handleFollow = () => {
-    if (isEmpty(userData)) {
-      message.info("You must be signed in to use this feature!");
-      return;
+  const messageBoxHeight = useMemo(() => {
+    if (isXs || isSm) {
+      return noticeAccess ? 240 : 180;
     }
-    const operationType = !following ? "arrayUnion" : "arrayRemove";
-    db.collection("games")
-      .doc(`${router?.query.matches[0]}`)
-      .update({
-        followers: firebase.firestore.FieldValue[operationType](
-          userData.userId
-        ),
-      })
-      .then((d) => console.log("Follow/Unfollow Success", d))
-      .catch((e) => console.log(e));
-  };
+    return noticeAccess ? 480 : 420;
+  }, [noticeAccess]);
+
+  // const handleFollow = () => {
+  //   if (isEmpty(userData)) {
+  //     message.info("You must be signed in to use this feature!");
+  //     return;
+  //   }
+  //   const operationType = !following ? "arrayUnion" : "arrayRemove";
+  //   db.collection("games")
+  //     .doc(`${router?.query.matches[0]}`)
+  //     .update({
+  //       followers: firebase.firestore.FieldValue[operationType](
+  //         userData.userId
+  //       ),
+  //     })
+  //     .then((d) => console.log("Follow/Unfollow Success", d))
+  //     .catch((e) => console.log(e));
+  // };
 
   const handleShare = ({ key }) => {
     if (!value.exists) {
@@ -483,7 +492,7 @@ function GameDetails() {
           direction="vertical"
           className="w100 messageBox pl-1 pr-1"
           style={{
-            maxHeight: `calc(100vh - ${noticeAccess ? 480 : 420}px)`,
+            maxHeight: `calc(100vh - ${messageBoxHeight}px)`,
           }}
           split={
             <Divider
