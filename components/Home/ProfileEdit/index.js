@@ -20,7 +20,7 @@ import {
 import db from "@config/firebaseConfig";
 import { capitalize, isEmpty } from "lodash";
 import ImgCrop from "antd-img-crop";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   getActiveSource,
   getBase64,
@@ -35,13 +35,16 @@ import Button from "@components/UI/Button";
 import TextInput from "@components/UI/TextInput";
 import { roles } from "@config/staticData";
 import moment from "moment";
-import AuthActions from "@redux/reducers/auth/actions";
+// import AuthActions from "@redux/reducers/auth/actions";
+import useMediaQuery from "utils/useMediaQuery";
 
-const { setUserData } = AuthActions;
+// const { setUserData } = AuthActions;
 
 function ProfileEdit() {
   const mc = useContext(MenuCtx);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const { isXs, isSm } = useMediaQuery();
+  const isMobile = isXs || isSm;
   const { userData, token } = useSelector((state) => state.auth);
   const [btnLoading, setBtnLoading] = useState(false);
 
@@ -134,23 +137,40 @@ function ProfileEdit() {
     );
   };
 
+  const noMobileProps = !isMobile ? { flex: "20", className: "pl-2" } : {};
+
+  const mobileHeaderProps = isMobile
+    ? {
+        noSearch: true,
+        noDrawerBtn: true,
+        extraBtn: (
+          <ArrowLeftOutlined
+            className="headerMenu"
+            onClick={() => mc.setActiveMenu(1)}
+          />
+        ),
+      }
+    : {};
+
   return (
     <>
-      <Col flex="4">
-        <Sider>
-          <Col span={24}>
-            <Button
-              type="text"
-              icon={<ArrowLeftOutlined style={{ fontSize: 20 }} />}
-              onClick={() => mc.setActiveMenu(1)}
-            >
-              <Text h4>Back</Text>
-            </Button>
-          </Col>
-        </Sider>
-      </Col>
-      <Col flex="20" className="pl-2">
-        <Header />
+      {!isMobile && (
+        <Col flex="4">
+          <Sider>
+            <Col span={24}>
+              <Button
+                type="text"
+                icon={<ArrowLeftOutlined style={{ fontSize: 20 }} />}
+                onClick={() => mc.setActiveMenu(1)}
+              >
+                <Text h4>Back</Text>
+              </Button>
+            </Col>
+          </Sider>
+        </Col>
+      )}
+      <Col {...noMobileProps}>
+        <Header {...mobileHeaderProps} />
         <div>
           <Row justify="space-between" align="middle" className="mb-2 mt-2">
             <Col>
@@ -160,7 +180,7 @@ function ProfileEdit() {
             </Col>
           </Row>
           <Row gutter={[48, 0]} justify="space-between">
-            <Col span={10}>
+            <Col sm={24} md={10}>
               <Space
                 direction="vertical"
                 style={{ height: "100%", justifyContent: "space-between" }}
@@ -223,7 +243,7 @@ function ProfileEdit() {
                 </Row>
                 <Row align="middle">
                   <Col span={24}>
-                    <Row align="middle">
+                    <Row align="middle" className={isMobile && "mt-2"}>
                       <Title n={1} text="Profile information" />
                     </Row>
                     <Row align="middle">
@@ -277,18 +297,22 @@ function ProfileEdit() {
                 </Row>
               </Space>
             </Col>
-            <Col span={14}>
-              <Row align="middle">
+            <Col sm={24} md={14}>
+              <Row align="middle" className={isMobile && "mt-2"}>
                 <Title n={2} text="Role" />
               </Row>
               <Row className="mb-4" align="middle">
-                <Row justify="center" align="middle" gutter={[16, 48]}>
+                <Row
+                  justify={isMobile ? "space-around" : "center"}
+                  align="middle"
+                  gutter={[16, 48]}
+                >
                   {roles.map((item) => {
                     const isActive = selectedRole?.id === item.id;
                     return (
-                      <Col span={6} className="textCenter" key={item.id}>
+                      <Col sm={12} md={6} className="textCenter" key={item.id}>
                         <div
-                          className="roleButton2 colFlex allCenter"
+                          className="roleButton3 colFlex allCenter"
                           onClick={() => setSelectedRole(item)}
                         >
                           {/* <span
@@ -304,14 +328,21 @@ function ProfileEdit() {
                           <Text
                             primary={isActive}
                             secondary={!isActive}
-                            className={item.id !== 4 ? "mb-1" : ""}
+                            className={item.id !== 4 && !isMobile ? "mb-1" : ""}
+                            style={
+                              item.id === 4 && isMobile
+                                ? { marginLeft: 30 }
+                                : {}
+                            }
                           >
                             {capitalize(item.name)}
                           </Text>
                           <img
                             style={
-                              item.id == 4
+                              item.id == 4 && !isMobile
                                 ? { height: 145, width: 165, marginTop: 8 }
+                                : item.id == 4 && isMobile
+                                ? { marginRight: -20 }
                                 : {}
                             }
                             className="roleImg2"
