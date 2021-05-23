@@ -585,15 +585,17 @@ function CreateGame(props) {
       )}
       <Col flex="20" className="pl-2">
         <Header />
-        <Row>
-          <div className="stepsCounter">
-            <Steps direction="horizontal" current={currentStep}>
-              <Step title="Game information" />
-              {/* <Step title="In Progress" /> */}
-              <Step title="Recap & Publish" />
-            </Steps>
-          </div>
-        </Row>
+        {isMobile ? (
+          <Row>
+            <div className="stepsCounter">
+              <Steps direction="horizontal" current={currentStep}>
+                <Step title="Game information" />
+                {/* <Step title="In Progress" /> */}
+                <Step title="Recap & Publish" />
+              </Steps>
+            </div>
+          </Row>
+        ) : null}
         {currentStep === 0 && renderFirstStep()}
         {currentStep === 1 && renderThirdStep()}
         {/* {currentStep === 2 && renderThirdStep()} */}
