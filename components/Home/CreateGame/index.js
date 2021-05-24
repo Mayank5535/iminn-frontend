@@ -185,11 +185,18 @@ function CreateGame(props) {
   const renderFirstStep = () => {
     return (
       <>
-        <Row align="middle" className="mt-4 mb-1">
+        {isMobile ? (
+          <Row align="middle" className="mb-1">
+            <Text h3 className="robotoFamily mb-1" weight="500">
+              Create Game
+            </Text>
+          </Row>
+        ) : null}
+        <Row align="middle" className={`${!isMobile && "mt-4"} mb-1`}>
           <PitchIcon className="formLabelIcon" />
           <Text h4>Type Pitch</Text>
         </Row>
-        <Row gutter={24}>
+        <Row gutter={isMobile ? 6 : 24}>
           {pitchTypes.map((p) => {
             return (
               <Col key={p.id}>
@@ -223,7 +230,9 @@ function CreateGame(props) {
         </Row>
         <Row gutter={[48, 24]}>
           <Col
-            span={10}
+            xs={24}
+            sm={24}
+            md={10}
             onClick={() => setShowCentersModal(true)}
             className="pointer"
           >
@@ -235,7 +244,7 @@ function CreateGame(props) {
               className="pointer"
             />
           </Col>
-          <Col span={10}>
+          <Col xs={24} sm={24} md={10}>
             <Dropdown
               placeholder="Payment"
               value={payment?.value || undefined}
@@ -250,7 +259,7 @@ function CreateGame(props) {
               })}
             </Dropdown>
           </Col>
-          <Col span={10}>
+          <Col xs={24} sm={24} md={10}>
             <TextInput
               type="number"
               placeholder="Cost per person"
@@ -263,7 +272,7 @@ function CreateGame(props) {
               }
             />
           </Col>
-          <Col span={10}>
+          <Col xs={24} sm={24} md={10}>
             <DatePicker
               inputReadOnly
               format="MM-DD-YYYY HH:mm"
@@ -279,7 +288,7 @@ function CreateGame(props) {
           <Text h4>Advance Options</Text>
         </Row>
         <Row gutter={[48, 24]}>
-          <Col span={10}>
+          <Col xs={24} sm={24} md={10}>
             <Dropdown
               placeholder="Cancellation terms"
               value={cancellationTerms?.value || undefined}
@@ -294,7 +303,7 @@ function CreateGame(props) {
               })}
             </Dropdown>
           </Col>
-          <Col span={10}>
+          <Col xs={24} sm={24} md={10}>
             <Row
               justify="space-between"
               align="middle"
@@ -358,8 +367,8 @@ function CreateGame(props) {
           </Text>
         </Row>
         <Row>
-          <Col span={20}>
-            <Row justify="end">
+          <Col xs={24} sm={24} md={20}>
+            <Row justify={isMobile ? "center" : "end"}>
               <span className="mt-1 mb-2">
                 <Button type="primary" onClick={handleContinue}>
                   CONTINUE
@@ -447,10 +456,14 @@ function CreateGame(props) {
   const renderThirdStep = () => {
     return (
       <>
-        <Row align="top" style={{ marginTop: "6rem" }}>
-          <Col span={10}>
-            <div className="rightBorder">
-              <Row justify="center" align="middle" className="mb-1">
+        <Row align="top" style={{ marginTop: !isMobile ? "6rem" : "1rem" }}>
+          <Col xs={24} sm={24} md={10}>
+            <div className={!isMobile ? "rightBorder" : ""}>
+              <Row
+                justify={isMobile ? "start" : "center"}
+                align="middle"
+                className="mb-1"
+              >
                 <GalleryIcon className="formLabelIcon" />
                 <Text h4>Cover Image</Text>
               </Row>
@@ -470,7 +483,7 @@ function CreateGame(props) {
                           icon={<KickBallIcon />}
                           style={{ cursor: "pointer" }}
                         />
-                        <a className="uploadText mt-1">Change Image</a>
+                        <a className="uploadText mt-1 mb-2">Change Image</a>
                       </div>
                     </Upload>
                   </ImgCrop>
@@ -478,17 +491,17 @@ function CreateGame(props) {
               </Row>
             </div>
           </Col>
-          <Col span={14}>
-            <Row justify="center" align="middle">
-              <Col span={12}>
-                <Row className="mb-1" align="middle">
+          <Col xs={24} sm={24} md={14}>
+            <Row justify={isMobile ? "start" : "center"} align="middle">
+              <Col xs={24} sm={24} md={12}>
+                <Row className={!isMobile ? "mb-1" : ""} align="middle">
                   <InfoCircleIcon className="formLabelIcon" />
                   <Text h4>Recap information</Text>
                 </Row>
               </Col>
             </Row>
             <Row justify="center">
-              <Col span={14}>
+              <Col xs={24} sm={24} md={14}>
                 <div className="mt-2">
                   <Space
                     direction="vertical"
@@ -555,6 +568,8 @@ function CreateGame(props) {
     );
   };
 
+  const noMobProps = isMobile ? {} : { flex: "20", className: "pl-2" };
+
   return (
     <>
       {!isMobile && (
@@ -583,19 +598,8 @@ function CreateGame(props) {
           </Sider>
         </Col>
       )}
-      <Col flex="20" className="pl-2">
+      <Col {...noMobProps}>
         <Header />
-        {isMobile ? (
-          <Row>
-            <div className="stepsCounter">
-              <Steps direction="horizontal" current={currentStep}>
-                <Step title="Game information" />
-                {/* <Step title="In Progress" /> */}
-                <Step title="Recap & Publish" />
-              </Steps>
-            </div>
-          </Row>
-        ) : null}
         {currentStep === 0 && renderFirstStep()}
         {currentStep === 1 && renderThirdStep()}
         {/* {currentStep === 2 && renderThirdStep()} */}
