@@ -194,7 +194,7 @@ function Header(props) {
                     }`}
                   >
                     <Avatar
-                      size={60}
+                      size={isSm || isXs ? 50 : 60}
                       icon={<UserOutlined />}
                       className={!isEmpty(userData) ? "primaryBg" : ""}
                       src={userData?.profileImage?.secure_url || ""}
