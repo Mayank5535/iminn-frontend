@@ -132,9 +132,7 @@ function Matches() {
                 </Text>
               </Col>
             </Row>
-            <Row gutter={[32, 0]} justify="space-between">
-              {renderData()}
-            </Row>
+            <Row justify="space-between">{renderData()}</Row>
           </div>
         </Col>
       </>
