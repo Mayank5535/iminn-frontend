@@ -10,12 +10,15 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import db from "@config/firebaseConfig";
 import { Col, Empty, Row, Spin } from "antd";
 import { has, isEmpty } from "lodash";
-import "./styles.module.less";
 import { GameListCard } from "@components/Matches/GameListCard";
+import useMediaQuery from "utils/useMediaQuery";
+import "./styles.module.less";
 
 function GameList() {
   const router = useRouter();
   const { theme } = useSelector((state) => state.theme);
+  const { isXs, isSm } = useMediaQuery();
+  const isMobile = isXs || isSm;
 
   const [value, loading, error] = useCollection(db.collection("games"), {
     snapshotListenOptions: { includeMetadataChanges: true },
@@ -32,7 +35,7 @@ function GameList() {
   const renderGamesCard = () => {
     return value.docs.map((game, index) => {
       return (
-        <Col span={12} key={index}>
+        <Col xs={21} sm={21} md={12} lg={12} xl={12} key={index}>
           <GameListCard
             data={game.data()}
             onOpen={() => handleNavigation(game)}
@@ -45,7 +48,7 @@ function GameList() {
   const renderSkeleton = () => {
     return [...new Array(6)].map((i, n) => {
       return (
-        <Col span={12} key={n}>
+        <Col xs={21} sm={21} md={12} lg={12} xl={12} key={n}>
           <GameListCard skeleton />
         </Col>
       );
@@ -55,7 +58,11 @@ function GameList() {
   const renderData = () => {
     if (loading) {
       return (
-        <Row gutter={[32, 32]} justify="space-between" className="w100">
+        <Row
+          gutter={isMobile ? [0, 16] : [32, 32]}
+          justify={isMobile ? "center" : "space-between"}
+          className="w100"
+        >
           {renderSkeleton()}
         </Row>
       );
@@ -75,44 +82,64 @@ function GameList() {
       );
     }
     return (
-      <Row gutter={[32, 32]} justify="space-between">
+      <Row
+        gutter={isMobile ? [0, 16] : [32, 32]}
+        justify={isMobile ? "center" : "space-between"}
+      >
         {renderGamesCard()}
       </Row>
     );
   };
 
-  const GameList = () => (
-    <>
-      <Col flex="4">
-        <Sider>
-          <Col span={24}>
-            <Button
-              type="text"
-              icon={<ArrowLeftOutlined style={{ fontSize: 20 }} />}
+  const GameList = () => {
+    const noMobProps = isMobile ? {} : { flex: "20", className: "pl-2" };
+    const mobileHeaderProps = isMobile
+      ? {
+          noDrawerBtn: true,
+          extraBtn: (
+            <ArrowLeftOutlined
+              className="headerMenu"
               onClick={() => router.back()}
-            >
-              <Text h4>Back</Text>
-            </Button>
+            />
+          ),
+        }
+      : {};
+
+    return (
+      <>
+        {!isMobile && (
+          <Col flex="4">
+            <Sider>
+              <Col span={24}>
+                <Button
+                  type="text"
+                  icon={<ArrowLeftOutlined style={{ fontSize: 20 }} />}
+                  onClick={() => router.back()}
+                >
+                  <Text h4>Back</Text>
+                </Button>
+              </Col>
+            </Sider>
           </Col>
-        </Sider>
-      </Col>
-      <Col flex="20" className="pl-2">
-        <Header />
-        <div>
-          <Row justify="space-between" align="middle" className="mb-2 mt-2">
-            <Col>
-              <Text h2 className="robotoFamily" weight="500">
-                Games
-              </Text>
-            </Col>
-          </Row>
-          <Row gutter={[32, 0]} justify="space-between">
-            {renderData()}
-          </Row>
-        </div>
-      </Col>
-    </>
-  );
+        )}
+        <Col {...noMobProps}>
+          <Header {...mobileHeaderProps} />
+          <div>
+            <Row justify="space-between" align="middle" className="mb-2 mt-2">
+              <Col>
+                <Text h2 className="robotoFamily" weight="500">
+                  Games
+                </Text>
+              </Col>
+            </Row>
+            <Row gutter={[32, 0]} justify="space-between">
+              {renderData()}
+            </Row>
+          </div>
+        </Col>
+      </>
+    );
+  };
 
   const routeBased = () => {
     let Theme = theme; // !IMPORTANT FOR RERENDERING ON CHANGE THEME
