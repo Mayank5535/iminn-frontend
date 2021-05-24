@@ -14,7 +14,7 @@ import { GameListCard } from "@components/Matches/GameListCard";
 import useMediaQuery from "utils/useMediaQuery";
 import "./styles.module.less";
 
-function GameList() {
+function Matches() {
   const router = useRouter();
   const { theme } = useSelector((state) => state.theme);
   const { isXs, isSm } = useMediaQuery();
@@ -177,4 +177,4 @@ function GameList() {
   );
 }
 
-export default GameList;
+export default Matches;
