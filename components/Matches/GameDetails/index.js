@@ -677,7 +677,7 @@ function GameDetails() {
             <Row justify="space-between">
               <Col span={leftSpan}>
                 <Space direction="vertical" className="mt-2">
-                  <Row align="top">
+                  <Row align="top" wrap={false}>
                     <Col style={{ width: 36 }}>
                       <PlaceIcon className="formLabelIcon primaryColor mr-1" />
                     </Col>
@@ -692,7 +692,7 @@ function GameDetails() {
                       </Row>
                     </Col>
                   </Row>
-                  <Row align="middle">
+                  <Row align="middle" wrap={false}>
                     <Col style={{ width: 36 }}>
                       <CalendarOutlined
                         style={{ fontSize: 20 }}
@@ -703,7 +703,7 @@ function GameDetails() {
                       <Text>{data.dateTime}</Text>
                     </Col>
                   </Row>
-                  <Row align="middle">
+                  <Row align="middle" wrap={false}>
                     <Col style={{ width: 36 }}>
                       <MoneyIcon className="formLabelIcon primaryColor mr-1" />
                     </Col>
